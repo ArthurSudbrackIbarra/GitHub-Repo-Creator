@@ -1,12 +1,13 @@
 from os import path
 import base64
 
-TOKEN_FILE_PATH = ".program-files/config/TOKEN.txt"
+TOKEN_FILE_PATH = path.abspath(path.join(path.dirname(
+    __file__), '../config/TOKEN.txt'))
 
 
 class TokenManager:
     def __init__(self) -> None:
-        self.absoluteFilePath = path.abspath(TOKEN_FILE_PATH)
+        self.absoluteFilePath = TOKEN_FILE_PATH
 
     def readToken(self) -> str:
         with open(self.absoluteFilePath, 'r') as tokenFile:
