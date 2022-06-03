@@ -2,6 +2,7 @@ from .parsers import YAMLParser
 
 REPO_NAME = "name"
 REPO_DESCRIPTION = "description"
+PRIVATE = "private"
 COLLABORATORS = "collaborators"
 COLLABORATOR = "collaborator"
 COLLABORATOR_NAME = "name"
@@ -21,6 +22,11 @@ class YAMLInterpreter:
     def getRepoDescription(self) -> str:
         if REPO_DESCRIPTION in self.data:
             return self.data[REPO_DESCRIPTION]
+        return None
+
+    def getPrivate(self) -> str:
+        if PRIVATE in self.data:
+            return self.data[PRIVATE]
         return None
 
     def getCollaboratorsCount(self) -> int:
