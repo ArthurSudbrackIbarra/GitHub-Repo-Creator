@@ -1,34 +1,38 @@
-import click
 from .parsers import YAMLParser
 from .interpreters import YAMLInterpreter
+from .tokens import TokenManager
 from .apis import GitHubAPI
 
 
 class CLI:
     def __init__(self) -> None:
+        self.tokenManager = TokenManager()
         self.githubAPI = None
 
-    # Authenticate.
+    def isAuthenticated(self) -> bool:
+        return self.githubAPI is not None
+
     def authenticate(self, accessToken: str) -> bool:
         try:
             self.githubAPI = GitHubAPI(accessToken)
+            self.tokenManager.writeToken(accessToken)
         except Exception as error:
             print(error)
-            raise Exception("Error when trying to authenticate to GitHub.")
-
-    # Set token.
-    def setToken(self, accessToken: str) -> bool:
-        print(f"Setar token: {accessToken}")
+            return False
 
     # Template.
     def template(self, templateType: str) -> bool:
         print(f"Template: {templateType}")
+        return True
 
     # Create.
     def create(self, absoluteFilePath: str) -> bool:
         print(f"Criar: {absoluteFilePath}")
         exit(0)
         # Para depois...
+        if not self.isAuthenticated():
+            print(
+                "User not authenticated to GitHub, run 'grc authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
         parser = YAMLParser(absoluteFilePath)
         interpreter = YAMLInterpreter(parser)
         repoName = interpreter.getRepoName()

@@ -1,42 +1,53 @@
 import click
+from modules.tokens import TokenManager
 from modules.clis import CLI
 
 cli = None
+tokenManager = None
+
+
+# Main.
 
 
 @click.group(help="Automatically create GitHub repositories.")
 def main() -> None:
     pass
 
+
 # Set token.
 
 
-@click.command(name="set-token")
+@click.command(name="authenticate")
 @click.argument("access_token")
-def setToken(access_token: str) -> bool:
-    cli.setToken(access_token)
+def authenticate(access_token: str) -> None:
+    cli.authenticate(access_token)
+
 
 # Template.
 
 
 @click.command(name="template")
 @click.argument("template_type")
-def template(template_type: str) -> bool:
+def template(template_type: str) -> None:
     cli.template(template_type)
+
 
 # Create.
 
 
 @click.command(name="create")
 @click.argument("absolute_file_path")
-def create(absolute_file_path: str) -> bool:
+def create(absolute_file_path: str) -> None:
     cli.create(absolute_file_path)
 
 
 if __name__ == "__main__":
     cli = CLI()
-    cli.authenticate("TOKEN")
-    main.add_command(setToken)
+    tokenManager = TokenManager()
+    token = tokenManager.readToken()
+    print(token)
+    cli.authenticate(token)
+    main.add_command(authenticate)
     main.add_command(template)
     main.add_command(create)
     main()

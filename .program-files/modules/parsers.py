@@ -9,6 +9,6 @@ class YAMLParser:
         self.absoluteFilePath = path.abspath(filePath)
 
     def load(self) -> Any:
-        with open(self.absoluteFilePath) as yamlFile:
+        with open(self.absoluteFilePath, 'r') as yamlFile:
             data = yaml.load(yamlFile, Loader=SafeLoader)
             return data
