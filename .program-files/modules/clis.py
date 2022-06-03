@@ -34,7 +34,7 @@ class CLI:
         if not self.isAuthenticated():
             print(
                 "User not authenticated to GitHub, run 'grc authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
-            return
+            return False
         # Refactor this later...
         parser = YAMLParser(absoluteFilePath)
         interpreter = YAMLInterpreter(parser)
