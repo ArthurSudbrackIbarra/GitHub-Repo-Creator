@@ -17,7 +17,7 @@ def main() -> None:
 @click.argument("access_token")
 def authenticate(access_token: str) -> None:
     global cli
-    cli.authenticate(access_token)
+    cli.authenticate(access_token, logs=True)
 
 
 # Template.
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     cli = CLI()
     tokenManager = TokenManager()
     token = tokenManager.readToken()
-    cli.authenticate(token)
+    cli.authenticate(token, logs=False)
     main.add_command(authenticate)
     main.add_command(template)
     main.add_command(create)

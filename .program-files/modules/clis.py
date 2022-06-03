@@ -12,12 +12,14 @@ class CLI:
     def isAuthenticated(self) -> bool:
         return self.githubAPI is not None
 
-    def authenticate(self, accessToken: str) -> bool:
+    # Take a look into this method.
+    def authenticate(self, accessToken: str, logs: bool = False) -> bool:
         try:
             if len(accessToken) > 0:
                 self.githubAPI = GitHubAPI(accessToken)
                 self.tokenManager.writeToken(accessToken)
-                print("\n[User successfully authenticated]\n")
+                if logs:
+                    print("\n[User successfully authenticated]\n")
             return False
         except Exception as error:
             print(error)
