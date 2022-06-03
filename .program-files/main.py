@@ -7,37 +7,32 @@ tokenManager = None
 
 
 # Main.
-
-
 @click.group(help="Automatically create GitHub repositories.")
 def main() -> None:
     pass
 
 
 # Set token.
-
-
 @click.command(name="authenticate")
 @click.argument("access_token")
 def authenticate(access_token: str) -> None:
+    global cli
     cli.authenticate(access_token)
 
 
 # Template.
-
-
 @click.command(name="template")
 @click.argument("template_type")
 def template(template_type: str) -> None:
+    global cli
     cli.template(template_type)
 
 
 # Create.
-
-
 @click.command(name="create")
 @click.argument("absolute_file_path")
 def create(absolute_file_path: str) -> None:
+    global cli
     cli.create(absolute_file_path)
 
 
@@ -45,7 +40,6 @@ if __name__ == "__main__":
     cli = CLI()
     tokenManager = TokenManager()
     token = tokenManager.readToken()
-    print(token)
     cli.authenticate(token)
     main.add_command(authenticate)
     main.add_command(template)

@@ -14,8 +14,10 @@ class CLI:
 
     def authenticate(self, accessToken: str) -> bool:
         try:
-            self.githubAPI = GitHubAPI(accessToken)
-            self.tokenManager.writeToken(accessToken)
+            if len(accessToken) > 0:
+                self.githubAPI = GitHubAPI(accessToken)
+                self.tokenManager.writeToken(accessToken)
+            return False
         except Exception as error:
             print(error)
             return False
