@@ -1,0 +1,10 @@
+name: "My-Repository"
+description: "This is my repository!"
+
+collaborators:
+    - collaborator:
+          name: "Felipe"
+          permission: "admin"
+    - collaborator:
+          name: "Miguel"
+          permission: "pull"
