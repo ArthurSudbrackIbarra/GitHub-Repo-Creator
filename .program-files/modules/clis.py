@@ -17,6 +17,7 @@ class CLI:
             if len(accessToken) > 0:
                 self.githubAPI = GitHubAPI(accessToken)
                 self.tokenManager.writeToken(accessToken)
+                print("\n[User successfully authenticated]\n")
             return False
         except Exception as error:
             print(error)
@@ -29,12 +30,11 @@ class CLI:
 
     # Create.
     def create(self, absoluteFilePath: str) -> bool:
-        print(f"Criar: {absoluteFilePath}")
-        exit(0)
-        # Para depois...
+        print(f"Create: {absoluteFilePath}")
         if not self.isAuthenticated():
             print(
                 "User not authenticated to GitHub, run 'grc authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+        # Refactor this later...
         parser = YAMLParser(absoluteFilePath)
         interpreter = YAMLInterpreter(parser)
         repoName = interpreter.getRepoName()
