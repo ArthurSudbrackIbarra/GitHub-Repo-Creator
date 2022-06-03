@@ -3,9 +3,6 @@ description: "This is my repository!"
 private: true
 
 collaborators:
-    - collaborator:
-          name: "Felipe"
-          permission: "admin"
-    - collaborator:
-          name: "Miguel"
-          permission: "pull"
+      - collaborator:
+              name: "brun0-znx"
+              permission: "admin"
