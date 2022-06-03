@@ -1,0 +1,27 @@
+@ECHO OFF
+
+SET COMMAND=%1
+SET PARAMETER=%2
+
+IF DEFINED PARAMETER GOTO EXECUTE_COMMAND
+
+ECHO No parameters passed.
+EXIT
+
+:EXECUTE_COMMAND
+IF %COMMAND%==create GOTO CREATE
+IF %COMMAND%==template GOTO TEMPLATE
+IF %COMMAND%==authenticate GOTO AUTHENTICATE
+
+:CREATE
+SET FILE_PATH=%CD%/%PARAMETER%
+python %~dp0.program-files/main.py %COMMAND% %FILE_PATH%
+EXIT
+
+:TEMPLATE
+python %~dp0.program-files/main.py %COMMAND% %PARAMETER%
+EXIT
+
+:AUTHENTICATE
+python %~dp0.program-files/main.py %COMMAND% %PARAMETER%
+EXIT

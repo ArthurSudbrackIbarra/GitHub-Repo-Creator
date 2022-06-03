@@ -1,8 +1,14 @@
+# The repository name.
 name: "My-Repository"
+
+# The repository description.
 description: "This is my repository!"
+
+# Whether the repository is private or not.
 private: true
 
+# Collaborators list.
 collaborators:
       - collaborator:
-              name: "brun0-znx"
-              permission: "admin"
+              name: "brun0-znx" # Collaborator name.
+              permission: "admin" # Collaborator permission (push/pull/admin)

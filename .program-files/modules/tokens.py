@@ -1,7 +1,7 @@
 from os import path
 import base64
 
-TOKEN_FILE_PATH = "config/TOKEN.txt"
+TOKEN_FILE_PATH = ".program-files/config/TOKEN.txt"
 
 
 class TokenManager:
