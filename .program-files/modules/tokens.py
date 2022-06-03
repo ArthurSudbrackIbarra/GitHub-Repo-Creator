@@ -7,17 +7,17 @@ TOKEN_FILE_PATH = path.abspath(path.join(path.dirname(
 
 class TokenManager:
     def __init__(self) -> None:
-        self.absoluteFilePath = TOKEN_FILE_PATH
+        pass
 
     def readToken(self) -> str:
-        with open(self.absoluteFilePath, 'r') as tokenFile:
+        with open(TOKEN_FILE_PATH, 'r') as tokenFile:
             base64Token = tokenFile.readline()
             base64Bytes = base64Token.encode("ascii")
             tokenBytes = base64.b64decode(base64Bytes)
             return tokenBytes.decode("ascii")
 
     def writeToken(self, accessToken: str) -> None:
-        with open(self.absoluteFilePath, 'w') as tokenFile:
+        with open(TOKEN_FILE_PATH, 'w') as tokenFile:
             tokenBytes = accessToken.encode("ascii")
             base64Bytes = base64.b64encode(tokenBytes)
             base64Token = base64Bytes.decode("ascii")
