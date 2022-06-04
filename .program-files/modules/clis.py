@@ -154,7 +154,7 @@ class CLI:
 
     # Delete.
     def delete(self, templateName: str) -> bool:
-        if templateName == "--all":
+        if templateName == "all":
             dirPath = path.abspath(
                 path.join(path.dirname(__file__), "../../templates"))
             FileDeleter.deleteAllFromFolder(dirPath)
