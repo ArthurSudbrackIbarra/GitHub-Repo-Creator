@@ -6,9 +6,6 @@ from modules.coloring import Colors
 cli = None
 tokenManager = None
 
-GREEN = Colors.GREEN
-RESET = Colors.RESET
-
 
 # Main.
 @click.group(help="Automatically create GitHub repositories.")
@@ -22,16 +19,24 @@ def main() -> None:
 def authenticate(access_token: str) -> None:
     global cli
     cli.authenticate(access_token, logs=True)
+    print("")
 
 
-# Template.
+# Save.
 @click.command(name="save")
 @click.argument("absolute_file_path")
 def save(absolute_file_path: str) -> None:
     global cli
-    saved = cli.save(absolute_file_path)
-    if saved:
-        print(f"\n{GREEN}[SUCCESS]{RESET} File saved!\n")
+    cli.save(absolute_file_path)
+    print("")
+
+
+# Choose.
+@click.command(name="choose")
+def choose() -> None:
+    global cli
+    cli.choose()
+    print("")
 
 
 # Create.
@@ -39,13 +44,8 @@ def save(absolute_file_path: str) -> None:
 @click.argument("absolute_file_path")
 def create(absolute_file_path: str) -> None:
     global cli
-    created = cli.create(absolute_file_path)
-    if created:
-        print(f"\n{GREEN}[SUCCESS]{RESET} Repository created with success!\n")
-
-
-# Choose
-# List
+    cli.create(absolute_file_path)
+    print("")
 
 
 if __name__ == "__main__":
@@ -55,5 +55,6 @@ if __name__ == "__main__":
     cli.authenticate(token, logs=False)
     main.add_command(authenticate)
     main.add_command(save)
+    main.add_command(choose)
     main.add_command(create)
     main()

@@ -3,7 +3,7 @@ from .parsers import YAMLParser
 from .interpreters import YAMLInterpreter
 from .tokens import TokenManager
 from .apis import GitHubAPI
-from .file_copiers import FileCopier
+from .file_managers import FileCopier, FileChooser
 from .terminal_commands import CommandRunner
 from .coloring import Colors
 
@@ -29,7 +29,7 @@ class CLI:
                 self.tokenManager.writeToken(accessToken)
                 if logs:
                     print(
-                        f"\n{GREEN}[SUCCESS]{RESET} User authenticated.\n")
+                        f"\n{GREEN}[SUCCESS]{RESET} User authenticated.")
                 return True
             return False
         except Exception as error:
@@ -38,23 +38,47 @@ class CLI:
             self.githubAPI = None
             return False
 
-    # Template.
+    # Save.
     def save(self, absoluteFilePath: str) -> bool:
         if not absoluteFilePath.endswith(".yaml"):
             print(
-                f"\n{RED}[ERROR]{RESET} Only .yaml files can be saved to your templates.\n")
+                f"\n{RED}[ERROR]{RESET} Only .yaml files can be saved to your templates.")
             return False
         copier = FileCopier(absoluteFilePath)
         templatesPath = path.abspath(
-            path.join(path.dirname(__file__), '../../templates'))
+            path.join(path.dirname(__file__), "../../templates"))
         copier.copyTo(templatesPath)
+        print(f"\n{GREEN}[SUCCESS]{RESET} File saved!")
         return True
+
+    # Choose.
+    def choose(self) -> None:
+        templatesPath = path.abspath(
+            path.join(path.dirname(__file__), "../../templates"))
+        chooser = FileChooser(templatesPath)
+        print("\n" + ("=" * 40))
+        files = chooser.getFiles()
+        for index, file in enumerate(files):
+            print(f"{CYAN}[{index}]{RESET} - {file}")
+        print("=" * 40)
+        option = -1
+        try:
+            option = int(input("\nChoose which file to use: "))
+        except:
+            print(f"\n{RED}[ERROR]{RESET} Option must be a number.")
+            return
+        filePath = chooser.getFilePath(option)
+        if filePath is None:
+            print(f"\n{RED}[ERROR]{RESET} Invalid choice.")
+            return
+        # Calling the create command.
+        self.create(filePath)
 
     # Create.
     def create(self, absoluteFilePath: str) -> bool:
         if not self.isAuthenticated():
             print(
-                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.\n")
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
         parser = YAMLParser(absoluteFilePath)
         yaml = YAMLInterpreter(parser)
@@ -77,6 +101,8 @@ class CLI:
                 description=repoDescription,
                 private=private
             )
+            print(
+                f"\n{GREEN}[SUCCESS]{RESET} Repository created with success!")
         except Exception as error:
             print(error)
             return False
