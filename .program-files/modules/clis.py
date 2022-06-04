@@ -56,11 +56,10 @@ class CLI:
         templatesPath = path.abspath(
             path.join(path.dirname(__file__), "../../templates"))
         chooser = FileChooser(templatesPath)
-        print("\n" + ("=" * 40))
+        print("")
         files = chooser.getFiles()
         for index, file in enumerate(files):
             print(f"{CYAN}[{index}]{RESET} - {file}")
-        print("=" * 40)
         option = -1
         try:
             option = int(input("\nChoose which file to use: "))
