@@ -4,9 +4,10 @@ from github import Github
 class GitHubAPI:
     def __init__(self, accessToken: str) -> None:
         try:
-            self.github = Github(accessToken)
-        except Exception as error:
-            print(error)
+            self.github = Github(accessToken, verify=True)
+            # Will raise an error if the access token is invalid.
+            self.github.get_user().get_repos().totalCount
+        except Exception:
             raise Exception("Invalid access token.")
 
     def createRepo(self, name: str, description: str, private: bool) -> bool:
@@ -15,11 +16,12 @@ class GitHubAPI:
             user.create_repo(
                 name=name,
                 description=description,
-                private=private
+                private=private,
+                auto_init=True
             )
         except Exception as error:
             print(error)
-            raise Exception("Unnable to create repository!")
+            raise Exception(f"Unnable to create repository '{name}'.")
 
     def addCollaborator(self, repoName: str, collaboratorName: str, permission: str) -> bool:
         user = self.github.get_user()
@@ -31,4 +33,15 @@ class GitHubAPI:
             )
         except Exception as error:
             print(error)
-            raise Exception("Unnable to add collaborator(s) to repository.")
+            raise Exception(
+                f"Unnable to add collaborator '{collaboratorName}' to repository.")
+
+    def getRepoCloneURL(self, repoName: str) -> str:
+        user = self.github.get_user()
+        try:
+            repo = user.get_repo(repoName)
+            return repo.clone_url
+        except Exception as error:
+            print(error)
+            raise Exception(
+                f"Unnable to get '{repoName}' repository clone URL.")

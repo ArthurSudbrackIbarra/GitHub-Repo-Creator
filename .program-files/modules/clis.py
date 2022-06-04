@@ -2,6 +2,7 @@ from .parsers import YAMLParser
 from .interpreters import YAMLInterpreter
 from .tokens import TokenManager
 from .apis import GitHubAPI
+from .terminal_commands import CommandRunner
 
 
 class CLI:
@@ -19,10 +20,13 @@ class CLI:
                 self.githubAPI = GitHubAPI(accessToken)
                 self.tokenManager.writeToken(accessToken)
                 if logs:
-                    print("\n[User successfully authenticated]\n")
+                    print("\nUser successfully authenticated.\n")
+                return True
             return False
         except Exception as error:
-            print(error)
+            if logs:
+                print(error)
+            self.githubAPI = None
             return False
 
     # Template.
@@ -32,31 +36,56 @@ class CLI:
 
     # Create.
     def create(self, absoluteFilePath: str) -> bool:
-        print(f"Create: {absoluteFilePath}")
         if not self.isAuthenticated():
             print(
                 "User not authenticated to GitHub, run 'grc authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
-        # Refactor this later...
         parser = YAMLParser(absoluteFilePath)
-        interpreter = YAMLInterpreter(parser)
-        repoName = interpreter.getRepoName()
-        repoDescription = interpreter.getRepoDescription()
-        private = interpreter.getPrivate()
-        if not (repoName is None or repoDescription is None or private is None):
+        yaml = YAMLInterpreter(parser)
+        repoName = yaml.repoName()
+        repoDescription = yaml.repoDescription() or ""
+        private = yaml.private()
+        autoClone = yaml.autoClone()
+        if repoName is None:
+            print("Error. The repository name was not specified.")
+            return False
+        if private is None:
+            private = True
+        if autoClone is None:
+            autoClone = True
+        # Creating repository.
+        try:
             self.githubAPI.createRepo(
                 name=repoName,
                 description=repoDescription,
                 private=private
             )
-            collaboratorsCount = interpreter.getCollaboratorsCount()
-            for i in range(collaboratorsCount):
-                collaboratorName = interpreter.getCollaboratorName(i)
-                collaboratorPermission = interpreter.getCollaboratorPermission(
-                    i)
-                if not (collaboratorName is None or collaboratorPermission is None):
+        except Exception as error:
+            print(error)
+            return False
+        # Cloning repository.
+        if autoClone:
+            try:
+                cloneURL = self.githubAPI.getRepoCloneURL(repoName)
+                runner = CommandRunner()
+                runner.gitClone(cloneURL)
+            except Exception as error:
+                print(error)
+        # Collaborators.
+        collaboratorsCount = yaml.collaboratorsCount()
+        for i in range(collaboratorsCount):
+            collaboratorName = yaml.collaboratorName(i)
+            collaboratorPermission = yaml.collaboratorPermission(i) or "admin"
+            if collaboratorName is None:
+                print(
+                    f"No name specified for collaborator {i}, cannot add collaborator.")
+            else:
+                try:
                     self.githubAPI.addCollaborator(
                         repoName=repoName,
                         collaboratorName=collaboratorName,
                         permission=collaboratorPermission
                     )
+                except Exception as error:
+                    print(error)
+        return True

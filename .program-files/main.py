@@ -33,7 +33,9 @@ def template(template_type: str) -> None:
 @click.argument("absolute_file_path")
 def create(absolute_file_path: str) -> None:
     global cli
-    cli.create(absolute_file_path)
+    created = cli.create(absolute_file_path)
+    if created:
+        print("Repository created with success!")
 
 
 if __name__ == "__main__":

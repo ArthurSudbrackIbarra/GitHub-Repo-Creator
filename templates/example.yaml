@@ -1,14 +1,20 @@
-# The repository name.
+# The repository name. (Required).
 name: "My-Repository"
 
-# The repository description.
+# The repository description. (Optional).
 description: "This is my repository!"
 
-# Whether the repository is private or not.
+# Whether the repository is private or not. (Optional, default is true).
 private: true
 
-# Collaborators list.
+# Whether the repository should be cloned to your machine after created or not. (Optional, default is true).
+autoClone: true
+
+# Collaborators list (Optional).
 collaborators:
-      - collaborator:
-              name: "brun0-znx" # Collaborator name.
-              permission: "admin" # Collaborator permission (push/pull/admin)
+        - collaborator:
+                  name: "brun0-znx" # Collaborator name. (Required).
+                  permission: "admin" # Collaborator permission -> push/pull/admin. (Optional, default is admin).
+        - collaborator:
+                  name: "ieuheiuehisuehiusehisehiuseiseisiebsieianjeol"
+                  permission: "push"

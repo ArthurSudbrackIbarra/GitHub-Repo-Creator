@@ -3,6 +3,7 @@ from .parsers import YAMLParser
 REPO_NAME = "name"
 REPO_DESCRIPTION = "description"
 PRIVATE = "private"
+AUTO_CLONE = "autoClone"
 COLLABORATORS = "collaborators"
 COLLABORATOR = "collaborator"
 COLLABORATOR_NAME = "name"
@@ -12,29 +13,33 @@ COLLABORATOR_PERMISSION = "permission"
 class YAMLInterpreter:
     def __init__(self, parser: YAMLParser) -> None:
         self.data = parser.load()
-        # print(self.data)
 
-    def getRepoName(self) -> str:
+    def repoName(self) -> str:
         if REPO_NAME in self.data:
             return self.data[REPO_NAME]
         return None
 
-    def getRepoDescription(self) -> str:
+    def repoDescription(self) -> str:
         if REPO_DESCRIPTION in self.data:
             return self.data[REPO_DESCRIPTION]
         return None
 
-    def getPrivate(self) -> str:
+    def private(self) -> bool:
         if PRIVATE in self.data:
             return self.data[PRIVATE]
         return None
 
-    def getCollaboratorsCount(self) -> int:
+    def autoClone(self) -> bool:
+        if AUTO_CLONE in self.data:
+            return self.data[AUTO_CLONE]
+        return None
+
+    def collaboratorsCount(self) -> int:
         if COLLABORATORS in self.data:
             return len(self.data[COLLABORATORS])
         return 0
 
-    def getCollaboratorName(self, index: int) -> str:
+    def collaboratorName(self, index: int) -> str:
         if COLLABORATORS in self.data:
             collaborators = self.data[COLLABORATORS]
             if len(collaborators) >= index + 1:
@@ -46,7 +51,7 @@ class YAMLInterpreter:
                 return None
             return None
 
-    def getCollaboratorPermission(self, index: int) -> str:
+    def collaboratorPermission(self, index: int) -> str:
         if COLLABORATORS in self.data:
             collaborators = self.data[COLLABORATORS]
             if len(collaborators) >= index + 1:
