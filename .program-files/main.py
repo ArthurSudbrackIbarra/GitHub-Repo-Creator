@@ -1,7 +1,6 @@
 import click
 from modules.tokens import TokenManager
 from modules.clis import CLI
-from modules.coloring import Colors
 
 cli = None
 tokenManager = None

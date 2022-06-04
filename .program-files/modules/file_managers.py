@@ -1,4 +1,4 @@
-from os import path, listdir, remove
+from os import path, listdir, remove, unlink
 import shutil
 
 
@@ -27,12 +27,22 @@ class FileChooser:
 
 
 class FileDeleter:
-    def __init__(self, filePath: str) -> None:
-        self.absoluteFilePath = path.abspath(filePath)
-
-    def delete(self) -> bool:
+    @staticmethod
+    def deleteFile(absoluteFilePath) -> bool:
         try:
-            remove(self.absoluteFilePath)
+            remove(absoluteFilePath)
             return True
         except:
             return False
+
+    @staticmethod
+    def deleteAllFromFolder(absoluteDirPath) -> None:
+        for filename in listdir(absoluteDirPath):
+            filePath = path.join(absoluteDirPath, filename)
+            try:
+                if path.isfile(filePath) or path.islink(filePath):
+                    unlink(filePath)
+                elif path.isdir(filePath):
+                    shutil.rmtree(filePath)
+            except:
+                pass

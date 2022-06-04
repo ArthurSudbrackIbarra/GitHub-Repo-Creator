@@ -153,18 +153,24 @@ class CLI:
         return True
 
     # Delete.
-
     def delete(self, templateName: str) -> bool:
-        if not templateName.endswith(".yaml"):
-            templateName += ".yaml"
-        filePath = path.abspath(
-            path.join(path.dirname(__file__), f"../../templates/{templateName}"))
-        deleter = FileDeleter(filePath)
-        deleted = deleter.delete()
-        if deleted:
+        if templateName == "--all":
+            dirPath = path.abspath(
+                path.join(path.dirname(__file__), "../../templates"))
+            FileDeleter.deleteAllFromFolder(dirPath)
             print(
-                f"\n{GREEN}[SUCCESS]{RESET} Template deleted with success!")
+                f"\n{GREEN}[SUCCESS]{RESET} Templates cleared!")
             return True
-        print(
-            f"\n{RED}[ERROR]{RESET} Unnable to delete template, make sure the file exists.")
-        return False
+        else:
+            if not templateName.endswith(".yaml"):
+                templateName += ".yaml"
+            filePath = path.abspath(
+                path.join(path.dirname(__file__), f"../../templates/{templateName}"))
+            deleted = FileDeleter.deleteFile(filePath)
+            if deleted:
+                print(
+                    f"\n{GREEN}[SUCCESS]{RESET} Template deleted with success!")
+                return True
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to delete template, make sure the file exists.")
+            return False
