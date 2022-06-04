@@ -71,19 +71,33 @@ class CLI:
         if filePath is None:
             print(f"\n{RED}[ERROR]{RESET} Invalid choice.")
             return
-        # Calling the create command.
-        self.create(filePath)
+        print("\nWould you like to change the repository name and/or description?")
+        print(f"\n{GREEN}[Y/y]{RESET} - Yes, I want to change.")
+        print(
+            f"{RED}[Other]{RESET} - No, keep the name/description from the template file.\n")
+        change = input()
+        if change == "Y" or change == "y":
+            repoName = input("\nRepository name: ")
+            repoDescription = input("Repository description: ")
+            # Calling the create command with optional arguments.
+            self.create(filePath, repoName=repoName,
+                        repoDescription=repoDescription)
+        else:
+            # Calling the create command.
+            self.create(filePath)
 
     # Create.
-    def create(self, absoluteFilePath: str) -> bool:
+    def create(self, absoluteFilePath: str, repoName: str = None, repoDescription: str = None) -> bool:
         if not self.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
         parser = YAMLParser(absoluteFilePath)
         yaml = YAMLInterpreter(parser)
-        repoName = yaml.repoName()
-        repoDescription = yaml.repoDescription() or ""
+        if repoName is None:
+            repoName = yaml.repoName()
+        if repoDescription is None:
+            repoDescription = yaml.repoDescription() or ""
         private = yaml.private()
         autoClone = yaml.autoClone()
         if repoName is None:
