@@ -1,4 +1,8 @@
 from github import Github
+from .coloring import Colors
+
+RED = Colors.RED
+RESET = Colors.RESET
 
 
 class GitHubAPI:
@@ -8,7 +12,7 @@ class GitHubAPI:
             # Will raise an error if the access token is invalid.
             self.github.get_user().get_repos().totalCount
         except Exception:
-            raise Exception("Invalid access token.")
+            raise Exception(f"\n{RED}[ERROR]{RESET} Invalid access token.")
 
     def createRepo(self, name: str, description: str, private: bool) -> bool:
         user = self.github.get_user()
@@ -21,7 +25,8 @@ class GitHubAPI:
             )
         except Exception as error:
             print(error)
-            raise Exception(f"Unnable to create repository '{name}'.")
+            raise Exception(
+                f"\n{RED}[ERROR]{RESET} Unnable to create repository '{name}'.")
 
     def addCollaborator(self, repoName: str, collaboratorName: str, permission: str) -> bool:
         user = self.github.get_user()
@@ -34,7 +39,7 @@ class GitHubAPI:
         except Exception as error:
             print(error)
             raise Exception(
-                f"Unnable to add collaborator '{collaboratorName}' to repository.")
+                f"\n{RED}[ERROR]{RESET} Unnable to add collaborator '{collaboratorName}' to repository.")
 
     def getRepoCloneURL(self, repoName: str) -> str:
         user = self.github.get_user()
@@ -44,4 +49,4 @@ class GitHubAPI:
         except Exception as error:
             print(error)
             raise Exception(
-                f"Unnable to get '{repoName}' repository clone URL.")
+                f"\n{RED}[ERROR]{RESET} Unnable to get '{repoName}' repository clone URL.")

@@ -3,6 +3,13 @@ from .interpreters import YAMLInterpreter
 from .tokens import TokenManager
 from .apis import GitHubAPI
 from .terminal_commands import CommandRunner
+from .coloring import Colors
+
+GREEN = Colors.GREEN
+YELLOW = Colors.YELLOW
+RED = Colors.RED
+CYAN = Colors.CYAN
+RESET = Colors.RESET
 
 
 class CLI:
@@ -20,7 +27,8 @@ class CLI:
                 self.githubAPI = GitHubAPI(accessToken)
                 self.tokenManager.writeToken(accessToken)
                 if logs:
-                    print("\nUser successfully authenticated.\n")
+                    print(
+                        f"\n{GREEN}[SUCCESS]{RESET} User authenticated.\n")
                 return True
             return False
         except Exception as error:
@@ -38,7 +46,7 @@ class CLI:
     def create(self, absoluteFilePath: str) -> bool:
         if not self.isAuthenticated():
             print(
-                "User not authenticated to GitHub, run 'grc authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.\n")
             return False
         parser = YAMLParser(absoluteFilePath)
         yaml = YAMLInterpreter(parser)
@@ -47,7 +55,8 @@ class CLI:
         private = yaml.private()
         autoClone = yaml.autoClone()
         if repoName is None:
-            print("Error. The repository name was not specified.")
+            print(
+                f"\n{RED}[ERROR]{RESET}. The repository name was not specified.")
             return False
         if private is None:
             private = True
@@ -78,7 +87,7 @@ class CLI:
             collaboratorPermission = yaml.collaboratorPermission(i) or "admin"
             if collaboratorName is None:
                 print(
-                    f"No name specified for collaborator {i}, cannot add collaborator.")
+                    f"\n{YELLOW}[WARN]{RESET} No name specified for collaborator {i}, cannot add collaborator.")
             else:
                 try:
                     self.githubAPI.addCollaborator(

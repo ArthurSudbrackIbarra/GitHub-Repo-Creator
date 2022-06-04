@@ -6,4 +6,6 @@ class CommandRunner:
         pass
 
     def gitClone(self, cloneURL: str) -> None:
+        print()
         system(f"git clone {cloneURL}")
+        print("\n")

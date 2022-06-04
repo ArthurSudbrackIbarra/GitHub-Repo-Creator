@@ -1,9 +1,13 @@
 import click
 from modules.tokens import TokenManager
 from modules.clis import CLI
+from modules.coloring import Colors
 
 cli = None
 tokenManager = None
+
+GREEN = Colors.GREEN
+RESET = Colors.RESET
 
 
 # Main.
@@ -35,7 +39,7 @@ def create(absolute_file_path: str) -> None:
     global cli
     created = cli.create(absolute_file_path)
     if created:
-        print("Repository created with success!")
+        print(f"\n{GREEN}[SUCCESS]{RESET} Repository created with success!\n")
 
 
 if __name__ == "__main__":
