@@ -58,6 +58,10 @@ class CLI:
         chooser = FileChooser(templatesPath)
         print("")
         files = chooser.getFiles()
+        if len(files) <= 0:
+            print(
+                f"No files to choose, create templates by running {CYAN}grc{RESET} save <PATH_TO_YOUR_YAML>.")
+            return
         for index, file in enumerate(files):
             print(f"{CYAN}[{index}]{RESET} - {file}")
         option = -1
