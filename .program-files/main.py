@@ -25,11 +25,13 @@ def authenticate(access_token: str) -> None:
 
 
 # Template.
-@click.command(name="template")
-@click.argument("template_type")
-def template(template_type: str) -> None:
+@click.command(name="save")
+@click.argument("absolute_file_path")
+def save(absolute_file_path: str) -> None:
     global cli
-    cli.template(template_type)
+    saved = cli.save(absolute_file_path)
+    if saved:
+        print(f"\n{GREEN}[SUCCESS]{RESET} File saved!\n")
 
 
 # Create.
@@ -42,12 +44,16 @@ def create(absolute_file_path: str) -> None:
         print(f"\n{GREEN}[SUCCESS]{RESET} Repository created with success!\n")
 
 
+# Choose
+# List
+
+
 if __name__ == "__main__":
     cli = CLI()
     tokenManager = TokenManager()
     token = tokenManager.readToken()
     cli.authenticate(token, logs=False)
     main.add_command(authenticate)
-    main.add_command(template)
+    main.add_command(save)
     main.add_command(create)
     main()

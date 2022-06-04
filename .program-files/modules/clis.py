@@ -1,7 +1,9 @@
+from os import path
 from .parsers import YAMLParser
 from .interpreters import YAMLInterpreter
 from .tokens import TokenManager
 from .apis import GitHubAPI
+from .file_copiers import FileCopier
 from .terminal_commands import CommandRunner
 from .coloring import Colors
 
@@ -20,7 +22,6 @@ class CLI:
     def isAuthenticated(self) -> bool:
         return self.githubAPI is not None
 
-    # Take a look into this method.
     def authenticate(self, accessToken: str, logs: bool = False) -> bool:
         try:
             if len(accessToken) > 0:
@@ -38,8 +39,15 @@ class CLI:
             return False
 
     # Template.
-    def template(self, templateType: str) -> bool:
-        print(f"Template: {templateType}")
+    def save(self, absoluteFilePath: str) -> bool:
+        if not absoluteFilePath.endswith(".yaml"):
+            print(
+                f"\n{RED}[ERROR]{RESET} Only .yaml files can be saved to your templates.\n")
+            return False
+        copier = FileCopier(absoluteFilePath)
+        templatesPath = path.abspath(
+            path.join(path.dirname(__file__), '../../templates'))
+        copier.copyTo(templatesPath)
         return True
 
     # Create.
