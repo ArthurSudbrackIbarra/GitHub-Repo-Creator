@@ -1,0 +1,14 @@
+name: "My-Repository"
+description: "This is my repository!"
+private: true
+
+# This configuration will make the repository NOT get auto-cloned after its creation.
+autoClone: false
+
+collaborators:
+  - collaborator:
+      name: "ArthurManatee_33"
+      permission: "admin"
+  - collaborator:
+      name: "PikachuMan123"
+      permission: "push"

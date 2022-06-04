@@ -12,9 +12,9 @@ autoClone: true
 
 # Collaborators list (Optional).
 collaborators:
-        - collaborator:
-                  name: "brun0-znx" # Collaborator name. (Required).
-                  permission: "admin" # Collaborator permission -> push/pull/admin. (Optional, default is admin).
-        - collaborator:
-                  name: "ieuheiuehisuehiusehisehiuseiseisiebsieianjeol"
-                  permission: "push"
+  - collaborator:
+      name: "ArthurManatee_33" # Collaborator name. (Required).
+      permission: "admin" # Collaborator permission -> push/pull/admin. (Optional, default is admin).
+  - collaborator:
+      name: "PikachuMan123"
+      permission: "push"
