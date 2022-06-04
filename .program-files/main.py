@@ -48,6 +48,15 @@ def create(absolute_file_path: str) -> None:
     print("")
 
 
+# Delete.
+@click.command(name="delete")
+@click.argument("template_name")
+def delete(template_name: str) -> None:
+    global cli
+    cli.delete(template_name)
+    print("")
+
+
 if __name__ == "__main__":
     cli = CLI()
     tokenManager = TokenManager()
@@ -57,4 +66,5 @@ if __name__ == "__main__":
     main.add_command(save)
     main.add_command(choose)
     main.add_command(create)
+    main.add_command(delete)
     main()

@@ -1,5 +1,4 @@
-from os import path
-from os import listdir
+from os import path, listdir, remove
 import shutil
 
 
@@ -25,3 +24,15 @@ class FileChooser:
         if len(files) >= index + 1:
             return path.join(self.absoluteDirPath, files[index])
         return None
+
+
+class FileDeleter:
+    def __init__(self, filePath: str) -> None:
+        self.absoluteFilePath = path.abspath(filePath)
+
+    def delete(self) -> bool:
+        try:
+            remove(self.absoluteFilePath)
+            return True
+        except:
+            return False

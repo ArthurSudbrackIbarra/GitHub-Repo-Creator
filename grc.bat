@@ -19,6 +19,7 @@ GOTO NO_PARAMETER_COMMANDS
 IF %COMMAND%==create GOTO CREATE
 IF %COMMAND%==save GOTO SAVE
 IF %COMMAND%==authenticate GOTO AUTHENTICATE
+IF %COMMAND%==delete GOTO AUTHENTICATE
 EXIT
 
 :CREATE
@@ -32,6 +33,10 @@ python %~dp0.program-files/main.py %COMMAND% %FILE_PATH%
 EXIT
 
 :AUTHENTICATE
+python %~dp0.program-files/main.py %COMMAND% %PARAMETER%
+EXIT
+
+:DELETE
 python %~dp0.program-files/main.py %COMMAND% %PARAMETER%
 EXIT
 

@@ -3,7 +3,7 @@ from .parsers import YAMLParser
 from .interpreters import YAMLInterpreter
 from .tokens import TokenManager
 from .apis import GitHubAPI
-from .file_managers import FileCopier, FileChooser
+from .file_managers import FileCopier, FileChooser, FileDeleter
 from .terminal_commands import CommandRunner
 from .coloring import Colors
 
@@ -151,3 +151,20 @@ class CLI:
                 except Exception as error:
                     print(error)
         return True
+
+    # Delete.
+
+    def delete(self, templateName: str) -> bool:
+        if not templateName.endswith(".yaml"):
+            templateName += ".yaml"
+        filePath = path.abspath(
+            path.join(path.dirname(__file__), f"../../templates/{templateName}"))
+        deleter = FileDeleter(filePath)
+        deleted = deleter.delete()
+        if deleted:
+            print(
+                f"\n{GREEN}[SUCCESS]{RESET} Template deleted with success!")
+            return True
+        print(
+            f"\n{RED}[ERROR]{RESET} Unnable to delete template, make sure the file exists.")
+        return False
