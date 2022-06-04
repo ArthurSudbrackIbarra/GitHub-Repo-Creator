@@ -111,7 +111,13 @@ class CLI:
             try:
                 cloneURL = self.githubAPI.getRepoCloneURL(repoName)
                 runner = CommandRunner()
-                runner.gitClone(cloneURL)
+                status = runner.gitClone(cloneURL)
+                if status == 0:
+                    print(
+                        f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
+                else:
+                    print(
+                        f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
             except Exception as error:
                 print(error)
         # Collaborators.

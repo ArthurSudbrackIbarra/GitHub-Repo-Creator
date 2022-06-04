@@ -5,7 +5,6 @@ class CommandRunner:
     def __init__(self) -> None:
         pass
 
-    def gitClone(self, cloneURL: str) -> None:
+    def gitClone(self, cloneURL: str) -> int:
         print()
-        system(f"git clone {cloneURL}")
-        print("\n")
+        return system(f"git clone {cloneURL}")
