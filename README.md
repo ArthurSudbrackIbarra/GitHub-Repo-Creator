@@ -4,6 +4,21 @@ GRC is a tool to automatically create GitHub repositories using YAML templates. 
 
 ## Installation
 
+1. Install [Python 3](https://www.python.org/downloads/).
+
+2. Install the necessary dependencies using pip:
+
+```sh
+# In the root of the project:
+pip install -r .\.program-files\requirements.txt
+```
+
+### Windows-Specific Steps
+
+To be done...
+
+### Linux-Specific Steps
+
 To be done...
 
 ## Commands
