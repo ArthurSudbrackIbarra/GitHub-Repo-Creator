@@ -12,6 +12,8 @@ In this section, all the possible GRC commands will be listed and explained.
 
 ### Authenticate
 
+![Authenticate](https://user-images.githubusercontent.com/69170322/172030151-00f09557-7129-4fc6-ab73-7b29078e8147.png)
+
 The 'authenticate' command is used so you can authenticate to GitHub and create repositories in your account. This is the **first command** you need to execute in order to start using GRC.
 
 ```sh
@@ -27,6 +29,8 @@ Before running the command, you will need to generate a personal access token in
 ### Create
 
 The 'create' command creates a repository for you based on a YAML file that is passed as a parameter. The YAML file contains information about the repository you want to create and must follow the patterns defined in the [templates](https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/tree/main/templates).
+
+![Create](https://user-images.githubusercontent.com/69170322/172030355-cf5c3e39-4753-4936-9f26-5c8b8a0799db.png)
 
 **File:** my-template.yaml
 
@@ -46,10 +50,10 @@ autoClone: true
 # Collaborators list (Optional).
 collaborators:
   - collaborator:
-      name: "ArthurManatee_33" # Collaborator name. (Required).
+      name: "brun0-znx" # Collaborator name. (Required).
       permission: "admin" # Collaborator permission -> push/pull/admin. (Optional, default is admin).
   - collaborator:
-      name: "PikachuMan123"
+      name: "Miguel-de-Castro"
       permission: "push"
 ```
 
@@ -65,6 +69,8 @@ grc create ./my-template.yaml
 
 The 'save' command is used to save a YAML file to your templates, so that you can later use it to create another repository with the same configurations but with a different repository name/description without having to specify the file path again.
 
+![Save](https://user-images.githubusercontent.com/69170322/172030218-a11db610-6de7-40b2-93e3-0466d31677b6.png)
+
 ```sh
 # Usage:
 grc save <PATH_TO_YOUR_YAML_FILE>
@@ -77,6 +83,8 @@ grc save ./my-template.yaml
 
 The 'choose' command lets you choose a file from your saved templates to create a repository based on it. When selecting a template, you have the option to use a different repository name/description than the one specified in the template file.
 
+![Choose](https://user-images.githubusercontent.com/69170322/172030272-9f62a9a9-a30e-48bc-8356-ec83b4743737.png)
+
 ```sh
 # Usage:
 grc choose
@@ -85,6 +93,8 @@ grc choose
 ### Delete
 
 The 'delete' command is used to delete a template from your saved templates.
+
+![Delete](https://user-images.githubusercontent.com/69170322/172030289-60f9be26-2575-4e13-a674-ba1519709beb.png)
 
 ```sh
 # Usage:
