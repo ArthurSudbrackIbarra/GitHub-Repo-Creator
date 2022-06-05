@@ -13,15 +13,12 @@ if [ -z "$COMMAND" ]; then
 fi
 
 if [ -z "$PARAMETER" ]; then
-    if [ $COMMAND = "choose" ]; then
-        python $SCRIPT_DIR/.program-files/main.py $COMMAND
-    fi
+    python $SCRIPT_DIR/.program-files/main.py $COMMAND
 else
     if [ $COMMAND = "create" ] || [ $COMMAND = "save" ]; then
         FILE_PATH=$PWD/$PARAMETER
         python $SCRIPT_DIR/.program-files/main.py $COMMAND $FILE_PATH
-    fi
-    if [ $COMMAND = "authenticate" ] || [ $COMMAND = "delete" ]; then
+    else
         python $SCRIPT_DIR/.program-files/main.py $COMMAND $PARAMETER
     fi
 fi

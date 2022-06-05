@@ -6,15 +6,13 @@ if ($COMMAND -eq $null) {
 }
 
 if ($PARAMETER -eq $null) {
-    if ($COMMAND -eq "choose") {
-        python $PSScriptRoot\.program-files\main.py $COMMAND
-    }
+    python $PSScriptRoot\.program-files\main.py $COMMAND
 } else {
     if ($COMMAND -eq "create" -or $COMMAND -eq "save") {
         $FILE_PATH = "$PWD\$PARAMETER"
         python $PSScriptRoot\.program-files\main.py $COMMAND $FILE_PATH
     }
-    if ($COMMAND -eq "authenticate" -or $COMMAND -eq "delete") {
+    else {
         python $PSScriptRoot\.program-files\main.py $COMMAND $PARAMETER
     }
 }
