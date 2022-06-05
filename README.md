@@ -2,35 +2,6 @@
 
 GRC is a tool to automatically create GitHub repositories using YAML templates. It comes with a CLI (Command Line Interface) that you can use to execute commands.
 
-## Installation
-
-1. Install [Python 3](https://www.python.org/downloads/).
-
-2. Install the necessary dependencies using pip:
-
-```sh
-# In the root of the project:
-pip install -r .\.program-files\requirements.txt
-```
-
-### Windows-Specific Steps
-
-3. Add the project directory to your path:
-
-![Path](https://user-images.githubusercontent.com/69170322/172066052-4e9df0dc-52ee-41cf-82bd-d41be6b64577.png)
-
-Copy the project directory path, as shown in the image above, and follow [this short tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
-
-### Linux-Specific Steps
-
-3. Run the linux-setup.sh script:
-
-```sh
-# In the root of the project:
-chmod +x linux-setup.sh # First command.
-bash linux-setup.sh # Second command.
-```
-
 ## Commands
 
 In this section, all the possible GRC commands will be listed and explained.
@@ -130,4 +101,33 @@ grc delete my-template # Or...
 grc delete my-template.yaml
 
 grc delete all # Will delete all your templates.
+```
+
+## Installation
+
+1. Install [Python 3](https://www.python.org/downloads/).
+
+2. Install the necessary dependencies using pip:
+
+```sh
+# In the root of the project:
+pip install -r .\.program-files\requirements.txt
+```
+
+### Windows-Specific Steps
+
+3. Add the project directory to your path:
+
+![Path](https://user-images.githubusercontent.com/69170322/172066052-4e9df0dc-52ee-41cf-82bd-d41be6b64577.png)
+
+Copy the project directory path, as shown in the image above, and follow [this short tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
+
+### Linux-Specific Steps
+
+3. Run the linux-setup.sh script:
+
+```sh
+# In the root of the project:
+chmod +x linux-setup.sh # First command.
+bash linux-setup.sh # Second command.
 ```
