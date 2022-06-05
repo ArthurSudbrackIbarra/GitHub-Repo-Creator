@@ -103,9 +103,18 @@ grc delete my-template.yaml
 grc delete all # Will delete all your templates.
 ```
 
+## Requirements
+
+- [Python 3](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/downloads)
+
 ## Installation
 
-1. Install [Python 3](https://www.python.org/downloads/).
+1. Clone this repository:
+
+```sh
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git
+```
 
 2. Install the necessary dependencies using pip:
 
