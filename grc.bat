@@ -46,4 +46,3 @@ EXIT
 
 :CHOOSE
 python %~dp0.program-files/main.py %COMMAND%
-EXIT

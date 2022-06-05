@@ -21,6 +21,8 @@ To be done...
 
 To be done...
 
+chmod u+x script.sh
+
 ## Commands
 
 In this section, all the possible GRC commands will be listed and explained.
