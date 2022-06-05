@@ -17,6 +17,10 @@ pip install -r .\.program-files\requirements.txt
 
 3. Add the project directory to your path:
 
+![Path](https://user-images.githubusercontent.com/69170322/172066052-4e9df0dc-52ee-41cf-82bd-d41be6b64577.png)
+
+Copy the project directory path, as shown in the image above, and follow [this short tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
+
 ### Linux-Specific Steps
 
 3. Run the linux-setup.sh script:
