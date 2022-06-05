@@ -15,13 +15,17 @@ pip install -r .\.program-files\requirements.txt
 
 ### Windows-Specific Steps
 
-To be done...
+3. Add the project directory to your path:
 
 ### Linux-Specific Steps
 
-To be done...
+3. Run the linux-setup.sh script:
 
-chmod u+x script.sh
+```sh
+# In the root of the project:
+chmod +x linux-setup.sh # First command.
+bash linux-setup.sh # Second command.
+```
 
 ## Commands
 
