@@ -42,11 +42,10 @@ class CommandRunner:
 
     @staticmethod
     def getGRCCurrentVersion(repoPath: str) -> str:
-        print("")
         try:
             outputAsBytes = check_output(
                 ["git", "--git-dir", f"{repoPath}/.git", "describe", "--tags"], shell=True)
-            output = outputAsBytes.decode()
+            output = outputAsBytes.decode().strip()
             return output
         except:
             return None

@@ -137,6 +137,24 @@ grc delete my-template.yaml
 grc delete all # Will delete all your templates.
 ```
 
+### Version
+
+The 'version' command shows you the GRC version that you are currently using.
+
+```sh
+# Usage:
+grc version
+```
+
+### Update
+
+The 'update' command automatically installs the latest GRC version in case you're still not using it.
+
+```sh
+# Usage:
+grc update
+```
+
 ## Requirements
 
 - [Python 3](https://www.python.org/downloads/)

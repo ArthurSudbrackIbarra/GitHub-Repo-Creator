@@ -6,11 +6,7 @@ if ($COMMAND -eq $null) {
 }
 
 if ($PARAMETER -eq $null) {
-    if ($COMMAND -eq "version" -or $COMMAND -eq "update") {
-        python $PSScriptRoot\.program-files\main.py $COMMAND $PSScriptRoot
-    } else {
-        python $PSScriptRoot\.program-files\main.py $COMMAND
-    }
+    python $PSScriptRoot\.program-files\main.py $COMMAND
 } else {
     if ($COMMAND -eq "create" -or $COMMAND -eq "save") {
         $FILE_PATH = "$PWD\$PARAMETER"

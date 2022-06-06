@@ -1,9 +1,16 @@
+from os import path
 import click
 from modules.tokens import TokenManager
 from modules.clis import CLI
+from modules.terminal_commands import CommandRunner
+from modules.coloring import Colors
 
 cli = None
 tokenManager = None
+
+YELLOW = Colors.YELLOW
+CYAN = Colors.CYAN
+RESET = Colors.RESET
 
 
 # Main.
@@ -16,7 +23,6 @@ def main() -> None:
 @click.command(name="authenticate")
 @click.argument("access_token")
 def authenticate(access_token: str) -> None:
-    global cli
     cli.authenticate(access_token, logs=True)
     print("")
 
@@ -25,7 +31,6 @@ def authenticate(access_token: str) -> None:
 @click.command(name="save")
 @click.argument("absolute_file_path")
 def save(absolute_file_path: str) -> None:
-    global cli
     cli.save(absolute_file_path)
     print("")
 
@@ -33,7 +38,6 @@ def save(absolute_file_path: str) -> None:
 # Choose.
 @click.command(name="choose")
 def choose() -> None:
-    global cli
     cli.choose()
     print("")
 
@@ -42,7 +46,6 @@ def choose() -> None:
 @click.command(name="create")
 @click.argument("absolute_file_path")
 def create(absolute_file_path: str) -> None:
-    global cli
     cli.create(absolute_file_path)
     print("")
 
@@ -50,7 +53,6 @@ def create(absolute_file_path: str) -> None:
 # List.
 @click.command(name="list")
 def list() -> None:
-    global cli
     cli.list()
     print("")
 
@@ -59,7 +61,6 @@ def list() -> None:
 @click.command(name="get")
 @click.argument("template_name")
 def get(template_name: str) -> None:
-    global cli
     cli.get(template_name)
 
 
@@ -67,7 +68,6 @@ def get(template_name: str) -> None:
 @click.command(name="edit")
 @click.argument("template_name")
 def edit(template_name: str) -> None:
-    global cli
     cli.edit(template_name)
     print("")
 
@@ -76,7 +76,6 @@ def edit(template_name: str) -> None:
 @click.command(name="delete")
 @click.argument("template_name")
 def delete(template_name: str) -> None:
-    global cli
     cli.delete(template_name)
     print("")
 
@@ -85,29 +84,29 @@ def delete(template_name: str) -> None:
 @click.command(name="version")
 @click.argument("repo_path")
 def update(repo_path: str) -> None:
-    global cli
     cli.version(repo_path)
     print("")
 
 
 # Version.
 @click.command(name="version")
-@click.argument("repo_path")
-def version(repo_path: str) -> None:
-    global cli
-    cli.version(repo_path)
+def version() -> None:
+    repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
+    print("")
+    cli.version(repoPath)
+    print("")
 
 
 # Update.
 @click.command(name="update")
-@click.argument("repo_path")
-def update(repo_path: str) -> None:
-    global cli
-    cli.update(repo_path)
+def update() -> None:
+    repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
+    cli.update(repoPath)
     print("")
 
 
-if __name__ == "__main__":
+# Function to add all the commands.
+def addCommands() -> None:
     main.add_command(authenticate)
     main.add_command(save)
     main.add_command(choose)
@@ -118,8 +117,23 @@ if __name__ == "__main__":
     main.add_command(delete)
     main.add_command(version)
     main.add_command(update)
+
+
+# Function warns the user if they are not using the latest GRC version.
+def versionLog() -> None:
+    repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
+    currentVersion = CommandRunner.getGRCCurrentVersion(repoPath)
+    isLatestVersion = cli.isLatestVersion(currentVersion)
+    if not isLatestVersion:
+        print(
+            f"\n{YELLOW}[WARN]{RESET} A newer version of GRC is disponible, run {CYAN}grc{RESET} update to get it.")
+
+
+if __name__ == "__main__":
     cli = CLI()
     tokenManager = TokenManager()
     token = tokenManager.readToken()
     cli.authenticate(token, logs=False)
+    versionLog()
+    addCommands()
     main()
