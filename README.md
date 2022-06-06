@@ -35,7 +35,6 @@ name: "My-Repository"
 description: "This is my repository!"
 private: true
 autoClone: true
-autoPush: false
 
 collaborators:
   - collaborator:
