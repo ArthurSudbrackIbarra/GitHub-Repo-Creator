@@ -92,9 +92,7 @@ def update(repo_path: str) -> None:
 @click.command(name="version")
 def version() -> None:
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
-    print("")
     cli.version(repoPath)
-    print("")
 
 
 # Update.
@@ -133,7 +131,8 @@ if __name__ == "__main__":
     cli = CLI()
     tokenManager = TokenManager()
     token = tokenManager.readToken()
-    cli.authenticate(token, logs=False)
-    versionLog()
+    authenticated = cli.authenticate(token, logs=False)
+    if authenticated:
+        versionLog()
     addCommands()
     main()

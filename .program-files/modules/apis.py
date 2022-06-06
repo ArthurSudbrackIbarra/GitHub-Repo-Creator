@@ -15,6 +15,14 @@ class GitHubAPI:
         except:
             raise Exception(f"\n{RED}[ERROR]{RESET} Invalid access token.")
 
+    def isAuthenticated(self) -> bool:
+        try:
+            # Will raise an error if the user is not authenticated.
+            self.github.get_user().get_repos().totalCount
+            return True
+        except:
+            return False
+
     def createRepo(self, name: str, description: str, private: bool) -> bool:
         user = self.github.get_user()
         try:

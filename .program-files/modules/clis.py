@@ -20,10 +20,6 @@ class CLI:
         self.tokenManager = TokenManager()
         self.githubAPI = None
 
-    # Helper method.
-    def isAuthenticated(self) -> bool:
-        return self.githubAPI is not None
-
     # Authenticate.
     def authenticate(self, accessToken: str, logs: bool = False) -> bool:
         try:
@@ -38,7 +34,6 @@ class CLI:
         except Exception as error:
             if logs:
                 print(error)
-            self.githubAPI = None
             return False
 
     # Save.
@@ -90,7 +85,7 @@ class CLI:
                absoluteFilePath: str,
                repoName: str = None,
                repoDescription: str = None) -> bool:
-        if not self.isAuthenticated():
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
@@ -243,9 +238,9 @@ class CLI:
 
     # Version.
     def version(self, repoPath: str) -> bool:
-        if not self.isAuthenticated():
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
-                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.\n")
             return False
         version = CommandRunner.getGRCCurrentVersion(repoPath)
         if version is None:
@@ -268,7 +263,7 @@ class CLI:
 
     # Update.
     def update(self, repoPath: str) -> bool:
-        if not self.isAuthenticated():
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
