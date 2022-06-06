@@ -13,7 +13,11 @@ if [ -z "$COMMAND" ]; then
 fi
 
 if [ -z "$PARAMETER" ]; then
-    python $SCRIPT_DIR/.program-files/main.py $COMMAND
+    if [ $COMMAND = "version" ] || [ $COMMAND = "update" ]; then
+        python $SCRIPT_DIR/.program-files/main.py $COMMAND $SCRIPT_DIR
+    else
+        python $SCRIPT_DIR/.program-files/main.py $COMMAND
+    fi
 else
     if [ $COMMAND = "create" ] || [ $COMMAND = "save" ]; then
         FILE_PATH=$PWD/$PARAMETER
