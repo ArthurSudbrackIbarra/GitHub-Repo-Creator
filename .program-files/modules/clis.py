@@ -238,3 +238,8 @@ class CLI:
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to delete template, make sure the file exists.")
             return False
+
+    # Update.
+    def update(self) -> bool:
+        latestTag = self.githubAPI.getGRCLatestTag()
+        print(latestTag)

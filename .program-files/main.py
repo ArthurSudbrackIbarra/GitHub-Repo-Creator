@@ -81,6 +81,14 @@ def delete(template_name: str) -> None:
     print("")
 
 
+# Update.
+@click.command(name="update")
+def update() -> None:
+    global cli
+    cli.update()
+    print("")
+
+
 if __name__ == "__main__":
     main.add_command(authenticate)
     main.add_command(save)
@@ -90,6 +98,7 @@ if __name__ == "__main__":
     main.add_command(get)
     main.add_command(edit)
     main.add_command(delete)
+    main.add_command(update)
     cli = CLI()
     tokenManager = TokenManager()
     token = tokenManager.readToken()

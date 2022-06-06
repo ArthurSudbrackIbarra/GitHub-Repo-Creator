@@ -50,3 +50,18 @@ class GitHubAPI:
         except:
             raise Exception(
                 f"\n{RED}[ERROR]{RESET} Unnable to get '{repoName}' repository clone URL.")
+
+    def getGRCLatestTag(self) -> str:
+        try:
+            repo = self.github.get_repo(
+                "ArthurSudbrackIbarra/GitHub-Repo-Creator")
+            tags = repo.get_tags()
+            tagNames = []
+            for tag in tags:
+                tagNames.append(tag.name)
+                if len(tagNames) > 0:
+                    return tagNames[0]
+            return None
+        except:
+            raise Exception(
+                f"\n{RED}[ERROR]{RESET} Unnable to get GRC repository latest tag.")
