@@ -256,15 +256,15 @@ class CLI:
         return True
 
     # Helper method.
-    def isLatestVersion(self, version: str) -> bool:
+    def isLatestVersion(self, version: str) -> "list":
         try:
             latestTag = self.githubAPI.getGRCLatestTag()
             if not version.startswith(latestTag):
-                return False
-            return True
+                return [False, latestTag]
+            return [True, latestTag]
         except Exception as error:
             print(error)
-            return False
+            return [False, latestTag]
 
     # Update.
     def update(self, repoPath: str) -> bool:
@@ -272,14 +272,16 @@ class CLI:
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
-        version = CommandRunner.getGRCCurrentVersion(repoPath)
-        if version is None:
+        currentVersion = CommandRunner.getGRCCurrentVersion(repoPath)
+        if currentVersion is None:
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to get GRC current version.")
             return False
-        isLatestVersion = self.isLatestVersion(version)
+        latestVersionInfo = self.isLatestVersion(currentVersion)
+        isLatestVersion = latestVersionInfo[0]
+        latestTag = latestVersionInfo[1]
         if not isLatestVersion:
-            exitCode = CommandRunner.updateGRCVersion(repoPath)
+            exitCode = CommandRunner.updateGRCVersion(repoPath, latestTag)
             if exitCode == 0:
                 print(
                     f"\n{GREEN}[SUCCESS]{RESET} GRC updated to latest version!")
