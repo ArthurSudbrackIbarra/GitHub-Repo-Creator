@@ -1,3 +1,4 @@
+from fileinput import filename
 from os import path
 from .parsers import YAMLParser
 from .interpreters import YAMLInterpreter
@@ -53,23 +54,16 @@ class CLI:
 
     # Choose.
     def choose(self) -> None:
-        templatesPath = path.abspath(
-            path.join(path.dirname(__file__), "../../templates"))
-        chooser = FileChooser(templatesPath)
-        print("")
-        files = chooser.getFiles()
-        if len(files) <= 0:
-            print(
-                f"No files to choose, create templates by running '{CYAN}grc{RESET} save <PATH_TO_YOUR_YAML>'.")
-            return
-        for index, file in enumerate(files):
-            print(f"{CYAN}[{index}]{RESET} - {file}")
+        self.list(enumeration=True)
         option = -1
         try:
             option = int(input("\nChoose which file to use: "))
         except:
             print(f"\n{RED}[ERROR]{RESET} Option must be a number.")
             return
+        templatesPath = path.abspath(
+            path.join(path.dirname(__file__), "../../templates"))
+        chooser = FileChooser(templatesPath)
         filePath = chooser.getFilePathByIndex(option)
         if filePath is None:
             print(f"\n{RED}[ERROR]{RESET} Invalid choice.")
@@ -174,6 +168,23 @@ class CLI:
                 except Exception as error:
                     print(error)
         return True
+
+    # List.
+    def list(self, enumeration: bool = False) -> None:
+        templatesPath = path.abspath(
+            path.join(path.dirname(__file__), "../../templates"))
+        chooser = FileChooser(templatesPath)
+        fileNames = chooser.getFileNames()
+        if len(fileNames) <= 0:
+            print(
+                f"No files to list, create templates by running '{CYAN}grc{RESET} save <PATH_TO_YOUR_YAML>'.")
+            return
+        print("")
+        for index, fileName in enumerate(fileNames):
+            if enumeration:
+                print(f"{CYAN}[{index}]{RESET} - {fileName}")
+            else:
+                print(fileName)
 
     # Get.
     def get(self, templateName: str) -> bool:

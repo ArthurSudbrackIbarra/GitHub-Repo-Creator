@@ -47,6 +47,14 @@ def create(absolute_file_path: str) -> None:
     print("")
 
 
+# List.
+@click.command(name="list")
+def list() -> None:
+    global cli
+    cli.list()
+    print("")
+
+
 # Get.
 @click.command(name="get")
 @click.argument("template_name")
@@ -61,6 +69,7 @@ def get(template_name: str) -> None:
 def edit(template_name: str) -> None:
     global cli
     cli.edit(template_name)
+    print("")
 
 
 # Delete.
@@ -77,6 +86,7 @@ if __name__ == "__main__":
     main.add_command(save)
     main.add_command(choose)
     main.add_command(create)
+    main.add_command(list)
     main.add_command(get)
     main.add_command(edit)
     main.add_command(delete)
