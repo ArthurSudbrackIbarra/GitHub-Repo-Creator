@@ -1,4 +1,5 @@
 from os import system
+from sys import platform
 
 
 class CommandRunner:
@@ -29,3 +30,11 @@ class CommandRunner:
         if exitCode != 0:
             return exitCode
         return system("git push --all origin")
+
+    @staticmethod
+    def openTextEditor(absoluteFilePath: str) -> int:
+        if platform.startswith("win"):
+            return system(f"notepad {absoluteFilePath}")
+        elif platform.startswith("linux") or platform.startswith("darwin"):
+            return system(f"nano {absoluteFilePath}")
+        return 1

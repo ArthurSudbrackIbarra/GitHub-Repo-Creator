@@ -47,6 +47,22 @@ def create(absolute_file_path: str) -> None:
     print("")
 
 
+# Get.
+@click.command(name="get")
+@click.argument("template_name")
+def get(template_name: str) -> None:
+    global cli
+    cli.get(template_name)
+
+
+# Edit.
+@click.command(name="edit")
+@click.argument("template_name")
+def edit(template_name: str) -> None:
+    global cli
+    cli.edit(template_name)
+
+
 # Delete.
 @click.command(name="delete")
 @click.argument("template_name")
@@ -57,13 +73,15 @@ def delete(template_name: str) -> None:
 
 
 if __name__ == "__main__":
-    cli = CLI()
-    tokenManager = TokenManager()
-    token = tokenManager.readToken()
-    cli.authenticate(token, logs=False)
     main.add_command(authenticate)
     main.add_command(save)
     main.add_command(choose)
     main.add_command(create)
+    main.add_command(get)
+    main.add_command(edit)
     main.add_command(delete)
+    cli = CLI()
+    tokenManager = TokenManager()
+    token = tokenManager.readToken()
+    cli.authenticate(token, logs=False)
     main()

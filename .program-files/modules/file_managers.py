@@ -1,5 +1,6 @@
-from os import path, listdir, remove, unlink
+from os import path, listdir, scandir, DirEntry, remove, unlink
 from shutil import copy, rmtree
+from typing import AnyStr
 
 
 class FileCopier:
@@ -14,15 +15,35 @@ class FileChooser:
     def __init__(self, dirPath: str) -> None:
         self.absoluteDirPath = path.abspath(dirPath)
 
-    def getFiles(self, fileExtension: str = ".yaml") -> None:
+    def getFileNames(self, fileExtension: str = ".yaml") -> "list[str]":
         files = [file for file in listdir(self.absoluteDirPath) if path.isfile(
             path.join(self.absoluteDirPath, file)) and file.endswith(fileExtension)]
         return files
 
-    def getFilePath(self, index: int, fileExtension: str = ".yaml") -> str:
-        files = self.getFiles(fileExtension)
+    def getFilesInfo(self, fileExtension: str = ".yaml") -> "list[DirEntry[str]]":
+        files = [file for file in scandir(self.absoluteDirPath) if path.isfile(
+            path.join(self.absoluteDirPath, file)) and file.name.endswith(fileExtension)]
+        return files
+
+    def getFilePathByIndex(self, index: int, fileExtension: str = ".yaml") -> str:
+        files = self.getFileNames(fileExtension)
         if len(files) >= index + 1:
             return path.join(self.absoluteDirPath, files[index])
+        return None
+
+    def getFilePathByName(self, name: str) -> str:
+        files = self.getFilesInfo(fileExtension="")
+        for file in files:
+            if file.name == name:
+                return file.path
+        return None
+
+    def getFileContentByName(self, name: str) -> str:
+        files = self.getFilesInfo(fileExtension="")
+        for file in files:
+            if file.name == name:
+                with open(file.path, 'r') as template:
+                    return template.read()
         return None
 
 

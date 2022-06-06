@@ -70,7 +70,7 @@ class CLI:
         except:
             print(f"\n{RED}[ERROR]{RESET} Option must be a number.")
             return
-        filePath = chooser.getFilePath(option)
+        filePath = chooser.getFilePathByIndex(option)
         if filePath is None:
             print(f"\n{RED}[ERROR]{RESET} Invalid choice.")
             return
@@ -174,6 +174,36 @@ class CLI:
                 except Exception as error:
                     print(error)
         return True
+
+    # Get.
+    def get(self, templateName: str) -> bool:
+        templatesPath = path.abspath(
+            path.join(path.dirname(__file__), "../../templates"))
+        chooser = FileChooser(templatesPath)
+        if not templateName.endswith(".yaml"):
+            templateName += ".yaml"
+        content = chooser.getFileContentByName(templateName)
+        if content is None:
+            print(
+                f"\n{RED}[ERROR]{RESET} Template '{templateName}' not found.")
+            return False
+        print(f"\n{content}")
+        return True
+
+    # Edit.
+    def edit(self, templateName: str) -> bool:
+        templatesPath = path.abspath(
+            path.join(path.dirname(__file__), "../../templates"))
+        chooser = FileChooser(templatesPath)
+        if not templateName.endswith(".yaml"):
+            templateName += ".yaml"
+        filePath = chooser.getFilePathByName(templateName)
+        exitCode = CommandRunner.openTextEditor(filePath)
+        if exitCode == 0:
+            return True
+        print(
+            f"\n{RED}[ERROR]{RESET} Unnable to edit template, make sure the file exists.")
+        return False
 
     # Delete.
     def delete(self, templateName: str) -> bool:
