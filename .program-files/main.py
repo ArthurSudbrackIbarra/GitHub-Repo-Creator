@@ -123,7 +123,7 @@ def addCommands() -> None:
 def versionLog() -> None:
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
     currentVersion = CommandRunner.getGRCCurrentVersion(repoPath)
-    isLatestVersion = cli.isLatestVersion(currentVersion)
+    isLatestVersion = cli.isLatestVersion(currentVersion)[0]
     if not isLatestVersion:
         print(
             f"\n{YELLOW}[WARN]{RESET} A newer version of GRC is disponible, run {CYAN}grc{RESET} update to get it.")
