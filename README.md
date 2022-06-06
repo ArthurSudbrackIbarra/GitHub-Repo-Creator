@@ -8,9 +8,9 @@ In this section, all the possible GRC commands will be listed and explained.
 
 ### Authenticate
 
-![Authenticate](https://user-images.githubusercontent.com/69170322/172030151-00f09557-7129-4fc6-ab73-7b29078e8147.png)
-
 The 'authenticate' command is used so you can authenticate to GitHub and create repositories in your account. This is the **first command** you need to execute in order to start using GRC.
+
+![Authenticate](https://user-images.githubusercontent.com/69170322/172030151-00f09557-7129-4fc6-ab73-7b29078e8147.png)
 
 ```sh
 # Usage:
@@ -72,6 +72,8 @@ grc save ./my-template.yaml
 
 The 'list' command lists all the templates that are saved in your machine.
 
+![List](https://user-images.githubusercontent.com/69170322/172093152-a5f96ee0-4803-4b4f-9cb7-029338799e58.png)
+
 ```sh
 # Usage:
 grc list
@@ -80,6 +82,8 @@ grc list
 ### Get
 
 The 'get' command shows the content of a template that is saved in your machine.
+
+![Get](https://user-images.githubusercontent.com/69170322/172093282-b282c9c8-7ac0-4d00-a758-139880716cd1.png)
 
 ```sh
 # Usage:
@@ -104,6 +108,8 @@ grc choose
 ### Edit
 
 The 'edit' command opens a text editor and lets you edit one of your saved templates. When using Windows, the text editor is notepad, and when using Linux or MacOS, the text editor is nano.
+
+![Edit](https://user-images.githubusercontent.com/69170322/172093332-c08f74ba-5a3a-49f9-8811-eaeb01b3a2b9.png)
 
 ```sh
 # Usage:
