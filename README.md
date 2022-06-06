@@ -141,6 +141,8 @@ grc delete all # Will delete all your templates.
 
 The 'version' command shows you the GRC version that you are currently using.
 
+![Version](https://user-images.githubusercontent.com/69170322/172204486-f139282f-6f32-4c3e-bf3d-c9188cf95691.png)
+
 ```sh
 # Usage:
 grc version
@@ -149,6 +151,8 @@ grc version
 ### Update
 
 The 'update' command automatically installs the latest GRC version in case you're still not using it.
+
+![Update](https://user-images.githubusercontent.com/69170322/172204826-73d4fa06-cd18-465e-b1f1-548246c1039c.png)
 
 ```sh
 # Usage:
