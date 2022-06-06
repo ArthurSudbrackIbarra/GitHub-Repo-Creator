@@ -68,6 +68,28 @@ grc save <PATH_TO_YOUR_YAML_FILE>
 grc save ./my-template.yaml
 ```
 
+### List
+
+The 'list' command lists all the templates that are saved in your machine.
+
+```sh
+# Usage:
+grc list
+```
+
+### Get
+
+The 'get' command shows the content of a template that is saved in your machine.
+
+```sh
+# Usage:
+grc get <TEMPLATE_NAME>
+
+# Example:
+grc get my-template # Or...
+grc get my-template.yaml
+```
+
 ### Choose
 
 The 'choose' command lets you choose a file from your saved templates to create a repository based on it. When selecting a template, you have the option to use a different repository name/description than the one specified in the template file.
@@ -77,6 +99,19 @@ The 'choose' command lets you choose a file from your saved templates to create 
 ```sh
 # Usage:
 grc choose
+```
+
+### Edit
+
+The 'edit' command opens a text editor and lets you edit one of your saved templates. When using Windows, the text editor is notepad, and when using Linux or MacOS, the text editor is nano.
+
+```sh
+# Usage:
+grc edit <TEMPLATE_NAME>
+
+# Example:
+grc edit my-template # Or...
+grc edit my-template.yaml
 ```
 
 ### Delete
