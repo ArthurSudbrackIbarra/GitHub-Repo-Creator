@@ -105,8 +105,8 @@ class CLI:
         if private is None:
             private = True
         if autoClone is None:
-            autoClone = True
-        if autoPush is None:
+            autoClone = False
+        if autoPush is None or (autoPush == True and autoClone == True):
             autoPush = False
         # Creating repository.
         try:

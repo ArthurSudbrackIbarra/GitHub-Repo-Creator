@@ -9,8 +9,8 @@ private: true
 
 # !!! IMPORTANT: autoClone and autoPush are mutually exclusive, use one OR another.
 
-# Whether the repository should be cloned to your machine after created or not. (Optional, default is true).
-autoClone: true
+# Whether the repository should be cloned to your machine after created or not. (Optional, default is false).
+autoClone: false
 
 # Whether the files in your current directory should be pushed to the created repository or not. (Optional, default is false).
 autoPush: false

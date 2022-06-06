@@ -1,7 +1,6 @@
 name: "Cookies"
 description: "I really like cookies!"
 private: true
-autoClone: false
 autoPush: true
 
 # Collaborators list (Optional).
