@@ -126,7 +126,7 @@ def versionLog() -> None:
     isLatestVersion = cli.isLatestVersion(currentVersion)[0]
     if not isLatestVersion:
         print(
-            f"\n{YELLOW}[WARN]{RESET} A newer version of GRC is disponible, run {CYAN}grc{RESET} update to get it.")
+            f"\n{YELLOW}[WARN]{RESET} A newer version of GRC is disponible, run '{CYAN}grc{RESET} update' to get it.")
 
 
 if __name__ == "__main__":
