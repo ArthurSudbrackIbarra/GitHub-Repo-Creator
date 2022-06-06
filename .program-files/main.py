@@ -81,11 +81,29 @@ def delete(template_name: str) -> None:
     print("")
 
 
+# Version.
+@click.command(name="version")
+@click.argument("repo_path")
+def update(repo_path: str) -> None:
+    global cli
+    cli.version(repo_path)
+    print("")
+
+
+# Version.
+@click.command(name="version")
+@click.argument("repo_path")
+def version(repo_path: str) -> None:
+    global cli
+    cli.version(repo_path)
+
+
 # Update.
 @click.command(name="update")
-def update() -> None:
+@click.argument("repo_path")
+def update(repo_path: str) -> None:
     global cli
-    cli.update()
+    cli.update(repo_path)
     print("")
 
 
@@ -98,6 +116,7 @@ if __name__ == "__main__":
     main.add_command(get)
     main.add_command(edit)
     main.add_command(delete)
+    main.add_command(version)
     main.add_command(update)
     cli = CLI()
     tokenManager = TokenManager()

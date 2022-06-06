@@ -20,9 +20,11 @@ class CLI:
         self.tokenManager = TokenManager()
         self.githubAPI = None
 
+    # Helper method.
     def isAuthenticated(self) -> bool:
         return self.githubAPI is not None
 
+    # Authenticate.
     def authenticate(self, accessToken: str, logs: bool = False) -> bool:
         try:
             if len(accessToken) > 0:
@@ -239,7 +241,50 @@ class CLI:
                 f"\n{RED}[ERROR]{RESET} Unnable to delete template, make sure the file exists.")
             return False
 
+    # Version.
+    def version(self, repoPath: str) -> bool:
+        if not self.isAuthenticated():
+            print(
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+            return False
+        version = CommandRunner.getGRCCurrentVersion(repoPath)
+        if version is None:
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to get GRC current version.")
+            return False
+        print(f"GRC version {version}")
+        return True
+
+    # Helper method.
+    def isLatestVersion(self, version: str) -> bool:
+        try:
+            latestTag = self.githubAPI.getGRCLatestTag()
+            if not version.startswith(latestTag):
+                return False
+            return True
+        except Exception as error:
+            print(error)
+            return False
+
     # Update.
-    def update(self) -> bool:
-        latestTag = self.githubAPI.getGRCLatestTag()
-        print(latestTag)
+    def update(self, repoPath: str) -> bool:
+        if not self.isAuthenticated():
+            print(
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+            return False
+        version = CommandRunner.getGRCCurrentVersion(repoPath)
+        if version is None:
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to get GRC current version.")
+            return False
+        isLatestVersion = self.isLatestVersion(version)
+        if not isLatestVersion:
+            exitCode = CommandRunner.updateGRCVersion(repoPath)
+            if exitCode == 0:
+                print(
+                    f"\n{GREEN}[SUCCESS]{RESET} GRC updated to latest version!")
+                return True
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to update GRC to latest version.")
+        print("\nAlready using GRC latest version.")
+        return False

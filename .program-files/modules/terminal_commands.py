@@ -1,5 +1,6 @@
 from os import system
 from sys import platform
+from subprocess import check_output
 
 
 class CommandRunner:
@@ -38,3 +39,19 @@ class CommandRunner:
         elif platform.startswith("linux") or platform.startswith("darwin"):
             return system(f"nano {absoluteFilePath}")
         return 1
+
+    @staticmethod
+    def getGRCCurrentVersion(repoPath: str) -> str:
+        print("")
+        try:
+            outputAsBytes = check_output(
+                ["git", "--git-dir", f"{repoPath}/.git", "describe", "--tags"], shell=True)
+            output = outputAsBytes.decode()
+            return output
+        except:
+            return None
+
+    @staticmethod
+    def updateGRCVersion(repoPath: str) -> int:
+        print("")
+        return system(f"git --git-dir {repoPath}/.git pull origin main")

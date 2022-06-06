@@ -1,6 +1,11 @@
-name: "My-Repository"
-description: "This is my repository!"
+name: "Cookies"
+description: "I really like cookies!"
 private: true
 autoClone: false
 autoPush: true
-# No collaborators.
+
+# Collaborators list (Optional).
+collaborators:
+  - collaborator:
+      name: "brun0-znx" # Collaborator name. (Required).
+      permission: "pull" # Collaborator permission -> push/pull/admin. (Optional, default is admin).
