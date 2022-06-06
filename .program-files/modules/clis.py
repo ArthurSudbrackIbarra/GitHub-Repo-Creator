@@ -90,7 +90,10 @@ class CLI:
             self.create(filePath)
 
     # Create.
-    def create(self, absoluteFilePath: str, repoName: str = None, repoDescription: str = None) -> bool:
+    def create(self,
+               absoluteFilePath: str,
+               repoName: str = None,
+               repoDescription: str = None) -> bool:
         if not self.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
@@ -103,6 +106,7 @@ class CLI:
             repoDescription = yaml.repoDescription() or ""
         private = yaml.private()
         autoClone = yaml.autoClone()
+        autoPush = yaml.autoPush()
         if repoName is None:
             print(
                 f"\n{RED}[ERROR]{RESET}. The repository name was not specified.")
@@ -111,6 +115,8 @@ class CLI:
             private = True
         if autoClone is None:
             autoClone = True
+        if autoPush is None:
+            autoPush = False
         # Creating repository.
         try:
             self.githubAPI.createRepo(
@@ -127,14 +133,27 @@ class CLI:
         if autoClone:
             try:
                 cloneURL = self.githubAPI.getRepoCloneURL(repoName)
-                runner = CommandRunner()
-                status = runner.gitClone(cloneURL)
-                if status == 0:
+                exitCode = CommandRunner.gitClone(cloneURL)
+                if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
+            except Exception as error:
+                print(error)
+        # Pushing content.
+        if autoPush and not autoClone:
+            try:
+                cloneURL = self.githubAPI.getRepoCloneURL(repoName)
+                exitCode = CommandRunner.gitLocalToRemote(
+                    cloneURL, "Initial Commit.")
+                if exitCode == 0:
+                    print(
+                        f"\n{GREEN}[SUCCESS]{RESET} Pushed content to repository with success!")
+                else:
+                    print(
+                        f"\n{RED}[ERROR]{RESET} Unnable to push content to repository.")
             except Exception as error:
                 print(error)
         # Collaborators.

@@ -12,7 +12,7 @@ def main() -> None:
     pass
 
 
-# Set token.
+# Authenticate.
 @click.command(name="authenticate")
 @click.argument("access_token")
 def authenticate(access_token: str) -> None:

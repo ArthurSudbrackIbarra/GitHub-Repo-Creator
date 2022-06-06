@@ -2,4 +2,5 @@ name: "My-Repository"
 description: "This is my repository!"
 private: true
 autoClone: true
+autoPush: true
 # No collaborators.

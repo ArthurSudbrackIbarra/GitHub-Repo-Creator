@@ -4,6 +4,7 @@ REPO_NAME = "name"
 REPO_DESCRIPTION = "description"
 PRIVATE = "private"
 AUTO_CLONE = "autoClone"
+AUTO_PUSH = "autoPush"
 COLLABORATORS = "collaborators"
 COLLABORATOR = "collaborator"
 COLLABORATOR_NAME = "name"
@@ -32,6 +33,11 @@ class YAMLInterpreter:
     def autoClone(self) -> bool:
         if AUTO_CLONE in self.data:
             return self.data[AUTO_CLONE]
+        return None
+
+    def autoPush(self) -> bool:
+        if AUTO_PUSH in self.data:
+            return self.data[AUTO_PUSH]
         return None
 
     def collaboratorsCount(self) -> int:

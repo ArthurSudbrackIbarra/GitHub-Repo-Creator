@@ -1,5 +1,5 @@
 from os import path, listdir, remove, unlink
-import shutil
+from shutil import copy, rmtree
 
 
 class FileCopier:
@@ -7,7 +7,7 @@ class FileCopier:
         self.absoluteFilePath = path.abspath(filePath)
 
     def copyTo(self, copyPath: str) -> None:
-        shutil.copy(self.absoluteFilePath, copyPath)
+        copy(self.absoluteFilePath, copyPath)
 
 
 class FileChooser:
@@ -43,6 +43,6 @@ class FileDeleter:
                 if path.isfile(filePath) or path.islink(filePath):
                     unlink(filePath)
                 elif path.isdir(filePath):
-                    shutil.rmtree(filePath)
+                    rmtree(filePath)
             except:
                 pass
