@@ -31,23 +31,16 @@ The 'create' command creates a repository for you based on a YAML file that is p
 **File:** my-template.yaml
 
 ```yaml
-# The repository name. (Required).
 name: "My-Repository"
-
-# The repository description. (Optional).
 description: "This is my repository!"
-
-# Whether the repository is private or not. (Optional, default is true).
 private: true
-
-# Whether the repository should be cloned to your machine after created or not. (Optional, default is true).
 autoClone: true
+autoPush: false
 
-# Collaborators list (Optional).
 collaborators:
   - collaborator:
-      name: "brun0-znx" # Collaborator name. (Required).
-      permission: "admin" # Collaborator permission -> push/pull/admin. (Optional, default is admin).
+      name: "brun0-znx"
+      permission: "admin"
   - collaborator:
       name: "Miguel-de-Castro"
       permission: "push"
