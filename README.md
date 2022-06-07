@@ -115,7 +115,7 @@ grc choose
 
 ### Edit
 
-The 'edit' command opens a text editor and lets you edit one of your saved templates. When using Windows, the text editor is notepad, and when using Linux or MacOS, the text editor is nano.
+The 'edit' command opens a text editor and lets you edit one of your saved templates. If you have [VSCode](https://code.visualstudio.com) installed in your computer, then it is used. If you don't, then a native text editor is used.
 
 ![Edit](https://user-images.githubusercontent.com/69170322/172093332-c08f74ba-5a3a-49f9-8811-eaeb01b3a2b9.png)
 
