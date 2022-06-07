@@ -1,4 +1,6 @@
+from genericpath import exists
 from os import system
+from os.path import exists
 from sys import platform
 from subprocess import check_output
 
@@ -34,6 +36,8 @@ class CommandRunner:
 
     @staticmethod
     def openTextEditor(absoluteFilePath: str) -> int:
+        if absoluteFilePath is None or not exists(absoluteFilePath):
+            return 1
         # First tries to open the file with VSCode.
         # If the user does not have VSCode installed, then uses native text editors.
         exitCode = system(f"code {absoluteFilePath}")
