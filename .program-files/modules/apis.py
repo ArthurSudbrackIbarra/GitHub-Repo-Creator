@@ -59,9 +59,11 @@ class GitHubAPI:
             raise Exception(
                 f"\n{RED}[ERROR]{RESET} Unnable to get '{repoName}' repository clone URL.")
 
-    def getGRCLatestTag(self) -> str:
+    @staticmethod
+    def getGRCLatestTag() -> str:
         try:
-            repo = self.github.get_repo(
+            github = Github()
+            repo = github.get_repo(
                 "ArthurSudbrackIbarra/GitHub-Repo-Creator")
             tags = repo.get_tags()
             tagNames = []

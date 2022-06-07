@@ -52,6 +52,9 @@ class CLI:
 
     # Choose.
     def choose(self) -> None:
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
+            print(
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
         self.list(enumeration=True)
         option = -1
         try:
@@ -239,10 +242,6 @@ class CLI:
 
     # Version.
     def version(self, repoPath: str) -> bool:
-        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
-            print(
-                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.\n")
-            return False
         version = CommandRunner.getGRCCurrentVersion(repoPath)
         if version is None:
             print(
@@ -254,7 +253,7 @@ class CLI:
     # Helper method.
     def isLatestVersion(self, version: str) -> "list":
         try:
-            latestTag = self.githubAPI.getGRCLatestTag()
+            latestTag = GitHubAPI.getGRCLatestTag()
             if not version.startswith(latestTag):
                 return [False, latestTag]
             return [True, latestTag]
@@ -264,10 +263,6 @@ class CLI:
 
     # Update.
     def update(self, repoPath: str) -> bool:
-        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
-            print(
-                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
-            return False
         currentVersion = CommandRunner.getGRCCurrentVersion(repoPath)
         if currentVersion is None:
             print(
