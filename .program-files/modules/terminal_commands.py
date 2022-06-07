@@ -34,11 +34,16 @@ class CommandRunner:
 
     @staticmethod
     def openTextEditor(absoluteFilePath: str) -> int:
-        if platform.startswith("win"):
-            return system(f"notepad {absoluteFilePath}")
-        elif platform.startswith("linux") or platform.startswith("darwin"):
-            return system(f"nano {absoluteFilePath}")
-        return 1
+        # First tries to open the file with VSCode.
+        # If the user does not have VSCode installed, then uses native text editors.
+        exitCode = system(f"code {absoluteFilePath}")
+        if exitCode != 0:
+            if platform.startswith("win"):
+                return system(f"notepad {absoluteFilePath}")
+            elif platform.startswith("linux") or platform.startswith("darwin"):
+                return system(f"nano {absoluteFilePath}")
+            return 1
+        return exitCode
 
     @staticmethod
     def getGRCCurrentVersion(repoPath: str) -> str:

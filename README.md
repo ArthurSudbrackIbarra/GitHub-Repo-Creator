@@ -6,6 +6,15 @@ GRC is a tool to automatically create GitHub repositories using YAML templates. 
 
 In this section, all the possible GRC commands will be listed and explained.
 
+### Help
+
+The 'help' command gives you orientation about what GRC is and how to use its commands.
+
+```sh
+# Usage:
+grc help
+```
+
 ### Authenticate
 
 The 'authenticate' command is used so you can authenticate to GitHub and create repositories in your account. This is the **first command** you need to execute in order to start using GRC.
@@ -159,6 +168,8 @@ grc update
 ```
 
 ## Requirements
+
+In order to use GRC, you must have the following tools installed in your machine:
 
 - [Python 3](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
