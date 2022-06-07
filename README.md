@@ -175,7 +175,12 @@ git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git
 
 ```sh
 # In the root of the project:
+
+# Windows:
 pip install -r .\.program-files\requirements.txt
+
+# Linux:
+pip install -r ./.program-files/requirements.txt
 ```
 
 ### Windows-Specific Steps

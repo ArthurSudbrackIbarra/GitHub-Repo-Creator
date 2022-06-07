@@ -1,9 +1,12 @@
 #!/bin/bash
 
 # Giving all users the permission to execute grc.sh script.
-chmod +x "$PWD/grc.sh"
+chmod +x "$PWD/grc"
 
 # Adding the project directory to $PATH.
-NEW_PATH="$PATH:$PWD"
-echo "export PATH=\"$NEW_PATH\"" >> ~/.bashrc
-source ~/.bashrc
+sed -i "/grc_project/d" ~/.bashrc
+echo "export PATH+=\":$PWD\" # grc_project" >> ~/.bashrc
+
+echo
+echo "You may close this terminal now for the changes to take effect."
+echo
