@@ -302,7 +302,7 @@ class CLI:
         print(
             f"\n{BLUE}save{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\n\nSaves a YAML file to your templates, so that you can later use it to create another repository with the same configurations.")
         print(
-            f"\n{BLUE}list{RESET}\n\nThe 'list' command lists all the templates that are saved in your machine.")
+            f"\n{BLUE}list{RESET}\n\nLists all the templates that are saved in your machine.")
         print(
             f"\n{BLUE}get{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\n\nThe 'get' command shows the content of a template that is saved in your machine.")
         print(
