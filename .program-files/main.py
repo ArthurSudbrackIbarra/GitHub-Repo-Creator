@@ -14,7 +14,7 @@ RESET = Colors.RESET
 
 
 # Main.
-@click.group(help="Automatically create GitHub repositories.")
+@click.group()
 def main() -> None:
     pass
 
@@ -62,6 +62,7 @@ def list() -> None:
 @click.argument("template_name")
 def get(template_name: str) -> None:
     cli.get(template_name)
+    print("")
 
 
 # Edit.
@@ -103,6 +104,12 @@ def update() -> None:
     print("")
 
 
+# Help.
+@click.command(name="help")
+def help() -> None:
+    cli.help()
+
+
 # Function to add all the commands.
 def addCommands() -> None:
     main.add_command(authenticate)
@@ -115,6 +122,7 @@ def addCommands() -> None:
     main.add_command(delete)
     main.add_command(version)
     main.add_command(update)
+    main.add_command(help)
 
 
 # Function warns the user if they are not using the latest GRC version.

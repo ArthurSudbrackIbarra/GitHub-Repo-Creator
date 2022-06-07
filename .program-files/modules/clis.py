@@ -12,6 +12,7 @@ GREEN = Colors.GREEN
 YELLOW = Colors.YELLOW
 RED = Colors.RED
 CYAN = Colors.CYAN
+BLUE = Colors.BLUE
 RESET = Colors.RESET
 
 
@@ -285,3 +286,32 @@ class CLI:
                 f"\n{RED}[ERROR]{RESET} Unnable to update GRC to latest version.")
         print("\nAlready using GRC latest version.")
         return False
+
+    # Help
+    def help(self) -> None:
+        print(
+            "\nWhat is GRC?\nGRC is a tool to automatically create GitHub repositories using YAML templates.")
+        print(
+            "\n[COMMANDS]")
+        print(
+            f"\n{BLUE}help{RESET}\n\nShows this message.")
+        print(
+            f"\n{BLUE}authenticate{RESET} {CYAN}<ACCESS_TOKEN>{RESET}\n\nAuthenticates to GitHub in order to create repositories in your account.")
+        print(
+            f"\n{BLUE}create{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\n\nCreates a repository for you based on a YAML file that is passed as a parameter.")
+        print(
+            f"\n{BLUE}save{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\n\nSaves a YAML file to your templates, so that you can later use it to create another repository with the same configurations.")
+        print(
+            f"\n{BLUE}list{RESET}\n\nThe 'list' command lists all the templates that are saved in your machine.")
+        print(
+            f"\n{BLUE}get{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\n\nThe 'get' command shows the content of a template that is saved in your machine.")
+        print(
+            f"\n{BLUE}choose{RESET}\n\nLets you choose a file from your saved templates to create a repository based on it.")
+        print(
+            f"\n{BLUE}edit{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\n\nOpens a text editor and lets you edit one of your saved templates.")
+        print(
+            f"\n{BLUE}delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\n\nDeletes a template from your saved templates.")
+        print(
+            f"\n{BLUE}version{RESET}\n\nShows you the GRC version that you are currently using.")
+        print(
+            f"\n{BLUE}update{RESET}\n\nAutomatically installs the latest GRC version in case you're still not using it.\n")
