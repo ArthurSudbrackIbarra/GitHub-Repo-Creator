@@ -139,8 +139,7 @@ if __name__ == "__main__":
     cli = CLI()
     tokenManager = TokenManager()
     token = tokenManager.readToken()
-    authenticated = cli.authenticate(token, logs=False)
-    if authenticated:
-        versionLog()
+    cli.authenticate(token, logs=False)
+    versionLog()
     addCommands()
     main()
