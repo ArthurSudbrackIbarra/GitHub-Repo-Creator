@@ -247,7 +247,7 @@ class CLI:
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to get GRC current version.")
             return False
-        print(f"GRC version {version}")
+        print(f"\nGRC version {version}\n")
         return True
 
     # Helper method.

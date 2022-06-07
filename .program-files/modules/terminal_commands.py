@@ -45,8 +45,8 @@ class CommandRunner:
         try:
             outputAsBytes = check_output(
                 ["git", "--git-dir", f"{repoPath}/.git", "describe", "--tags"], shell=True)
-            output = outputAsBytes.decode().strip()
-            return output
+            output = outputAsBytes.decode()
+            return output.strip().split("-")[0]
         except:
             return None
 
