@@ -7,9 +7,9 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && 
 
 if [ -z "$COMMAND" ]; then
     echo
-    echo "No command passed."
+    echo "GRC: No command passed."
     echo
-    exit
+    exit 0
 fi
 
 if [ -z "$PARAMETER" ]; then

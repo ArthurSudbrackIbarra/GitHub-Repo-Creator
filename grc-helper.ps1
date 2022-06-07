@@ -2,7 +2,8 @@ $COMMAND = $args[0]
 $PARAMETER = $args[1]
 
 if ($COMMAND -eq $null) {
-    Write-Host "`nNo command passed.`n"
+    Write-Host "`nGRC: No command passed.`n"
+    Exit 0
 }
 
 if ($PARAMETER -eq $null) {
