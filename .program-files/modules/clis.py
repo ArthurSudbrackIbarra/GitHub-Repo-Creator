@@ -304,7 +304,7 @@ class CLI:
         print(
             f"\n{BLUE}list{RESET}\nLists all the templates that are saved in your machine.")
         print(
-            f"\n{BLUE}get{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nThe 'get' command shows the content of a template that is saved in your machine.")
+            f"\n{BLUE}get{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nShows the content of a template that is saved in your machine.")
         print(
             f"\n{BLUE}choose{RESET}\nLets you choose a file from your saved templates to create a repository based on it.")
         print(
