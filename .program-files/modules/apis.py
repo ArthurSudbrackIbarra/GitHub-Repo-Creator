@@ -68,7 +68,8 @@ class GitHubAPI:
             tags = repo.get_tags()
             tagNames = []
             for tag in tags:
-                tagNames.append(tag.name)
+                if tag.name.startswith("v"):
+                    tagNames.append(tag.name)
                 if len(tagNames) > 0:
                     return tagNames[0]
             return None
