@@ -23,9 +23,6 @@ class CommandRunner:
         exitCode = system(f"git remote add origin {repoURL}")
         if exitCode != 0:
             return exitCode
-        exitCode = system("git fetch")
-        if exitCode != 0:
-            return exitCode
         exitCode = system("git pull origin main")
         if exitCode != 0:
             return exitCode
