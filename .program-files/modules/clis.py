@@ -280,6 +280,7 @@ class CLI:
                 return True
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to update GRC to latest version.")
+            return False
         print("\nAlready using GRC latest version.")
         return False
 
