@@ -21,4 +21,8 @@ sed -i "/grc/d" ~/.bashrc
 echo "export PATH+=\":$PWD\" # grc" >> ~/.bashrc
 echo "[INFO] Added repository directory to your PATH."
 
+# Installing python dependencies.
+pip install -r ./.program-files/requirements.txt
+echo "[INFO] Installed Python dependencies."
+
 echo "[INFO] You may close this terminal now for the changes to take effect."
