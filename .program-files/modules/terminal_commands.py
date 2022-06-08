@@ -14,7 +14,10 @@ class CommandRunner:
     @staticmethod
     def gitLocalToRemote(repoURL: str, commitMessage: str) -> int:
         print("")
-        exitCode = system("git init --initial-branch=main")
+        exitCode = system("git init")
+        if exitCode != 0:
+            return exitCode
+        exitCode = system("git branch -M main")
         if exitCode != 0:
             return exitCode
         exitCode = system(f"git remote add origin {repoURL}")
@@ -32,7 +35,7 @@ class CommandRunner:
         exitCode = system(f"git commit -m \"{commitMessage}\"")
         if exitCode != 0:
             return exitCode
-        return system("git push --all origin")
+        return system("git push origin main")
 
     @staticmethod
     def openTextEditor(absoluteFilePath: str) -> int:
