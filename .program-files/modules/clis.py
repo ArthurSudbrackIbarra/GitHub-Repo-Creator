@@ -255,6 +255,8 @@ class CLI:
     def isLatestVersion(self, version: str) -> "list":
         try:
             latestTag = GitHubAPI.getGRCLatestTag()
+            if not version.startswith("v"):
+                version = f"v{version}"
             if not version.startswith(latestTag):
                 return [False, latestTag]
             return [True, latestTag]
