@@ -1,4 +1,4 @@
-# Use this template to create and clone a public repository to your current directory.
+# Use this template to create a remote public repository and then clone it to your current directory.
 
 name: "My-Repository"
 description: "This is my repository!"
