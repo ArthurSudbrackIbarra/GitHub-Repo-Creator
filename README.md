@@ -1,12 +1,14 @@
-# GitHub Repository Creator
+<h1 align="center">GitHub Repository Creator (GRC)</h1>
 
+<br/>
 GRC is a tool to automatically create GitHub repositories using YAML templates. It comes with a CLI (Command Line Interface) that you can use to execute commands.
+<br/>
 
 ## Commands
 
-In this section, all the possible GRC commands will be listed and explained.
+In the next sections, all the possible GRC commands will be listed and explained.
 
-### Help
+## Help
 
 The 'help' command gives you orientation about what GRC is and how to use its commands.
 
@@ -15,7 +17,7 @@ The 'help' command gives you orientation about what GRC is and how to use its co
 grc help
 ```
 
-### Authenticate
+## Authenticate
 
 The 'authenticate' command is used so you can authenticate to GitHub and create repositories in your account. This is the **first command** you need to execute in order to start using GRC.
 
@@ -31,7 +33,7 @@ grc authenticate ghp_3dh39j39874hs3d8PSBSHksbsbtx
 
 Before running the command, you will need to generate a personal access token in GitHub if you don't have one yet. More on how to do that [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token), make sure to check the 'repo' permission box when creating your token.
 
-### Create
+## Create
 
 The 'create' command creates a repository for you based on a YAML file that is passed as a parameter. The YAML file contains information about the repository you want to create and must follow the patterns defined in the [templates](https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/tree/main/templates).
 
@@ -62,7 +64,7 @@ grc create <PATH_TO_YOUR_YAML_FILE>
 grc create ./my-template.yaml
 ```
 
-### Save
+## Save
 
 The 'save' command is used to save a YAML file to your templates, so that you can later use it to create another repository with the same configurations but with a different repository name/description without having to specify the file path again.
 
@@ -76,7 +78,7 @@ grc save <PATH_TO_YOUR_YAML_FILE>
 grc save ./my-template.yaml
 ```
 
-### List
+## List
 
 The 'list' command lists all the templates that are saved in your machine.
 
@@ -87,7 +89,7 @@ The 'list' command lists all the templates that are saved in your machine.
 grc list
 ```
 
-### Get
+## Get
 
 The 'get' command shows the content of a template that is saved in your machine.
 
@@ -102,7 +104,7 @@ grc get my-template # Or...
 grc get my-template.yaml
 ```
 
-### Choose
+## Choose
 
 The 'choose' command lets you choose a file from your saved templates to create a repository based on it. When selecting a template, you have the option to use a different repository name/description than the one specified in the template file.
 
@@ -113,7 +115,7 @@ The 'choose' command lets you choose a file from your saved templates to create 
 grc choose
 ```
 
-### Edit
+## Edit
 
 The 'edit' command opens a text editor and lets you edit one of your saved templates. If you have [VSCode](https://code.visualstudio.com) installed in your computer, then it is used. If you don't, then a native text editor is used.
 
@@ -128,7 +130,7 @@ grc edit my-template # Or...
 grc edit my-template.yaml
 ```
 
-### Delete
+## Delete
 
 The 'delete' command is used to delete a template from your saved templates.
 
@@ -145,7 +147,7 @@ grc delete my-template.yaml
 grc delete all # Will delete all your templates.
 ```
 
-### Version
+## Version
 
 The 'version' command shows you the GRC version that you are currently using.
 
@@ -156,7 +158,7 @@ The 'version' command shows you the GRC version that you are currently using.
 grc version
 ```
 
-### Update
+## Update
 
 The 'update' command automatically installs the latest GRC version in case you're still not using it.
 
@@ -195,7 +197,7 @@ pip install -r .\.program-files\requirements.txt
 
 Copy the project directory path, as shown in the image above, and follow [this quick tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
-### Installation (Linux)
+## Installation (Linux)
 
 1. Open a terminal and run this commmand:
 
