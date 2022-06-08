@@ -17,13 +17,13 @@ class CommandRunner:
         exitCode = system("git init")
         if exitCode != 0:
             return exitCode
-        exitCode = system("git branch -M main")
-        if exitCode != 0:
-            return exitCode
         exitCode = system(f"git remote add origin {repoURL}")
         if exitCode != 0:
             return exitCode
         exitCode = system("git pull origin main")
+        if exitCode != 0:
+            return exitCode
+        exitCode = system("git branch -M main")
         if exitCode != 0:
             return exitCode
         exitCode = system("git add .")
