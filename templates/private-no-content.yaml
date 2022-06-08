@@ -1,0 +1,6 @@
+# Use this template to create and clone a private repository to your current directory.
+
+name: "My-Repository"
+description: "This is my repository!"
+private: true
+autoClone: true

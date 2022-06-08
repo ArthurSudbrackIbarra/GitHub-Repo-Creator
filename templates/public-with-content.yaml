@@ -1,0 +1,8 @@
+# Use this template to create a remote public repository with all the contents inside your current
+# directory. This will also turn your current directory into a local repository that will connect
+# with the created remote repository.
+
+name: "My-Repository"
+description: "This is my repository!"
+private: false
+autoPush: true

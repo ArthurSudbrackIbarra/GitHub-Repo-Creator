@@ -21,8 +21,8 @@ autoPush: false
 # Collaborators list (Optional).
 collaborators:
   - collaborator:
-      name: "ArthurManatee_33" # Collaborator name. (Required).
+      name: "USER_NAME_1" # Collaborator name. (Required).
       permission: "admin" # Collaborator permission -> push/pull/admin. (Optional, default is admin).
   - collaborator:
-      name: "PikachuMan123"
+      name: "USER_NAME_2"
       permission: "push"

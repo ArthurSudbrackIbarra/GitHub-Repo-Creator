@@ -4,7 +4,7 @@
 set -e
 
 # Purple color for info messages.
-PURPLE='\033[0;35m'
+PURPLE='\033[0;94m'
 NC='\033[0m'
 
 # Creates GRC directory.

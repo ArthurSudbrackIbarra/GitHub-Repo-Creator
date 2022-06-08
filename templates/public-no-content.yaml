@@ -1,0 +1,6 @@
+# Use this template to create and clone a public repository to your current directory.
+
+name: "My-Repository"
+description: "This is my repository!"
+private: false
+autoClone: true
