@@ -51,10 +51,11 @@ class CLI:
         return True
 
     # Choose.
-    def choose(self) -> None:
+    def choose(self) -> bool:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+            return False
         self.list(enumeration=True)
         option = -1
         try:
@@ -78,11 +79,11 @@ class CLI:
             repoName = input("\nRepository name: ")
             repoDescription = input("Repository description: ")
             # Calling the create command with optional arguments.
-            self.create(filePath, repoName=repoName,
-                        repoDescription=repoDescription)
+            return self.create(filePath, repoName=repoName,
+                               repoDescription=repoDescription)
         else:
             # Calling the create command.
-            self.create(filePath)
+            return self.create(filePath)
 
     # Create.
     def create(self,
@@ -287,7 +288,7 @@ class CLI:
         print(
             "\nWhat is GRC?\nGRC is a tool to automatically create GitHub repositories using YAML templates.")
         print(
-            "\n[COMMANDS]")
+            "\n- Commands -")
         print(
             f"\n{BLUE}help{RESET}\nShows this message.")
         print(
