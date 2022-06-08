@@ -1,11 +1,15 @@
 #!/bin/bash
 
+# Place of installation.
+cd /usr/local
+
 # Creates hidden directory.
 mkdir .grc
 cd .grc
 
 # Clones GRC repository.
 git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git
+cd GitHub-Repo-Creator
 
 exit 0
 
