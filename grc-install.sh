@@ -3,7 +3,9 @@
 # If any error occurs, exits the script.
 set -e
 
-# Purple color for info messages.
+# Terminal colors.
+RED='\033[31m'
+GREEN='\033[32m'
 PURPLE='\033[0;94m'
 NC='\033[0m'
 
@@ -11,17 +13,16 @@ NC='\033[0m'
 
 # Checking pip3.
 if ! pip3 --version >/dev/null 2>/dev/null; then
-  echo -e "${PURPLE}[INFO]${NC} You don't have pip3 installed!"
+  echo -e "${RED}[ERROR]${NC} You don't have pip3 installed!"
   exit 1
 fi
 
 # If Debian, do checks.
-if awk -F= '/^NAME/{print $2}' /etc/os-release | grep Debian >/dev/null 2>/dev/null; then
+if awk -F='/^NAME/{print $2}' /etc/os-release | grep Debian >/dev/null 2>/dev/null; then
   # Checking libffi-dev.
   APT_LIBFFI_DEV_RES=$(apt-cache search --names-only '^libffi-dev$')
   if [[ $APT_LIBFFI_DEV_RES == "" ]]; then
-    echo -e "${PURPLE}[INFO]${NC} You don't have libffi-dev installed!"
-    echo -e "${PURPLE}[INFO]${NC} Install with: \"apt install libffi-dev\"!"
+    echo -e "${RED}[ERROR]${NC} You don't have libffi-dev installed! Install with: \"apt install libffi-dev\"."
     exit 1
   fi
 fi
@@ -41,12 +42,12 @@ echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 chmod +x "$PWD/grc"
 
 # Adding the project directory to $PATH.
-sed -i "/grc/d" ~/.bashrc
-echo "export PATH+=\":$PWD\" # grc" >> ~/.bashrc
+sed -i "/GRC/d" ~/.bashrc
+echo "export PATH+=\":$PWD\" # GRC" >> ~/.bashrc
 echo -e "${PURPLE}[INFO]${NC} Added repository directory to your PATH."
 
 # Installing python dependencies.
 pip3 install -r ./.program-files/requirements.txt
 echo -e "${PURPLE}[INFO]${NC} Installed Python dependencies."
 
-echo -e "${PURPLE}[INFO]${NC} You may close this terminal now for the changes to take effect."
+echo -e "${GREEN}[SUCCESS]${NC} You may close this terminal now for the changes to take effect."
