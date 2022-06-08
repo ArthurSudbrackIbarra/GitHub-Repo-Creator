@@ -51,9 +51,10 @@ class CommandRunner:
 
     @staticmethod
     def getGRCCurrentVersion(repoPath: str) -> str:
+        shell = True if platform.startswith("win") else False
         try:
             outputAsBytes = check_output(
-                ["git", "--git-dir", f"{repoPath}/.git", "describe", "--tags"], shell=True)
+                ["git", "--git-dir", f"{repoPath}/.git", "describe", "--tags"], shell=shell)
             output = outputAsBytes.decode()
             return output.strip().split("-")[0]
         except:
