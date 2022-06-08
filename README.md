@@ -174,7 +174,7 @@ In order to use GRC, you must have the following tools installed in your machine
 - [Python 3](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
 
-## Installation
+## Installation (Windows)
 
 1. Clone this repository:
 
@@ -186,15 +186,8 @@ git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git
 
 ```sh
 # In the root of the project:
-
-# Windows:
 pip install -r .\.program-files\requirements.txt
-
-# Linux:
-pip install -r ./.program-files/requirements.txt
 ```
-
-### Windows-Specific Steps
 
 3. Add the project directory to your path:
 
@@ -202,12 +195,10 @@ pip install -r ./.program-files/requirements.txt
 
 Copy the project directory path, as shown in the image above, and follow [this quick tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
-### Linux-Specific Steps
+### Installation (Linux)
 
-3. Run the setup.sh script:
+1. Open a terminal and run this commmand:
 
 ```sh
-# In the root of the project:
-chmod +x setup.sh # First command.
-bash setup.sh # Second command.
+bash <(curl -s https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install.sh)
 ```
