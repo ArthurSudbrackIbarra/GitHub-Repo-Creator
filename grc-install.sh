@@ -7,16 +7,17 @@ set -e
 PURPLE='\033[0;94m'
 NC='\033[0m'
 
-# Check dependencies
-# Check pip3
+# Checking dependencies.
+
+# Checking pip3.
 if ! pip3 --version >/dev/null 2>/dev/null; then
   echo -e "${PURPLE}[INFO]${NC} You don't have pip3 installed!"
   exit 1
 fi
 
-# If debian, do checks
+# If Debian, do checks.
 if awk -F= '/^NAME/{print $2}' /etc/os-release | grep Debian >/dev/null 2>/dev/null; then
-  # Check libffi-dev
+  # Checking libffi-dev.
   APT_LIBFFI_DEV_RES=$(apt-cache search --names-only '^libffi-dev$')
   if [[ $APT_LIBFFI_DEV_RES == "" ]]; then
     echo -e "${PURPLE}[INFO]${NC} You don't have libffi-dev installed!"
