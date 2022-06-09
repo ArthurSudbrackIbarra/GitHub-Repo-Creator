@@ -18,5 +18,4 @@ class VersionManager:
             versionFile.write(version)
 
     def shouldResetCache(self) -> float:
-        return (time() - path.getatime(self.versionPath)) >= 0
         return (time() - path.getatime(self.versionPath)) >= (86400 * self.daysInCache)
