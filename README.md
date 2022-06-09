@@ -147,6 +147,17 @@ grc delete my-template.yaml
 grc delete all # Will delete all your templates.
 ```
 
+## Generate
+
+The 'generate' command will ask you to input information, such as the repository name and collaborators, and then will generate and save an YAML template for you.
+
+![Generate](https://user-images.githubusercontent.com/69170322/172760848-e048de6e-cdf8-41e2-8301-477db1d60bf9.png)
+
+```sh
+# Usage:
+grc generate
+```
+
 ## Version
 
 The 'version' command shows you the GRC version that you are currently using.
