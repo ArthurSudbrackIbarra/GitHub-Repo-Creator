@@ -16,8 +16,12 @@ if [ -z "$PARAMETER" ]; then
     python3 $SCRIPT_DIR/.program-files/main.py $COMMAND
 else
     if [ $COMMAND = "create" ] || [ $COMMAND = "save" ]; then
-        FILE_PATH=$PWD/$PARAMETER
-        python3 $SCRIPT_DIR/.program-files/main.py $COMMAND $FILE_PATH
+        if [[ "$PARAMETER" = /* ]]; then
+            python3 $SCRIPT_DIR/.program-files/main.py $COMMAND $PARAMETER
+        else
+            FILE_PATH=$PWD/$PARAMETER
+            python3 $SCRIPT_DIR/.program-files/main.py $COMMAND $FILE_PATH
+        fi     
     else
         python3 $SCRIPT_DIR/.program-files/main.py $COMMAND $PARAMETER
     fi

@@ -10,8 +10,12 @@ if ($PARAMETER -eq $null) {
     python $PSScriptRoot\.program-files\main.py $COMMAND
 } else {
     if ($COMMAND -eq "create" -or $COMMAND -eq "save") {
-        $FILE_PATH = "$PWD\$PARAMETER"
-        python $PSScriptRoot\.program-files\main.py $COMMAND $FILE_PATH
+        if ([System.IO.Path]::IsPathRooted($PARAMETER)) {
+            python $PSScriptRoot\.program-files\main.py $COMMAND $PARAMETER
+        } else {
+            $FILE_PATH = "$PWD\$PARAMETER"
+            python $PSScriptRoot\.program-files\main.py $COMMAND $FILE_PATH
+        }   
     }
     else {
         python $PSScriptRoot\.program-files\main.py $COMMAND $PARAMETER
