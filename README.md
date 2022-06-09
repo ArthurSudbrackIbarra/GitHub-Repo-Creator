@@ -158,19 +158,6 @@ The 'generate' command will ask you to input information, such as the repository
 grc generate
 ```
 
-![Delete](https://user-images.githubusercontent.com/69170322/172030289-60f9be26-2575-4e13-a674-ba1519709beb.png)
-
-```sh
-# Usage:
-grc delete <TEMPLATE_NAME>
-
-# Examples:
-grc delete my-template # Or...
-grc delete my-template.yaml
-
-grc delete all # Will delete all your templates.
-```
-
 ## Version
 
 The 'version' command shows you the GRC version that you are currently using.
