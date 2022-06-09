@@ -134,7 +134,7 @@ def addCommands() -> None:
     main.add_command(help)
 
 
-# Function warns the user if they are not using the latest GRC version.
+# Function that warns the user if they are not using the latest GRC version.
 def versionLog(versionManager: VersionManager) -> None:
     print("\nChecking GRC version...")
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
