@@ -241,7 +241,9 @@ class CLI:
 
     # Generate.
     def generate(self) -> bool:
-        templateName = input("\nTemplate name: ")
+        print(
+            f"\n{CYAN}This is the name of the template YAML file (my-template -> my-template.yaml).{RESET}")
+        templateName = input("Template name: ")
         if not templateName.endswith(".yaml"):
             templateName += ".yaml"
         repoName = input("\nRepository name: ")
@@ -252,29 +254,33 @@ class CLI:
         private = input(
             "Should the repository be private? (Y/y = Yes, Others = No): ")
         private = True if private.upper() == "Y" else False
+        print(
+            f"\n{CYAN}This will clone the created repository to your current directory.{RESET}")
         autoClone = input("Activate auto clone? (Y/y = Yes, Others = No): ")
         autoClone = True if autoClone.upper() == "Y" else False
         autoPush = False
         if not autoClone:
+            print(
+                f"\n{CYAN}This will create a remote repository and push the contents of your current directory to it.{RESET}")
             autoPush = input("Activate auto push? (Y/y = Yes, Others = No): ")
             autoPush = True if autoPush.upper() == "Y" else False
         addCollaborators = input(
-            "Add collaborators? (Y/y = Yes, Others = No): ")
+            "\nAdd collaborators? (Y/y = Yes, Others = No): ")
         collaborators = []
         if addCollaborators.upper() == "Y":
             while True:
-                collaboratorName = input("\nCollaborator name: ")
+                collaboratorName = input("\n  Collaborator name: ")
                 permissionOptions = ["admin", "push", "pull"]
                 collaboratorPermission = input(
-                    "Collaborator permission (admin [default], push or pull): ") or "admin"
+                    "  Collaborator permission (admin [default], push or pull): ") or "admin"
                 while not collaboratorPermission.lower() in permissionOptions:
-                    print("Invalid permission.")
+                    print("  Invalid permission.")
                     collaboratorPermission = input(
-                        "Collaborator permission (admin [default], push or pull): ") or "admin"
+                        "  Collaborator permission (admin [default], push or pull): ") or "admin"
                 collaborators.append(
                     {"name": collaboratorName, "permission": collaboratorPermission})
                 continueAdding = input(
-                    "Continue adding collaborators? (Y/y/Enter = Yes, Others = No): ")
+                    "\nContinue adding collaborators? (Y/y/Enter = Yes, Others = No): ")
                 if not continueAdding.upper() == "Y" and not len(continueAdding) == 0:
                     break
         templatesPath = path.abspath(
@@ -298,7 +304,6 @@ class CLI:
         return False
 
     # Version.
-
     def version(self, repoPath: str) -> bool:
         version = CommandRunner.getGRCCurrentVersion(repoPath)
         if version is None:
