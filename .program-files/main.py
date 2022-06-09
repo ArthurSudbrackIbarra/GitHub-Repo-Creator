@@ -1,6 +1,7 @@
 from os import path
 import click
 from modules.tokens import TokenManager
+from modules.version import VersionManager
 from modules.clis import CLI
 from modules.terminal_commands import CommandRunner
 from modules.coloring import Colors
@@ -134,13 +135,17 @@ def addCommands() -> None:
 
 
 # Function warns the user if they are not using the latest GRC version.
-def versionLog() -> None:
+def versionLog(versionManager: VersionManager) -> None:
+    print("\nChecking GRC version...")
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
     currentVersion = CommandRunner.getGRCCurrentVersion(repoPath)
-    isLatestVersion = cli.isLatestVersion(currentVersion)[0]
+    versionManager.writeVersion(currentVersion)
+    versionInfo = cli.isLatestVersion(currentVersion)
+    isLatestVersion = versionInfo[0]
+    latestVersion = versionInfo[1]
     if not isLatestVersion:
         print(
-            f"\n{YELLOW}[WARN]{RESET} A newer version of GRC is disponible, run '{CYAN}grc{RESET} update' to get it.")
+            f"\n{YELLOW}[WARN]{RESET} A newer version of GRC is disponible [{latestVersion}], run '{CYAN}grc{RESET} update' to get it.")
 
 
 if __name__ == "__main__":
@@ -148,6 +153,8 @@ if __name__ == "__main__":
     tokenManager = TokenManager()
     token = tokenManager.readToken()
     cli.authenticate(token, logs=False)
-    versionLog()
+    versionManager = VersionManager(daysInCache=1)
+    if versionManager.shouldResetCache():
+        versionLog(versionManager)
     addCommands()
     main()
