@@ -1,4 +1,18 @@
-from .parsers import YAMLParser
+from os import path
+from typing import Any
+import yaml
+from yaml.loader import SafeLoader
+
+
+class YAMLParser:
+    def __init__(self, filePath: str) -> None:
+        self.absoluteFilePath = path.abspath(filePath)
+
+    def load(self) -> Any:
+        with open(self.absoluteFilePath, 'r') as yamlFile:
+            data = yaml.load(yamlFile, Loader=SafeLoader)
+            return data
+
 
 REPO_NAME = "name"
 REPO_DESCRIPTION = "description"
@@ -68,3 +82,34 @@ class YAMLInterpreter:
                     return None
                 return None
             return None
+
+
+class YAMLWriter:
+    def __init__(self, dirPath: str) -> None:
+        self.absoluteDirPath = path.abspath(dirPath)
+
+    def write(self,
+              templateName: str,
+              repoName: str,
+              repoDescription: str,
+              private: bool,
+              autoClone: bool,
+              autoPush: bool,
+              collaborators: "list[dict]") -> bool:
+        data = {}
+        data[REPO_NAME] = repoName
+        data[REPO_DESCRIPTION] = repoDescription
+        data[PRIVATE] = private
+        data[AUTO_CLONE] = autoClone
+        data[AUTO_PUSH] = autoPush
+        if len(collaborators) > 0:
+            data[COLLABORATORS] = []
+        for collaborator in collaborators:
+            data[COLLABORATORS].append(
+                {COLLABORATOR: {COLLABORATOR_NAME: collaborator["name"], COLLABORATOR_PERMISSION: collaborator["permission"]}})
+        with open(f"{self.absoluteDirPath}/{templateName}", "w+") as yamlFile:
+            try:
+                yaml.dump(data, yamlFile)
+                return True
+            except:
+                return False

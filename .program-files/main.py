@@ -81,6 +81,13 @@ def delete(template_name: str) -> None:
     print("")
 
 
+# Generate.
+@click.command(name="generate")
+def generate() -> None:
+    cli.generate()
+    print("")
+
+
 # Version.
 @click.command(name="version")
 @click.argument("repo_path")
@@ -120,6 +127,7 @@ def addCommands() -> None:
     main.add_command(get)
     main.add_command(edit)
     main.add_command(delete)
+    main.add_command(generate)
     main.add_command(version)
     main.add_command(update)
     main.add_command(help)

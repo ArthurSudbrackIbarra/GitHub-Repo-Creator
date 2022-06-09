@@ -1,7 +1,5 @@
-from fileinput import filename
 from os import path
-from .parsers import YAMLParser
-from .interpreters import YAMLInterpreter
+from .yaml import YAMLParser, YAMLInterpreter, YAMLWriter
 from .tokens import TokenManager
 from .apis import GitHubAPI
 from .file_managers import FileCopier, FileChooser, FileDeleter
@@ -241,7 +239,66 @@ class CLI:
                 f"\n{RED}[ERROR]{RESET} Unnable to delete template, make sure the file exists.")
             return False
 
+    # Generate.
+    def generate(self) -> bool:
+        templateName = input("\nTemplate name: ")
+        if not templateName.endswith(".yaml"):
+            templateName += ".yaml"
+        repoName = input("Repository name: ")
+        while len(repoName) == 0:
+            print("Invalid repository name.")
+            repoName = input("Repository name: ")
+        repoDescription = input("Repository description: ")
+        private = input(
+            "Should the repository be private? (Y/y = Yes, Other = No): ")
+        private = True if private.upper() == "Y" else False
+        autoClone = input("Activate auto clone? (Y/y = Yes, Other: No): ")
+        autoClone = True if autoClone.upper() == "Y" else False
+        autoPush = False
+        if not autoClone:
+            autoPush = input("Activate auto push? (Y/y = Yes, Other: No): ")
+            autoPush = True if autoPush.upper() == "Y" else False
+        addCollaborators = input(
+            "Add collaborators? (Y/y = Yes, Other = No): ")
+        collaborators = []
+        if addCollaborators.upper() == "Y":
+            while True:
+                collaboratorName = input("\nCollaborator name: ")
+                permissionOptions = ["admin", "push", "pull"]
+                collaboratorPermission = input(
+                    "Collaborator permission (admin -> default, push, pull): ") or "admin"
+                while not collaboratorPermission.lower() in permissionOptions:
+                    print("Invalid permission.")
+                    collaboratorPermission = input(
+                        "Collaborator permission (admin [default], push or pull):") or "admin"
+                collaborators.append(
+                    {"name": collaboratorName, "permission": collaboratorPermission})
+                continueAdding = input(
+                    "Continue adding collaborators? (Y/y = Yes, Other: No): ")
+                if not continueAdding.upper() == "Y":
+                    break
+        templatesPath = path.abspath(
+            path.join(path.dirname(__file__), "../../templates"))
+        writer = YAMLWriter(templatesPath)
+        wrote = writer.write(
+            templateName=templateName,
+            repoName=repoName,
+            repoDescription=repoDescription,
+            private=private,
+            autoClone=autoClone,
+            autoPush=autoPush,
+            collaborators=collaborators
+        )
+        if wrote:
+            print(
+                f"\n{GREEN}[SUCCESS]{RESET} Template {templateName} generated with success!")
+            return True
+        print(
+            f"\n{RED}[ERROR]{RESET} Unnable to generate template.")
+        return False
+
     # Version.
+
     def version(self, repoPath: str) -> bool:
         version = CommandRunner.getGRCCurrentVersion(repoPath)
         if version is None:
@@ -310,6 +367,8 @@ class CLI:
             f"\n{BLUE}edit{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nOpens a text editor and lets you edit one of your saved templates.")
         print(
             f"\n{BLUE}delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nDeletes a template from your saved templates.")
+        print(
+            f"\n{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.")
         print(
             f"\n{BLUE}version{RESET}\nShows you the GRC version that you are currently using.")
         print(
