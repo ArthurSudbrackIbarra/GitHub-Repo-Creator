@@ -244,38 +244,38 @@ class CLI:
         templateName = input("\nTemplate name: ")
         if not templateName.endswith(".yaml"):
             templateName += ".yaml"
-        repoName = input("Repository name: ")
+        repoName = input("\nRepository name: ")
         while len(repoName) == 0:
             print("Invalid repository name.")
             repoName = input("Repository name: ")
         repoDescription = input("Repository description: ")
         private = input(
-            "Should the repository be private? (Y/y = Yes, Other = No): ")
+            "Should the repository be private? (Y/y = Yes, Others = No): ")
         private = True if private.upper() == "Y" else False
-        autoClone = input("Activate auto clone? (Y/y = Yes, Other: No): ")
+        autoClone = input("Activate auto clone? (Y/y = Yes, Others = No): ")
         autoClone = True if autoClone.upper() == "Y" else False
         autoPush = False
         if not autoClone:
-            autoPush = input("Activate auto push? (Y/y = Yes, Other: No): ")
+            autoPush = input("Activate auto push? (Y/y = Yes, Others = No): ")
             autoPush = True if autoPush.upper() == "Y" else False
         addCollaborators = input(
-            "Add collaborators? (Y/y = Yes, Other = No): ")
+            "Add collaborators? (Y/y = Yes, Others = No): ")
         collaborators = []
         if addCollaborators.upper() == "Y":
             while True:
                 collaboratorName = input("\nCollaborator name: ")
                 permissionOptions = ["admin", "push", "pull"]
                 collaboratorPermission = input(
-                    "Collaborator permission (admin -> default, push, pull): ") or "admin"
+                    "Collaborator permission (admin [default], push or pull): ") or "admin"
                 while not collaboratorPermission.lower() in permissionOptions:
                     print("Invalid permission.")
                     collaboratorPermission = input(
-                        "Collaborator permission (admin [default], push or pull):") or "admin"
+                        "Collaborator permission (admin [default], push or pull): ") or "admin"
                 collaborators.append(
                     {"name": collaboratorName, "permission": collaboratorPermission})
                 continueAdding = input(
-                    "Continue adding collaborators? (Y/y = Yes, Other: No): ")
-                if not continueAdding.upper() == "Y":
+                    "Continue adding collaborators? (Y/y/Enter = Yes, Others = No): ")
+                if not continueAdding.upper() == "Y" and not len(continueAdding) == 0:
                     break
         templatesPath = path.abspath(
             path.join(path.dirname(__file__), "../../templates"))
