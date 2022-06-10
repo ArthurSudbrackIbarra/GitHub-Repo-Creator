@@ -45,7 +45,7 @@ The 'create' command creates a repository for you based on a YAML file that is p
 name: "My-Repository"
 description: "This is my repository!"
 private: true
-autoClone: true
+includeContent: false
 
 collaborators:
   - collaborator:
@@ -151,7 +151,7 @@ grc delete all # Will delete all your templates.
 
 The 'generate' command will ask you to input information, such as the repository name and collaborators, and then will generate and save an YAML template for you.
 
-![Generate](https://user-images.githubusercontent.com/69170322/172760848-e048de6e-cdf8-41e2-8301-477db1d60bf9.png)
+![Generate](https://user-images.githubusercontent.com/69170322/173131022-e1e9f209-6812-4f12-995d-13ced317b496.png)
 
 ```sh
 # Usage:

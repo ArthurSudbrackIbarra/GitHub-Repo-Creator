@@ -105,23 +105,33 @@ class CLI:
         private = yaml.private()
         autoClone = yaml.autoClone()
         autoPush = yaml.autoPush()
+        includeContent = yaml.includeContent()
         if repoName is None:
             print(
                 f"\n{RED}[ERROR]{RESET}. The repository name was not specified.")
             return False
         if private is None:
             private = True
-        if autoClone is None:
-            autoClone = False
-        if autoPush is None or (autoPush == True and autoClone == True):
-            autoPush = False
+        if includeContent is None:
+            # For retrocompatibility.
+            if autoClone is None and autoPush is None:
+                includeContent = False
+            else:
+                if autoClone:
+                    includeContent = False
+                else:
+                    if autoPush:
+                        includeContent = True
+                    else:
+                        includeContent = False
         # Creating repository.
         try:
+            createREADME = not includeContent
             self.githubAPI.createRepo(
                 name=repoName,
                 description=repoDescription,
                 private=private,
-                createREADME=False if autoPush else True
+                createREADME=createREADME
             )
             print(
                 f"\n{GREEN}[SUCCESS]{RESET} Repository created with success!")
@@ -129,7 +139,7 @@ class CLI:
             print(error)
             return False
         # Cloning repository.
-        if autoClone:
+        if not includeContent:
             try:
                 cloneURL = self.githubAPI.getRepoCloneURL(repoName)
                 exitCode = CommandRunner.gitClone(cloneURL)
@@ -142,7 +152,7 @@ class CLI:
             except Exception as error:
                 print(error)
         # Pushing content.
-        if autoPush and not autoClone:
+        else:
             try:
                 cloneURL = self.githubAPI.getRepoCloneURL(repoName)
                 exitCode = CommandRunner.gitLocalToRemote(cloneURL)
@@ -259,15 +269,9 @@ class CLI:
             "Should the repository be private? (Y/y = Yes, Others = No): ")
         private = True if private.upper() == "Y" else False
         print(
-            f"\n{CYAN}This will clone the created repository to your current directory.{RESET}")
-        autoClone = input("Activate auto clone? (Y/y = Yes, Others = No): ")
-        autoClone = True if autoClone.upper() == "Y" else False
-        autoPush = False
-        if not autoClone:
-            print(
-                f"\n{CYAN}This will create a remote repository and push the contents of your current directory to it.{RESET}")
-            autoPush = input("Activate auto push? (Y/y = Yes, Others = No): ")
-            autoPush = True if autoPush.upper() == "Y" else False
+            f"\n{CYAN}This will send the contents of your current directory to the repository.{RESET}")
+        includeContent = input("Include content? (Y/y = Yes, Others = No): ")
+        includeContent = True if includeContent.upper() == "Y" else False
         addCollaborators = input(
             "\nAdd collaborators? (Y/y = Yes, Others = No): ")
         collaborators = []
@@ -295,8 +299,7 @@ class CLI:
             repoName=repoName,
             repoDescription=repoDescription,
             private=private,
-            autoClone=autoClone,
-            autoPush=autoPush,
+            includeContent=includeContent,
             collaborators=collaborators
         )
         if wrote:

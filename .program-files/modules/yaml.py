@@ -17,8 +17,14 @@ class YAMLParser:
 REPO_NAME = "name"
 REPO_DESCRIPTION = "description"
 PRIVATE = "private"
+
+# For retrocompatibility.
 AUTO_CLONE = "autoClone"
 AUTO_PUSH = "autoPush"
+
+# New version of autoClone and autoPush.
+INCLUDE_CONTENT = "includeContent"
+
 COLLABORATORS = "collaborators"
 COLLABORATOR = "collaborator"
 COLLABORATOR_NAME = "name"
@@ -52,6 +58,11 @@ class YAMLInterpreter:
     def autoPush(self) -> bool:
         if AUTO_PUSH in self.data:
             return self.data[AUTO_PUSH]
+        return None
+
+    def includeContent(self) -> bool:
+        if INCLUDE_CONTENT in self.data:
+            return self.data[INCLUDE_CONTENT]
         return None
 
     def collaboratorsCount(self) -> int:
@@ -93,15 +104,13 @@ class YAMLWriter:
               repoName: str,
               repoDescription: str,
               private: bool,
-              autoClone: bool,
-              autoPush: bool,
+              includeContent: bool,
               collaborators: "list[dict]") -> bool:
         data = {}
         data[REPO_NAME] = repoName
         data[REPO_DESCRIPTION] = repoDescription
         data[PRIVATE] = private
-        data[AUTO_CLONE] = autoClone
-        data[AUTO_PUSH] = autoPush
+        data[INCLUDE_CONTENT] = includeContent
         if len(collaborators) > 0:
             data[COLLABORATORS] = []
         for collaborator in collaborators:
