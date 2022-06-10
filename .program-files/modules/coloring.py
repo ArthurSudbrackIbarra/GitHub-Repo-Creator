@@ -47,4 +47,3 @@ class Colors:
         RESET = '\033[0m'
         BOLD = '\033[1m'
         UNDERLINE = '\033[4m'
-        print("Entrou aqui!")
