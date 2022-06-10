@@ -92,6 +92,10 @@ class CLI:
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
+        if not path.exists(absoluteFilePath):
+            print(
+                f"\n{RED}[ERROR]{RESET} The path you specified does not exist.")
+            return False
         parser = YAMLParser(absoluteFilePath)
         yaml = YAMLInterpreter(parser)
         if repoName is None:
@@ -141,8 +145,7 @@ class CLI:
         if autoPush and not autoClone:
             try:
                 cloneURL = self.githubAPI.getRepoCloneURL(repoName)
-                exitCode = CommandRunner.gitLocalToRemote(
-                    cloneURL, "Initial Commit.")
+                exitCode = CommandRunner.gitLocalToRemote(cloneURL)
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Pushed content to repository with success!")

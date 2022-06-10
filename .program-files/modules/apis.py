@@ -30,7 +30,7 @@ class GitHubAPI:
                 name=name,
                 description=description,
                 private=private,
-                auto_init=createREADME
+                auto_init=createREADME,
             )
         except:
             raise Exception(
