@@ -153,7 +153,8 @@ if __name__ == "__main__":
     tokenManager = TokenManager()
     token = tokenManager.readToken()
     cli.authenticate(token, logs=False)
-    versionManager = VersionManager(daysInCache=1)
+    # 0.08 days = 1,92 hours.
+    versionManager = VersionManager(daysInCache=0.08)
     if versionManager.shouldResetCache():
         versionLog(versionManager)
     addCommands()
