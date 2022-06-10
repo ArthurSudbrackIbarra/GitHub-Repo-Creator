@@ -64,7 +64,7 @@ class CommandRunner:
     def updateGRCVersion(repoPath: str, latestTag: str) -> int:
         print("")
         gitDirFlag = f"--git-dir {repoPath}/.git"
-        redirectOutput = "null" if platform.startswith(
+        redirectOutput = "nul" if platform.startswith(
             "win") else "/dev/null"
         exitCode = system(f"git {gitDirFlag} fetch --tags > {redirectOutput}")
         if exitCode != 0:
