@@ -23,14 +23,14 @@ class GitHubAPI:
         except:
             return False
 
-    def createRepo(self, name: str, description: str, private: bool) -> bool:
+    def createRepo(self, name: str, description: str, private: bool, createREADME: bool = False) -> bool:
         user = self.github.get_user()
         try:
             user.create_repo(
                 name=name,
                 description=description,
                 private=private,
-                auto_init=True
+                auto_init=createREADME
             )
         except:
             raise Exception(

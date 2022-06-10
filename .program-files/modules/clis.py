@@ -116,7 +116,8 @@ class CLI:
             self.githubAPI.createRepo(
                 name=repoName,
                 description=repoDescription,
-                private=private
+                private=private,
+                createREADME=False if autoPush else True
             )
             print(
                 f"\n{GREEN}[SUCCESS]{RESET} Repository created with success!")
