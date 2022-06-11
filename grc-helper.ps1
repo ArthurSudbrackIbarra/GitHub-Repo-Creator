@@ -6,9 +6,8 @@ if ($COMMAND -eq $null) {
     Exit 0
 }
 
-Try {
-    If (Get-Command python3 2> $null) { Throw }
-} Catch {
+$PYTHON3VERSION = "$(try { python3 --version 2>$Null } catch { })"
+If ($PYTHON3VERSION.Contains("Python 3")) {
     Set-Alias -name python -value python3
 }
 
