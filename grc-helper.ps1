@@ -6,6 +6,12 @@ if ($COMMAND -eq $null) {
     Exit 0
 }
 
+Try {
+    If (Get-Command python3 2> $null) { Throw }
+} Catch {
+    Set-Alias -name python -value python3
+}
+
 if ($PARAMETER -eq $null) {
     python $PSScriptRoot\.program-files\main.py $COMMAND
 } else {
