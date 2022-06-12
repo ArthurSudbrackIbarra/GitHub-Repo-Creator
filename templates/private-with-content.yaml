@@ -5,5 +5,4 @@
 name: "My-Repository"
 description: "This is my repository!"
 private: true
-autoPush: true
 includeContent: true

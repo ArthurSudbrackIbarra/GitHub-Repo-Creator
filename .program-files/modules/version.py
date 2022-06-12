@@ -18,6 +18,6 @@ class VersionManager:
             versionFile.write(version)
 
     def shouldResetCache(self) -> bool:
-        milliDiff = time() - path.getatime(self.versionPath)
-        dayDiff = milliDiff / 86400000
+        secsDiff = time() - path.getatime(self.versionPath)
+        dayDiff = secsDiff / 86400
         return dayDiff >= self.daysInCache
