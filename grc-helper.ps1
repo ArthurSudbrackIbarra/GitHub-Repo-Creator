@@ -6,6 +6,11 @@ if ($COMMAND -eq $null) {
     Exit 0
 }
 
+$PYTHON3VERSION = "$(try { python3 --version 2>$Null } catch { })"
+If ($PYTHON3VERSION.Contains("Python 3")) {
+    Set-Alias -name python -value python3
+}
+
 if ($PARAMETER -eq $null) {
     python $PSScriptRoot\.program-files\main.py $COMMAND
 } else {
