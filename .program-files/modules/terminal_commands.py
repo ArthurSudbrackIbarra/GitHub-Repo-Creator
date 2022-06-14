@@ -59,7 +59,6 @@ class CommandRunner:
 
     @staticmethod
     def updateGRCVersion(repoPath: str, latestTag: str) -> int:
-        print("")
         gitDirFlag = f"--git-dir {repoPath}/.git"
         exitCode = system(f"git {gitDirFlag} fetch --tags --quiet")
         if exitCode != 0:
