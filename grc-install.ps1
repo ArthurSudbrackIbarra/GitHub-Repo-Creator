@@ -13,7 +13,7 @@ try {
 New-Item GRC-Win-Install -type directory -Force > $null
 cd GRC-Win-Install
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
-Write-Host "Created folder 'GRC', please do not move this folder to another path."
+Write-Host "Created folder 'GRC-Win-Install', please do not move this folder to another path."
 
 # Cloning repository.
 Remove-Item GitHub-Repo-Creator -Force -Recurse 2> $null
@@ -50,3 +50,5 @@ Write-Host "Installed Python dependencies."
 
 Write-Host "[SUCCESS] " -ForegroundColor Green -NoNewline
 Write-Host "You may close this terminal now for the changes to take effect."
+
+cd ../..
