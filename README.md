@@ -191,13 +191,15 @@ In order to use GRC, you must have the following tools installed in your machine
 
 ### Automatic installation
 
-1. Open a powershell an run this command:
+1. Open a **Powershell** terminal and run this command:
 
 ```ps1
-powershell -c "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install.ps1'))"
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install.ps1'))
 ```
 
 ### Manual Installation
+
+In case the automatic installation didn't work for you, it is possible to setup GRC manually:
 
 1. Clone this repository:
 
