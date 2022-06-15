@@ -389,7 +389,8 @@ class CLI:
             return False
         parser = YAMLParser(filePath)
         interpreter = YAMLInterpreter(parser)
-        exitCode = CommandRunner.code(interpreter.repoPath())
+        repoPath = interpreter.repoPath()
+        exitCode = CommandRunner.code(repoPath)
         if exitCode != 0:
             print(
                 f"\n{RED}[ERROR]{RESET} You don't have VSCode installed in your machine.")
@@ -400,12 +401,16 @@ class CLI:
     def help(self) -> None:
         print(
             "\nWhat is GRC?\nGRC is a tool to automatically create GitHub repositories using YAML templates.")
-        print(
-            "\n- Commands -")
+        print("\n- General Commands -")
         print(
             f"\n{BLUE}help{RESET}\nShows this message.")
         print(
             f"\n{BLUE}authenticate{RESET} {CYAN}<ACCESS_TOKEN>{RESET}\nAuthenticates to GitHub in order to create repositories in your account.")
+        print(
+            f"\n{BLUE}version{RESET}\nShows you the GRC version that you are currently using.")
+        print(
+            f"\n{BLUE}update{RESET}\nAutomatically installs the latest GRC version in case you're still not using it.\n")
+        print("- Template Commands -")
         print(
             f"\n{BLUE}create{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nCreates a repository for you based on a YAML file that is passed as a parameter.")
         print(
@@ -419,10 +424,11 @@ class CLI:
         print(
             f"\n{BLUE}edit{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nOpens a text editor and lets you edit one of your saved templates.")
         print(
-            f"\n{BLUE}delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nDeletes a template from your saved templates.")
+            f"\n{BLUE}delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nDeletes a template from your saved templates.\n(Use 'delete all' to delete all your templates).")
         print(
-            f"\n{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.")
+            f"\n{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.\n")
+        print("- Repository Commands -")
         print(
-            f"\n{BLUE}version{RESET}\nShows you the GRC version that you are currently using.")
+            f"\n{BLUE}list-repos{RESET}\nLists all the repositories that you have created with GRC.")
         print(
-            f"\n{BLUE}update{RESET}\nAutomatically installs the latest GRC version in case you're still not using it.\n")
+            f"\n{BLUE}open-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nOpens the specified repository in Visual Studio Code.\n")
