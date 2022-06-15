@@ -146,6 +146,8 @@ class CLI:
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
+                    currentUserDir = CommandRunner.getUserCurrentDir()
+                    self.addRepo(f"{currentUserDir}/{repoName}")
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
@@ -159,6 +161,8 @@ class CLI:
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Pushed content to repository with success!")
+                    currentUserDir = CommandRunner.getUserCurrentDir()
+                    self.addRepo(currentUserDir)
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to push content to repository.")
@@ -182,6 +186,20 @@ class CLI:
                 except Exception as error:
                     print(error)
         return True
+
+    # Helper method of create command.
+    def addRepo(self, repoPath: str) -> None:
+        repoPath = repoPath.replace("\\", "/")
+        repoName = repoPath.split("/")[-1]
+        templateName = f"{repoName.lower()}.yaml"
+        repositoriesPath = path.abspath(
+            path.join(path.dirname(__file__), "../../repositories"))
+        writer = YAMLWriter(repositoriesPath)
+        writer.writeRepo(
+            templateName=templateName,
+            repoName=repoName,
+            repoPath=repoPath
+        )
 
     # List.
     def list(self, enumeration: bool = False) -> None:
@@ -294,7 +312,7 @@ class CLI:
         templatesPath = path.abspath(
             path.join(path.dirname(__file__), "../../templates"))
         writer = YAMLWriter(templatesPath)
-        wrote = writer.write(
+        wrote = writer.writeTemplate(
             templateName=templateName,
             repoName=repoName,
             repoDescription=repoDescription,
@@ -354,6 +372,24 @@ class CLI:
             return False
         print("\nAlready using GRC latest version.")
         return False
+
+    # List Repos.
+    def listRepos(self) -> None:
+        repositoriesPath = path.abspath(
+            path.join(path.dirname(__file__), "../../repositories"))
+        chooser = FileChooser(repositoriesPath)
+        fileNames = chooser.getFileNames()
+        if len(fileNames) <= 0:
+            print("No repositories to list.")
+            return
+        for fileName in fileNames:
+            print(fileName.replace(".yaml", ""))
+        print("")
+
+    # Open Repo.
+    def openRepo(self, repoName) -> bool:
+        pass
+        print(repoName)
 
     # Help
     def help(self) -> None:

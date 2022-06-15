@@ -15,6 +15,7 @@ class YAMLParser:
 
 
 REPO_NAME = "name"
+REPO_PATH = "path"
 REPO_DESCRIPTION = "description"
 PRIVATE = "private"
 
@@ -38,6 +39,11 @@ class YAMLInterpreter:
     def repoName(self) -> str:
         if REPO_NAME in self.data:
             return self.data[REPO_NAME]
+        return None
+
+    def repoPath(self) -> str:
+        if REPO_PATH in self.data:
+            return self.data[REPO_PATH]
         return None
 
     def repoDescription(self) -> str:
@@ -99,13 +105,13 @@ class YAMLWriter:
     def __init__(self, dirPath: str) -> None:
         self.absoluteDirPath = path.abspath(dirPath)
 
-    def write(self,
-              templateName: str,
-              repoName: str,
-              repoDescription: str,
-              private: bool,
-              includeContent: bool,
-              collaborators: "list[dict]") -> bool:
+    def writeTemplate(self,
+                      templateName: str,
+                      repoName: str,
+                      repoDescription: str,
+                      private: bool,
+                      includeContent: bool,
+                      collaborators: "list[dict]") -> bool:
         data = {}
         data[REPO_NAME] = repoName
         data[REPO_DESCRIPTION] = repoDescription
@@ -116,6 +122,20 @@ class YAMLWriter:
         for collaborator in collaborators:
             data[COLLABORATORS].append(
                 {COLLABORATOR: {COLLABORATOR_NAME: collaborator["name"], COLLABORATOR_PERMISSION: collaborator["permission"]}})
+        with open(f"{self.absoluteDirPath}/{templateName}", "w+") as yamlFile:
+            try:
+                yaml.dump(data, yamlFile)
+                return True
+            except:
+                return False
+
+    def writeRepo(self,
+                  templateName: str,
+                  repoName: str,
+                  repoPath: str) -> bool:
+        data = {}
+        data[REPO_NAME] = repoName
+        data[REPO_PATH] = repoPath
         with open(f"{self.absoluteDirPath}/{templateName}", "w+") as yamlFile:
             try:
                 yaml.dump(data, yamlFile)

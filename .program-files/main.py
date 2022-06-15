@@ -91,14 +91,6 @@ def generate() -> None:
 
 # Version.
 @click.command(name="version")
-@click.argument("repo_path")
-def update(repo_path: str) -> None:
-    cli.version(repo_path)
-    print("")
-
-
-# Version.
-@click.command(name="version")
 def version() -> None:
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
     cli.version(repoPath)
@@ -109,6 +101,21 @@ def version() -> None:
 def update() -> None:
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
     cli.update(repoPath)
+    print("")
+
+
+# List-Repos.
+@click.command(name="list-repos")
+def listRepos() -> None:
+    print("")
+    cli.listRepos()
+
+
+# Open-Repo.
+@click.command(name="open-repo")
+@click.argument("repo_name")
+def openRepo(repo_name: str) -> None:
+    cli.openRepo(repo_name)
     print("")
 
 
@@ -131,6 +138,8 @@ def addCommands() -> None:
     main.add_command(generate)
     main.add_command(version)
     main.add_command(update)
+    main.add_command(listRepos)
+    main.add_command(openRepo)
     main.add_command(help)
 
 
