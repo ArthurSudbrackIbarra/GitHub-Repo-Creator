@@ -148,7 +148,8 @@ class CLI:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
                     currentUserDir = CommandRunner.getUserCurrentDir()
-                    self.addRepo(f"{currentUserDir}/{repoName}")
+                    self.addRepo(
+                        repoName=None, repoPath=f"{currentUserDir}/{repoName}")
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
@@ -163,7 +164,7 @@ class CLI:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Pushed content to repository with success!")
                     currentUserDir = CommandRunner.getUserCurrentDir()
-                    self.addRepo(currentUserDir)
+                    self.addRepo(repoName=repoName, repoPath=currentUserDir)
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to push content to repository.")
@@ -189,9 +190,10 @@ class CLI:
         return True
 
     # Helper method of create command.
-    def addRepo(self, repoPath: str) -> None:
+    def addRepo(self, repoName: str | None, repoPath: str) -> None:
         repoPath = repoPath.replace("\\", "/")
-        repoName = repoPath.split("/")[-1]
+        if repoName is None:
+            repoName = repoPath.split("/")[-1]
         templateName = f"{repoName.lower()}.yaml"
         repositoriesPath = path.abspath(
             path.join(path.dirname(__file__), "../../repositories"))
