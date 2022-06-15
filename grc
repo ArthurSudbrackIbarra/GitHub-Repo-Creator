@@ -1,7 +1,6 @@
 #!/bin/bash
 
 COMMAND=$1
-PARAMETER=$2
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 
@@ -12,17 +11,15 @@ if [ -z "$COMMAND" ]; then
     exit 0
 fi
 
-if [ -z "$PARAMETER" ]; then
-    python3 $SCRIPT_DIR/.program-files/main.py $COMMAND
-else
-    if [ $COMMAND = "create" ] || [ $COMMAND = "save" ]; then
-        if [[ "$PARAMETER" = /* ]]; then
-            python3 $SCRIPT_DIR/.program-files/main.py $COMMAND $PARAMETER
-        else
-            FILE_PATH=$PWD/$PARAMETER
-            python3 $SCRIPT_DIR/.program-files/main.py $COMMAND $FILE_PATH
-        fi     
+
+if [ $COMMAND = "create" ] || [ $COMMAND = "save" ]; then
+    USER_FILE_PATH=$2
+    if [[ "$USER_FILE_PATH" = /* ]]; then
+        python3 $SCRIPT_DIR/.program-files/main.py $@
     else
-        python3 $SCRIPT_DIR/.program-files/main.py $COMMAND $PARAMETER
-    fi
+        ABSOLUTE_FILE_PATH=$PWD/$USER_FILE_PATH
+        python3 $SCRIPT_DIR/.program-files/main.py $COMMAND $ABSOLUTE_FILE_PATH
+    fi     
+else
+    python3 $SCRIPT_DIR/.program-files/main.py $@
 fi
