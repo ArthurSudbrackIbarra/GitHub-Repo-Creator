@@ -11,6 +11,10 @@ class CommandRunner:
         return system(f"git clone {cloneURL}")
 
     @staticmethod
+    def code(repoPath: str) -> int:
+        return system(f"code {repoPath}")
+
+    @staticmethod
     def gitLocalToRemote(repoURL: str) -> int:
         print("")
         exitCode = system("git init")
@@ -32,7 +36,7 @@ class CommandRunner:
         return system("git push -u origin main")
 
     @staticmethod
-    def openTextEditor(absoluteFilePath: str) -> int:
+    def openFileInTextEditor(absoluteFilePath: str) -> int:
         if absoluteFilePath is None or not exists(absoluteFilePath):
             return 1
         # First tries to open the file with VSCode.

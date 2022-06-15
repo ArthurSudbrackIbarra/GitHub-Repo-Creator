@@ -13,6 +13,11 @@ CYAN = Colors.CYAN
 BLUE = Colors.BLUE
 RESET = Colors.RESET
 
+TEMPLATES_PATH = path.abspath(
+    path.join(path.dirname(__file__), "../../templates"))
+REPOSITORIES_PATH = path.abspath(
+    path.join(path.dirname(__file__), "../../repositories"))
+
 
 class CLI:
     def __init__(self) -> None:
@@ -42,9 +47,7 @@ class CLI:
                 f"\n{RED}[ERROR]{RESET} Only .yaml files can be saved to your templates.")
             return False
         copier = FileCopier(absoluteFilePath)
-        templatesPath = path.abspath(
-            path.join(path.dirname(__file__), "../../templates"))
-        copier.copyTo(templatesPath)
+        copier.copyTo(TEMPLATES_PATH)
         print(f"\n{GREEN}[SUCCESS]{RESET} File saved!")
         return True
 
@@ -61,9 +64,7 @@ class CLI:
         except:
             print(f"\n{RED}[ERROR]{RESET} Option must be a number.")
             return
-        templatesPath = path.abspath(
-            path.join(path.dirname(__file__), "../../templates"))
-        chooser = FileChooser(templatesPath)
+        chooser = FileChooser(TEMPLATES_PATH)
         filePath = chooser.getFilePathByIndex(option)
         if filePath is None:
             print(f"\n{RED}[ERROR]{RESET} Invalid choice.")
@@ -203,9 +204,7 @@ class CLI:
 
     # List.
     def list(self, enumeration: bool = False) -> None:
-        templatesPath = path.abspath(
-            path.join(path.dirname(__file__), "../../templates"))
-        chooser = FileChooser(templatesPath)
+        chooser = FileChooser(TEMPLATES_PATH)
         fileNames = chooser.getFileNames()
         if len(fileNames) <= 0:
             print(
@@ -220,9 +219,7 @@ class CLI:
 
     # Get.
     def get(self, templateName: str) -> bool:
-        templatesPath = path.abspath(
-            path.join(path.dirname(__file__), "../../templates"))
-        chooser = FileChooser(templatesPath)
+        chooser = FileChooser(TEMPLATES_PATH)
         if not templateName.endswith(".yaml"):
             templateName += ".yaml"
         content = chooser.getFileContentByName(templateName)
@@ -235,13 +232,11 @@ class CLI:
 
     # Edit.
     def edit(self, templateName: str) -> bool:
-        templatesPath = path.abspath(
-            path.join(path.dirname(__file__), "../../templates"))
-        chooser = FileChooser(templatesPath)
+        chooser = FileChooser(TEMPLATES_PATH)
         if not templateName.endswith(".yaml"):
             templateName += ".yaml"
         filePath = chooser.getFilePathByName(templateName)
-        exitCode = CommandRunner.openTextEditor(filePath)
+        exitCode = CommandRunner.openFileInTextEditor(filePath)
         if exitCode == 0:
             return True
         print(
@@ -309,9 +304,7 @@ class CLI:
                     "\nContinue adding collaborators? (Y/y/Enter = Yes, Others = No): ")
                 if not continueAdding.upper() == "Y" and not len(continueAdding) == 0:
                     break
-        templatesPath = path.abspath(
-            path.join(path.dirname(__file__), "../../templates"))
-        writer = YAMLWriter(templatesPath)
+        writer = YAMLWriter(TEMPLATES_PATH)
         wrote = writer.writeTemplate(
             templateName=templateName,
             repoName=repoName,
@@ -375,21 +368,33 @@ class CLI:
 
     # List Repos.
     def listRepos(self) -> None:
-        repositoriesPath = path.abspath(
-            path.join(path.dirname(__file__), "../../repositories"))
-        chooser = FileChooser(repositoriesPath)
+        chooser = FileChooser(REPOSITORIES_PATH)
         fileNames = chooser.getFileNames()
         if len(fileNames) <= 0:
-            print("No repositories to list.")
+            print("No repositories to list.\n")
             return
         for fileName in fileNames:
             print(fileName.replace(".yaml", ""))
         print("")
 
     # Open Repo.
-    def openRepo(self, repoName) -> bool:
-        pass
-        print(repoName)
+    def openRepo(self, repoName: str) -> bool:
+        chooser = FileChooser(REPOSITORIES_PATH)
+        if not repoName.endswith(".yaml"):
+            repoName += ".yaml"
+        filePath = chooser.getFilePathByName(repoName)
+        if filePath is None:
+            print(
+                f"\n{RED}[ERROR]{RESET} Repository '{repoName}' not found.")
+            return False
+        parser = YAMLParser(filePath)
+        interpreter = YAMLInterpreter(parser)
+        exitCode = CommandRunner.code(interpreter.repoPath())
+        if exitCode != 0:
+            print(
+                f"\n{RED}[ERROR]{RESET} You don't have VSCode installed in your machine.")
+            return False
+        return True
 
     # Help
     def help(self) -> None:
