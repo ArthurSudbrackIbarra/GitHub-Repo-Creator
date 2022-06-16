@@ -4,26 +4,34 @@
 GRC is a tool to automatically create GitHub repositories using YAML templates. It comes with a CLI (Command Line Interface) that you can use to execute commands.
 <br/>
 
-## Commands
+## Table of Contents
+
+* [Commands](#cli-commands)
+* [Installation (Windows)](#installation-windows)
+  * [Automatic Installation](#automatic-installation)
+  * [Manual Installation](#manual-installation)
+* [Installation (Linux and MacOS)](#installation-linux-and-macos)
+
+## CLI Commands
 
 In the next sections, all the possible GRC commands will be listed and explained.
 
-- [help](#help)
-- [version](#version)
-- [update](#update)
-- [authenticate](#authenticate)
-- [create](#create)
-- [save](#save)
-- [list](#list)
-- [get](#get)
-- [choose](#choose)
-- [delete](#delete)
-- [generate](#generate)
-- [merge](#merge)
-- [list-repos](#list-repos)
-- [open-repo](#open-repo)
-- [get-repo](#get-repo)
-- [remove-repo](#remove-repo)
+* [help](#help)
+* [version](#version)
+* [update](#update)
+* [authenticate](#authenticate)
+* [create](#create)
+* [save](#save)
+* [list](#list)
+* [get](#get)
+* [choose](#choose)
+* [delete](#delete)
+* [generate](#generate)
+* [merge](#merge)
+* [list-repos](#list-repos)
+* [open-repo](#open-repo)
+* [get-repo](#get-repo)
+* [remove-repo](#remove-repo)
 
 ## Help
 
@@ -267,9 +275,9 @@ grc remove-repo all # Removes all your repositories.
 
 In order to use GRC, you must have the following tools installed in your machine:
 
-- [Python 3](https://www.python.org/downloads/)
-- [Git](https://git-scm.com/downloads)
-- (Optional, but recommended) [Visual Studio Code](https://code.visualstudio.com)
+* [Python 3](https://www.python.org/downloads/)
+* [Git](https://git-scm.com/downloads)
+* (Optional, but recommended) [Visual Studio Code](https://code.visualstudio.com)
 
 ## Installation (Windows)
 
@@ -287,13 +295,13 @@ In case the automatic installation didn't work for you, it is possible to setup 
 
 1. Clone this repository:
 
-```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git
+```cmd
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b 2.0.0
 ```
 
 2. Install the necessary dependencies using pip:
 
-```sh
+```cmd
 # In the root of the project:
 pip install -r .\.program-files\requirements.txt
 ```
@@ -304,7 +312,7 @@ pip install -r .\.program-files\requirements.txt
 
 Copy the project directory path, as shown in the image above, and follow [this quick tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
-## Installation (Linux)
+## Installation (Linux and MacOS)
 
 1. Open a terminal and run this commmand:
 
