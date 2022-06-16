@@ -130,13 +130,13 @@ class YAMLWriter:
                 return False
 
     def writeRepo(self,
-                  templateName: str,
+                  fileName: str,
                   repoName: str,
                   repoPath: str) -> bool:
         data = {}
         data[REPO_NAME] = repoName
         data[REPO_PATH] = repoPath
-        with open(f"{self.absoluteDirPath}/{templateName}", "w+") as yamlFile:
+        with open(f"{self.absoluteDirPath}/{fileName}", "w+") as yamlFile:
             try:
                 yaml.dump(data, yamlFile)
                 return True

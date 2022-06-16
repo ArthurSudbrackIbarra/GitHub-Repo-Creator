@@ -194,12 +194,10 @@ class CLI:
         repoPath = repoPath.replace("\\", "/")
         if repoName is None:
             repoName = repoPath.split("/")[-1]
-        templateName = f"{repoName.lower()}.yaml"
-        repositoriesPath = path.abspath(
-            path.join(path.dirname(__file__), "../../repositories"))
-        writer = YAMLWriter(repositoriesPath)
+        fileName = f"{repoName}.yaml"
+        writer = YAMLWriter(REPOSITORIES_PATH)
         writer.writeRepo(
-            templateName=templateName,
+            fileName=fileName,
             repoName=repoName,
             repoPath=repoPath
         )
@@ -248,17 +246,14 @@ class CLI:
     # Delete.
     def delete(self, templateName: str) -> bool:
         if templateName == "all":
-            dirPath = path.abspath(
-                path.join(path.dirname(__file__), "../../templates"))
-            FileDeleter.deleteAllFromFolder(dirPath)
+            FileDeleter.deleteAllFromFolder(TEMPLATES_PATH)
             print(
                 f"\n{GREEN}[SUCCESS]{RESET} Templates cleared!")
             return True
         else:
             if not templateName.endswith(".yaml"):
                 templateName += ".yaml"
-            filePath = path.abspath(
-                path.join(path.dirname(__file__), f"../../templates/{templateName}"))
+            filePath = f"{TEMPLATES_PATH}/{templateName}"
             deleted = FileDeleter.deleteFile(filePath)
             if deleted:
                 print(
@@ -379,6 +374,19 @@ class CLI:
             print(fileName.replace(".yaml", ""))
         print("")
 
+    # Get Repo.
+    def getRepo(self, repoName: str) -> bool:
+        chooser = FileChooser(REPOSITORIES_PATH)
+        if not repoName.endswith(".yaml"):
+            repoName += ".yaml"
+        content = chooser.getFileContentByName(repoName)
+        if content is None:
+            print(
+                f"\n{RED}[ERROR]{RESET} Repository not found.")
+            return False
+        print(f"\n{content}")
+        return True
+
     # Open Repo.
     def openRepo(self, repoName: str) -> bool:
         chooser = FileChooser(REPOSITORIES_PATH)
@@ -399,11 +407,32 @@ class CLI:
             return False
         return True
 
+    # Remove Repo.
+    def removeRepo(self, fileName: str) -> bool:
+        if fileName == "all":
+            FileDeleter.deleteAllFromFolder(REPOSITORIES_PATH)
+            print(
+                f"\n{GREEN}[SUCCESS]{RESET} Repositories cleared!")
+            return True
+        else:
+            if not fileName.endswith(".yaml"):
+                fileName += ".yaml"
+            filePath = f"{REPOSITORIES_PATH}/{fileName}"
+            deleted = FileDeleter.deleteFile(filePath)
+            if deleted:
+                print(
+                    f"\n{GREEN}[SUCCESS]{RESET} Repository removed with success!")
+                return True
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to remove repository, make sure it exists.")
+            return False
+
     # Help
     def help(self) -> None:
         print(
             "\nWhat is GRC?\nGRC is a tool to automatically create GitHub repositories using YAML templates.")
-        print("\n- General Commands -")
+        print(
+            f"\n{Colors.HEADER}--{Colors.RESET} General Commands {Colors.HEADER}--{Colors.RESET}")
         print(
             f"\n{BLUE}help{RESET}\nShows this message.")
         print(
@@ -411,8 +440,9 @@ class CLI:
         print(
             f"\n{BLUE}version{RESET}\nShows you the GRC version that you are currently using.")
         print(
-            f"\n{BLUE}update{RESET}\nAutomatically installs the latest GRC version in case you're still not using it.\n")
-        print("- Template Commands -")
+            f"\n{BLUE}update{RESET}\nAutomatically installs the latest GRC version in case you're still not using it.")
+        print(
+            f"\n{Colors.HEADER}--{Colors.RESET} Templates Commands {Colors.HEADER}--{Colors.RESET}")
         print(
             f"\n{BLUE}create{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nCreates a repository for you based on a YAML file that is passed as a parameter.")
         print(
@@ -428,9 +458,14 @@ class CLI:
         print(
             f"\n{BLUE}delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nDeletes a template from your saved templates.\n(Use 'delete all' to delete all your templates).")
         print(
-            f"\n{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.\n")
-        print("- Repository Commands -")
+            f"\n{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.")
+        print(
+            f"\n{Colors.HEADER}--{Colors.RESET} Repositories Commands {Colors.HEADER}--{Colors.RESET}")
         print(
             f"\n{BLUE}list-repos{RESET}\nLists all the repositories that you have created with GRC.")
         print(
-            f"\n{BLUE}open-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nOpens the specified repository in Visual Studio Code.\n")
+            f"\n{BLUE}open-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nOpens the specified repository in Visual Studio Code.")
+        print(
+            f"\n{BLUE}get-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nShows information about a specific repository that was created with GRC.")
+        print(
+            f"\n{BLUE}remove-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nRemoves a repository from your repositories list.\n(Use 'remove-repo all' to remove all your repositories).\n")

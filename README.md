@@ -197,10 +197,38 @@ The 'open-repo' takes the name of a repository that you have created with GRC an
 
 ```sh
 # Usage:
-grc open-repo
+grc open-repo <REPO_NAME>
 
 # Example:
 grc open-repo my-repository
+```
+
+## Get-Repo
+
+The 'get-repo' command shows you some information about a repository that was created with GRC.
+
+![Get-Repo](https://user-images.githubusercontent.com/69170322/173985059-0b12b4c9-804b-4983-a713-c82a2c69083c.png)
+
+```sh
+# Usage:
+grc get-repo <REPO_NAME>
+
+# Example:
+grc get-repo my-repository
+```
+
+## Remove-Repo
+
+The 'remove-repo' commands removes a repository from your repositories list.
+
+```sh
+# Usage:
+grc remove-repo <REPO_NAME>
+
+# Example:
+grc remove-repo my-repository
+
+grc remove-repo all # Removes all your repositories.
 ```
 
 ## Requirements

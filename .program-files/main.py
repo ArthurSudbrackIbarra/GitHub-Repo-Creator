@@ -111,11 +111,27 @@ def listRepos() -> None:
     cli.listRepos()
 
 
+# Get-Repo.
+@click.command(name="get-repo")
+@click.argument("repo_name")
+def getRepo(repo_name: str) -> None:
+    cli.getRepo(repo_name)
+    print("")
+
+
 # Open-Repo.
 @click.command(name="open-repo")
 @click.argument("repo_name")
 def openRepo(repo_name: str) -> None:
     cli.openRepo(repo_name)
+    print("")
+
+
+# Remove-Repo.
+@click.command(name="remove-repo")
+@click.argument("repo_name")
+def removeRepo(repo_name: str) -> None:
+    cli.removeRepo(repo_name)
     print("")
 
 
@@ -139,7 +155,9 @@ def addCommands() -> None:
     main.add_command(version)
     main.add_command(update)
     main.add_command(listRepos)
+    main.add_command(getRepo)
     main.add_command(openRepo)
+    main.add_command(removeRepo)
     main.add_command(help)
 
 
