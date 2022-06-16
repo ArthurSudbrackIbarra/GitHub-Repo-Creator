@@ -229,7 +229,7 @@ The 'open-repo' takes the name of a repository that you have created with GRC an
 
 ```sh
 # Usage:
-grc open-repo <REPO_NAME>
+grc open-repo <REPOSITORY_NAME>
 
 # Example:
 grc open-repo my-repository
@@ -243,7 +243,7 @@ The 'get-repo' command shows you some information about a repository that was cr
 
 ```sh
 # Usage:
-grc get-repo <REPO_NAME>
+grc get-repo <REPOSITORY_NAME>
 
 # Example:
 grc get-repo my-repository
@@ -255,7 +255,7 @@ The 'remove-repo' commands removes a repository from your repositories list.
 
 ```sh
 # Usage:
-grc remove-repo <REPO_NAME>
+grc remove-repo <REPOSITORY_NAME>
 
 # Example:
 grc remove-repo my-repository
