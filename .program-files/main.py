@@ -89,6 +89,14 @@ def generate() -> None:
     print("")
 
 
+# Merge.
+@click.command(name="merge")
+@click.argument("template_names", nargs=-1)
+def merge(template_names: "tuple[str]") -> None:
+    cli.merge(template_names)
+    print("")
+
+
 # Version.
 @click.command(name="version")
 def version() -> None:
@@ -152,6 +160,7 @@ def addCommands() -> None:
     main.add_command(edit)
     main.add_command(delete)
     main.add_command(generate)
+    main.add_command(merge)
     main.add_command(version)
     main.add_command(update)
     main.add_command(listRepos)

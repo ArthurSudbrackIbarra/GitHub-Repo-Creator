@@ -8,6 +8,22 @@ GRC is a tool to automatically create GitHub repositories using YAML templates. 
 
 In the next sections, all the possible GRC commands will be listed and explained.
 
+- [help](#help)
+- [version](#version)
+- [update](#update)
+- [authenticate](#authenticate)
+- [create](#create)
+- [save](#save)
+- [list](#list)
+- [get](#get)
+- [choose](#choose)
+- [delete](#delete)
+- [generate](#generate)
+- [list-repos](#list-repos)
+- [open-repo](#open-repo)
+- [get-repo](#get-repo)
+- [remove-repo](#remove-repo)
+
 ## Help
 
 The 'help' command gives you orientation about what GRC is and how to use its commands.

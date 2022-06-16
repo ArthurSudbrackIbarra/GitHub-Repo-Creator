@@ -171,8 +171,7 @@ class CLI:
             except Exception as error:
                 print(error)
         # Collaborators.
-        collaboratorsCount = yaml.collaboratorsCount()
-        for i in range(collaboratorsCount):
+        for i in range(yaml.collaboratorsCount()):
             collaboratorName = yaml.collaboratorName(i)
             collaboratorPermission = yaml.collaboratorPermission(i) or "admin"
             if collaboratorName is None:
@@ -316,6 +315,75 @@ class CLI:
             return True
         print(
             f"\n{RED}[ERROR]{RESET} Unnable to generate template.")
+        return False
+
+    # Merge.
+    def merge(self, templateNames: "tuple[str]") -> bool:
+        if len(templateNames) < 2:
+            print(
+                f"\n{RED}[ERROR]{RESET} At least 2 template names must be specified.")
+            return False
+        chooser = FileChooser(TEMPLATES_PATH)
+        inputedTemplateName = input("\nEnter the new template name: ")
+        if not inputedTemplateName.endswith(".yaml"):
+            inputedTemplateName += ".yaml"
+        repoName = "Merged-Repository"
+        repoDescription = "This is a description!"
+        private = None
+        privateConflicted = False
+        includeContent = None
+        includeContentConflicted = False
+        mergedCollaborators = []
+        namesAdded = []
+        for templateName in templateNames:
+            if not templateName.endswith(".yaml"):
+                templateName += ".yaml"
+            filePath = chooser.getFilePathByName(templateName)
+            if filePath is None:
+                print(
+                    f"\n{RED}[ERROR]{RESET} Template {templateName} not found.")
+                return False
+            parser = YAMLParser(filePath)
+            yaml = YAMLInterpreter(parser)
+            if private is not None and yaml.private() != private and not privateConflicted:
+                privateConflicted = True
+                newPrivate = input(
+                    f"\nRepository visibility {YELLOW}conflicted{RESET}, use T/t for private or F/f for public: ")
+                private = True if newPrivate.upper() == "T" else False
+            elif private is None:
+                private = yaml.private()
+            if includeContent is not None and yaml.includeContent() != includeContent and not includeContentConflicted:
+                includeContentConflicted = True
+                newIncludeContent = input(
+                    f"\nInclude content {YELLOW}conflicted{RESET}, use T/t to include or F/f to not include: ")
+                includeContent = True if newIncludeContent.upper() == "T" else False
+            elif includeContent is None:
+                includeContent = yaml.includeContent()
+            for i in range(yaml.collaboratorsCount()):
+                collaboratorName = yaml.collaboratorName(i)
+                collaboratorPermission = yaml.collaboratorPermission(i)
+                if not collaboratorName in namesAdded:
+                    data = {
+                        "name": collaboratorName,
+                        "permission": collaboratorPermission
+                    }
+                    mergedCollaborators.append(data)
+                    namesAdded.append(collaboratorName)
+        writer = YAMLWriter(TEMPLATES_PATH)
+        wrote = writer.writeTemplate(
+            templateName=inputedTemplateName,
+            repoName=repoName,
+            repoDescription=repoDescription,
+            private=private,
+            includeContent=includeContent,
+            collaborators=mergedCollaborators
+        )
+        if wrote:
+            print(
+                f"\n{GREEN}[SUCCESS]{RESET} Templates merged with success!")
+            return True
+        print(
+            f"\n{RED}[ERROR]{RESET} Unnable to merge templates.")
         return False
 
     # Version.
