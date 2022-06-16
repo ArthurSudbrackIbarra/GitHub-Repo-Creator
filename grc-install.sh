@@ -36,7 +36,7 @@ echo -e "${PURPLE}[INFO]${NC} Created folder 'GRC', please do not move this fold
 
 # Clones GRC repository.
 rm -rf GitHub-Repo-Creator
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.0
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.1
 cd GitHub-Repo-Creator
 echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 
