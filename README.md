@@ -295,13 +295,13 @@ In case the automatic installation didn't work for you, it is possible to setup 
 
 1. Clone this repository:
 
-```cmd
+```sh
 git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b 2.0.0
 ```
 
 2. Install the necessary dependencies using pip:
 
-```cmd
+```sh
 # In the root of the project:
 pip install -r .\.program-files\requirements.txt
 ```
