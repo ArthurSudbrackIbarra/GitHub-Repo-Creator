@@ -18,12 +18,14 @@ if ! pip3 --version >/dev/null 2>/dev/null; then
 fi
 
 # If Debian, do checks.
-if awk -F= '/^NAME/{print $2}' /etc/os-release | grep Debian >/dev/null 2>/dev/null; then
-  # Checking libffi-dev.
-  APT_LIBFFI_DEV_RES=$(apt-cache search --names-only '^libffi-dev$')
-  if [[ $APT_LIBFFI_DEV_RES == "" ]]; then
-    echo -e "${RED}[ERROR]${NC} You don't have libffi-dev installed! Install with: \"apt install libffi-dev\"."
-    exit 1
+if [[ -f /etc/os-release ]]; then
+  if awk -F= '/^NAME/{print $2}' /etc/os-release | grep Debian >/dev/null 2>/dev/null; then
+    # Checking libffi-dev.
+    APT_LIBFFI_DEV_RES=$(apt-cache search --names-only '^libffi-dev$')
+    if [[ $APT_LIBFFI_DEV_RES == "" ]]; then
+      echo -e "${RED}[ERROR]${NC} You don't have libffi-dev installed! Install with: \"apt install libffi-dev\"."
+      exit 1
+    fi
   fi
 fi
 
