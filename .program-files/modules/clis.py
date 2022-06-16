@@ -528,6 +528,8 @@ class CLI:
         print(
             f"\n{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.")
         print(
+            f"\n{BLUE}merge{RESET} {CYAN}<TEMPLATE_NAME_1>{RESET} {CYAN}<TEMPLATE_NAME_2> ...{RESET}\nMerges *N* templates and creates a new template with all the collaborators included.")
+        print(
             f"\n{Colors.HEADER}--{Colors.RESET} Repositories Commands {Colors.HEADER}--{Colors.RESET}")
         print(
             f"\n{BLUE}list-repos{RESET}\nLists all the repositories that you have created with GRC.")

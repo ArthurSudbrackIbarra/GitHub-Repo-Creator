@@ -19,6 +19,7 @@ In the next sections, all the possible GRC commands will be listed and explained
 - [choose](#choose)
 - [delete](#delete)
 - [generate](#generate)
+- [merge](#merge)
 - [list-repos](#list-repos)
 - [open-repo](#open-repo)
 - [get-repo](#get-repo)
@@ -194,6 +195,21 @@ The 'generate' command will ask you to input information, such as the repository
 ```sh
 # Usage:
 grc generate
+```
+
+## Merge
+
+The 'merge' command takes *N* template names as a parameter and produces a new template joining the collaborators of all the templates inputed. In case some fields conflict, you will be asked to choose which values you want to keep.
+
+![Merge](https://user-images.githubusercontent.com/69170322/174129645-48c988b2-ad4e-4a00-8335-c09e6c5abf83.png)
+
+```sh
+# Usage:
+grc merge <TEMPLATE_NAME> <TEMPLATE_NAME> ...
+grc merge a b c d e f g ... # N number of templates.
+
+# Example:
+grc merge my-template-1 my-template-2
 ```
 
 ## List-Repos
