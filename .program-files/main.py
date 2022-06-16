@@ -89,11 +89,11 @@ def generate() -> None:
     print("")
 
 
-# Version.
-@click.command(name="version")
-@click.argument("repo_path")
-def update(repo_path: str) -> None:
-    cli.version(repo_path)
+# Merge.
+@click.command(name="merge")
+@click.argument("template_names", nargs=-1)
+def merge(template_names: "tuple[str]") -> None:
+    cli.merge(template_names)
     print("")
 
 
@@ -109,6 +109,37 @@ def version() -> None:
 def update() -> None:
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
     cli.update(repoPath)
+    print("")
+
+
+# List-Repos.
+@click.command(name="list-repos")
+def listRepos() -> None:
+    print("")
+    cli.listRepos()
+
+
+# Get-Repo.
+@click.command(name="get-repo")
+@click.argument("repo_name")
+def getRepo(repo_name: str) -> None:
+    cli.getRepo(repo_name)
+    print("")
+
+
+# Open-Repo.
+@click.command(name="open-repo")
+@click.argument("repo_name")
+def openRepo(repo_name: str) -> None:
+    cli.openRepo(repo_name)
+    print("")
+
+
+# Remove-Repo.
+@click.command(name="remove-repo")
+@click.argument("repo_name")
+def removeRepo(repo_name: str) -> None:
+    cli.removeRepo(repo_name)
     print("")
 
 
@@ -129,8 +160,13 @@ def addCommands() -> None:
     main.add_command(edit)
     main.add_command(delete)
     main.add_command(generate)
+    main.add_command(merge)
     main.add_command(version)
     main.add_command(update)
+    main.add_command(listRepos)
+    main.add_command(getRepo)
+    main.add_command(openRepo)
+    main.add_command(removeRepo)
     main.add_command(help)
 
 

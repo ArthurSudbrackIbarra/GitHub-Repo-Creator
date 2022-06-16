@@ -1,5 +1,4 @@
 $COMMAND = $args[0]
-$PARAMETER = $args[1]
 
 if ($COMMAND -eq $null) {
     Write-Host "`nGRC: No command passed.`n"
@@ -11,18 +10,14 @@ if ($PYTHON3VERSION.Contains("Python 3")) {
     Set-Alias -name python -value python3
 }
 
-if ($PARAMETER -eq $null) {
-    python $PSScriptRoot\.program-files\main.py $COMMAND
+if ($COMMAND -eq "create" -or $COMMAND -eq "save") {
+    $USER_FILE_PATH = $args[1]
+    if ([System.IO.Path]::IsPathRooted($USER_FILE_PATH)) {
+        python $PSScriptRoot\.program-files\main.py $args
+    } else {
+        $ABSOLUTE_FILE_PATH = "$PWD\$USER_FILE_PATH"
+        python $PSScriptRoot\.program-files\main.py $COMMAND $ABSOLUTE_FILE_PATH
+    }   
 } else {
-    if ($COMMAND -eq "create" -or $COMMAND -eq "save") {
-        if ([System.IO.Path]::IsPathRooted($PARAMETER)) {
-            python $PSScriptRoot\.program-files\main.py $COMMAND $PARAMETER
-        } else {
-            $FILE_PATH = "$PWD\$PARAMETER"
-            python $PSScriptRoot\.program-files\main.py $COMMAND $FILE_PATH
-        }   
-    }
-    else {
-        python $PSScriptRoot\.program-files\main.py $COMMAND $PARAMETER
-    }
+    python $PSScriptRoot\.program-files\main.py $args
 }

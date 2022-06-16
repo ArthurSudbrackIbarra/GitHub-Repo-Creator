@@ -4,9 +4,34 @@
 GRC is a tool to automatically create GitHub repositories using YAML templates. It comes with a CLI (Command Line Interface) that you can use to execute commands.
 <br/>
 
-## Commands
+## Table of Contents
+
+* [Commands](#cli-commands)
+* [Installation (Windows)](#installation-windows)
+  * [Automatic Installation](#automatic-installation)
+  * [Manual Installation](#manual-installation)
+* [Installation (Linux and MacOS)](#installation-linux-and-macos)
+
+## CLI Commands
 
 In the next sections, all the possible GRC commands will be listed and explained.
+
+* [help](#help)
+* [version](#version)
+* [update](#update)
+* [authenticate](#authenticate)
+* [create](#create)
+* [save](#save)
+* [list](#list)
+* [get](#get)
+* [choose](#choose)
+* [delete](#delete)
+* [generate](#generate)
+* [merge](#merge)
+* [list-repos](#list-repos)
+* [open-repo](#open-repo)
+* [get-repo](#get-repo)
+* [remove-repo](#remove-repo)
 
 ## Help
 
@@ -15,6 +40,28 @@ The 'help' command gives you orientation about what GRC is and how to use its co
 ```sh
 # Usage:
 grc help
+```
+
+## Version
+
+The 'version' command shows you the GRC version that you are currently using.
+
+![Version](https://user-images.githubusercontent.com/69170322/172204486-f139282f-6f32-4c3e-bf3d-c9188cf95691.png)
+
+```sh
+# Usage:
+grc version
+```
+
+## Update
+
+The 'update' command automatically installs the latest GRC version in case you're still not using it.
+
+![Update](https://user-images.githubusercontent.com/69170322/172204826-73d4fa06-cd18-465e-b1f1-548246c1039c.png)
+
+```sh
+# Usage:
+grc update
 ```
 
 ## Authenticate
@@ -158,34 +205,79 @@ The 'generate' command will ask you to input information, such as the repository
 grc generate
 ```
 
-## Version
+## Merge
 
-The 'version' command shows you the GRC version that you are currently using.
+The 'merge' command takes *N* template names as a parameter and produces a new template joining the collaborators of all the templates inputed. In case some fields conflict, you will be asked to choose which values you want to keep.
 
-![Version](https://user-images.githubusercontent.com/69170322/172204486-f139282f-6f32-4c3e-bf3d-c9188cf95691.png)
+![Merge](https://user-images.githubusercontent.com/69170322/174129645-48c988b2-ad4e-4a00-8335-c09e6c5abf83.png)
 
 ```sh
 # Usage:
-grc version
+grc merge <TEMPLATE_NAME> <TEMPLATE_NAME> ...
+grc merge a b c d e f g ... # N number of templates.
+
+# Example:
+grc merge my-template-1 my-template-2
 ```
 
-## Update
+## List-Repos
 
-The 'update' command automatically installs the latest GRC version in case you're still not using it.
+The 'list-repos' command will list the name of all the repositories that you have created with GRC.
 
-![Update](https://user-images.githubusercontent.com/69170322/172204826-73d4fa06-cd18-465e-b1f1-548246c1039c.png)
+![List-Repos](https://user-images.githubusercontent.com/69170322/173981692-5dd3c541-052f-4f11-af21-00b2fa6026dc.png)
 
 ```sh
 # Usage:
-grc update
+grc list-repos
+```
+
+## Open-Repo
+
+The 'open-repo' takes the name of a repository that you have created with GRC and opens the repository folder in Visual Studio Code.
+
+```sh
+# Usage:
+grc open-repo <REPOSITORY_NAME>
+
+# Example:
+grc open-repo my-repository
+```
+
+## Get-Repo
+
+The 'get-repo' command shows you some information about a repository that was created with GRC.
+
+![Get-Repo](https://user-images.githubusercontent.com/69170322/173985059-0b12b4c9-804b-4983-a713-c82a2c69083c.png)
+
+```sh
+# Usage:
+grc get-repo <REPOSITORY_NAME>
+
+# Example:
+grc get-repo my-repository
+```
+
+## Remove-Repo
+
+The 'remove-repo' commands removes a repository from your repositories list.
+
+```sh
+# Usage:
+grc remove-repo <REPOSITORY_NAME>
+
+# Example:
+grc remove-repo my-repository
+
+grc remove-repo all # Removes all your repositories.
 ```
 
 ## Requirements
 
 In order to use GRC, you must have the following tools installed in your machine:
 
-- [Python 3](https://www.python.org/downloads/)
-- [Git](https://git-scm.com/downloads)
+* [Python 3](https://www.python.org/downloads/)
+* [Git](https://git-scm.com/downloads)
+* (Optional, but recommended) [Visual Studio Code](https://code.visualstudio.com)
 
 ## Installation (Windows)
 
@@ -204,7 +296,7 @@ In case the automatic installation didn't work for you, it is possible to setup 
 1. Clone this repository:
 
 ```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b 2.0.0
 ```
 
 2. Install the necessary dependencies using pip:
@@ -220,7 +312,7 @@ pip install -r .\.program-files\requirements.txt
 
 Copy the project directory path, as shown in the image above, and follow [this quick tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
-## Installation (Linux)
+## Installation (Linux and MacOS)
 
 1. Open a terminal and run this commmand:
 
