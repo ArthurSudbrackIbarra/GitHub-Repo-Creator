@@ -17,6 +17,28 @@ The 'help' command gives you orientation about what GRC is and how to use its co
 grc help
 ```
 
+## Version
+
+The 'version' command shows you the GRC version that you are currently using.
+
+![Version](https://user-images.githubusercontent.com/69170322/172204486-f139282f-6f32-4c3e-bf3d-c9188cf95691.png)
+
+```sh
+# Usage:
+grc version
+```
+
+## Update
+
+The 'update' command automatically installs the latest GRC version in case you're still not using it.
+
+![Update](https://user-images.githubusercontent.com/69170322/172204826-73d4fa06-cd18-465e-b1f1-548246c1039c.png)
+
+```sh
+# Usage:
+grc update
+```
+
 ## Authenticate
 
 The 'authenticate' command is used so you can authenticate to GitHub and create repositories in your account. This is the **first command** you need to execute in order to start using GRC.
@@ -158,26 +180,27 @@ The 'generate' command will ask you to input information, such as the repository
 grc generate
 ```
 
-## Version
+## List-Repos
 
-The 'version' command shows you the GRC version that you are currently using.
+The 'list-repos' command will list the name of all the repositories that you have created with GRC.
 
-![Version](https://user-images.githubusercontent.com/69170322/172204486-f139282f-6f32-4c3e-bf3d-c9188cf95691.png)
+![List-Repos](https://user-images.githubusercontent.com/69170322/173981692-5dd3c541-052f-4f11-af21-00b2fa6026dc.png)
 
 ```sh
 # Usage:
-grc version
+grc list-repos
 ```
 
-## Update
+## Open-Repo
 
-The 'update' command automatically installs the latest GRC version in case you're still not using it.
-
-![Update](https://user-images.githubusercontent.com/69170322/172204826-73d4fa06-cd18-465e-b1f1-548246c1039c.png)
+The 'open-repo' takes the name of a repository that you have created with GRC and opens the repository folder in Visual Studio Code.
 
 ```sh
 # Usage:
-grc update
+grc open-repo
+
+# Example:
+grc open-repo my-repository
 ```
 
 ## Requirements
@@ -186,6 +209,7 @@ In order to use GRC, you must have the following tools installed in your machine
 
 - [Python 3](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
+- (Optional, but recommended) [Visual Studio Code](https://code.visualstudio.com)
 
 ## Installation (Windows)
 
