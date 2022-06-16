@@ -17,7 +17,7 @@ Write-Host "Created folder 'GRC-Win-Install', please do not move this folder to 
 
 # Cloning repository.
 Remove-Item GitHub-Repo-Creator -Force -Recurse 2> $null
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b 2.0.0 2> $null
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.0 2> $null
 cd GitHub-Repo-Creator
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Cloned GRC GitHub repository."
