@@ -45,7 +45,7 @@ chmod +x "$PWD/grc"
 
 # Adding the project directory to $PATH.
 sed -i "/GRC/d" ~/.bashrc
-echo "export PATH+=\":$PWD\" # GRC" >> ~/.bashrc
+echo "export PATH=\"\$PATH:$PWD\" # GRC" >> ~/.bashrc
 echo -e "${PURPLE}[INFO]${NC} Added repository directory to your PATH."
 
 # Installing python dependencies.
