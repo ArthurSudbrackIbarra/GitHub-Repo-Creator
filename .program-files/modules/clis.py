@@ -189,7 +189,7 @@ class CLI:
         return True
 
     # Helper method of create command.
-    def addRepo(self, repoName: str | None, repoPath: str) -> None:
+    def addRepo(self, repoName: str, repoPath: str) -> None:
         repoPath = repoPath.replace("\\", "/")
         if repoName is None:
             repoName = repoPath.split("/")[-1]
