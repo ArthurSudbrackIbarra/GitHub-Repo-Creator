@@ -12,7 +12,7 @@ class CommandRunner:
 
     @staticmethod
     def code(repoPath: str) -> int:
-        return system(f"code {repoPath}")
+        return system(f"code \"{repoPath}\"")
 
     @staticmethod
     def gitLocalToRemote(repoURL: str) -> int:
@@ -41,12 +41,12 @@ class CommandRunner:
             return 1
         # First tries to open the file with VSCode.
         # If the user does not have VSCode installed, then uses native text editors.
-        exitCode = system(f"code {absoluteFilePath}")
+        exitCode = system(f"code \"{absoluteFilePath}\"")
         if exitCode != 0:
             if platform.startswith("win"):
-                return system(f"notepad {absoluteFilePath}")
+                return system(f"notepad \"{absoluteFilePath}\"")
             elif platform.startswith("linux") or platform.startswith("darwin"):
-                return system(f"nano {absoluteFilePath}")
+                return system(f"nano \"{absoluteFilePath}\"")
             return 1
         return exitCode
 
@@ -55,7 +55,7 @@ class CommandRunner:
         shell = True if platform.startswith("win") else False
         try:
             outputAsBytes = check_output(
-                ["git", "--git-dir", f"{repoPath}/.git", "describe", "--tags"], shell=shell)
+                ["git", "--git-dir", f"\"{repoPath}/.git\"", "describe", "--tags"], shell=shell)
             output = outputAsBytes.decode()
             return output.strip().split("-")[0]
         except:
@@ -63,7 +63,7 @@ class CommandRunner:
 
     @staticmethod
     def updateGRCVersion(repoPath: str, latestTag: str) -> int:
-        gitDirFlag = f"--git-dir {repoPath}/.git"
+        gitDirFlag = f"--git-dir \"{repoPath}/.git\""
         exitCode = system(f"git {gitDirFlag} fetch --tags --quiet")
         if exitCode != 0:
             return exitCode

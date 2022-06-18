@@ -53,23 +53,33 @@ class CLI:
         return True
 
     # Choose.
-    def choose(self) -> bool:
+    def choose(self, templateName: str = None) -> bool:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
-        self.list(enumeration=True)
-        option = -1
-        try:
-            option = int(input("\nChoose which file to use: "))
-        except:
-            print(f"\n{RED}[ERROR]{RESET} Option must be a number.")
-            return
         chooser = FileChooser(TEMPLATES_PATH)
-        filePath = chooser.getFilePathByIndex(option)
-        if filePath is None:
-            print(f"\n{RED}[ERROR]{RESET} Invalid choice.")
-            return
+        filePath = ""
+        if templateName is None:
+            self.list(enumeration=True)
+            option = -1
+            try:
+                option = int(input("\nChoose which file to use: "))
+            except:
+                print(f"\n{RED}[ERROR]{RESET} Option must be a number.")
+                return False
+            filePath = chooser.getFilePathByIndex(option)
+            if filePath is None:
+                print(f"\n{RED}[ERROR]{RESET} Invalid choice.")
+                return False
+        else:
+            if not templateName.endswith(".yaml"):
+                templateName += ".yaml"
+            filePath = chooser.getFilePathByName(templateName)
+            if filePath is None:
+                print(
+                    f"\n{RED}[ERROR]{RESET} Template '{templateName}' not found.")
+                return False
         print("\nWould you like to change the repository name and/or description?")
         print(f"\n{GREEN}[Y/y]{RESET} - Yes, I want to change.")
         print(

@@ -38,8 +38,9 @@ def save(absolute_file_path: str) -> None:
 
 # Choose.
 @click.command(name="choose")
-def choose() -> None:
-    cli.choose()
+@click.argument("template_name", required=False)
+def choose(template_name: str = None) -> None:
+    cli.choose(template_name)
     print("")
 
 
