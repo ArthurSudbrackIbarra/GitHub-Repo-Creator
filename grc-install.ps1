@@ -48,7 +48,7 @@ pip3 install -r ./.program-files/requirements.txt
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Installed Python dependencies."
 
-Write-Host "   _____   _____     _____ "
+Write-Host "`n   _____   _____     _____ "
 Write-Host "  / ____| |  __ \   / ____|"
 Write-Host " | |  __  | |__) | | |     "
 Write-Host " | | |_ | |  _  /  | |     "

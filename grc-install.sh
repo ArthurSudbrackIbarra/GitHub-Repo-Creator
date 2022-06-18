@@ -52,6 +52,7 @@ echo -e "${PURPLE}[INFO]${NC} Added repository directory to your PATH."
 pip3 install -r ./.program-files/requirements.txt
 echo -e "${PURPLE}[INFO]${NC} Installed Python dependencies."
 
+echo
 echo "   _____   _____     _____ "
 echo "  / ____| |  __ \   / ____|"
 echo " | |  __  | |__) | | |     "
