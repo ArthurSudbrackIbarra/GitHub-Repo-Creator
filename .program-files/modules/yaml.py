@@ -18,12 +18,6 @@ REPO_NAME = "name"
 REPO_PATH = "path"
 REPO_DESCRIPTION = "description"
 PRIVATE = "private"
-
-# For retrocompatibility.
-AUTO_CLONE = "autoClone"
-AUTO_PUSH = "autoPush"
-
-# New version of autoClone and autoPush.
 INCLUDE_CONTENT = "includeContent"
 
 COLLABORATORS = "collaborators"
@@ -54,16 +48,6 @@ class YAMLInterpreter:
     def private(self) -> bool:
         if PRIVATE in self.data:
             return self.data[PRIVATE]
-        return None
-
-    def autoClone(self) -> bool:
-        if AUTO_CLONE in self.data:
-            return self.data[AUTO_CLONE]
-        return None
-
-    def autoPush(self) -> bool:
-        if AUTO_PUSH in self.data:
-            return self.data[AUTO_PUSH]
         return None
 
     def includeContent(self) -> bool:

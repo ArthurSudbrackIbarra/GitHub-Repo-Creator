@@ -19,6 +19,9 @@ TEMPLATES_PATH = path.abspath(
 REPOSITORIES_PATH = path.abspath(
     path.join(path.dirname(__file__), "../../repositories"))
 
+TEMPLATE_NAME_PATTERN = r"[^a-zA-Z0-9-_]"
+REPOSITORY_NAME_PATTERN = r"[^a-zA-Z0-9-._]"
+
 
 class CLI:
     def __init__(self) -> None:
@@ -112,34 +115,19 @@ class CLI:
         yaml = YAMLInterpreter(parser)
         if repoName is None:
             repoName = yaml.repoName()
-        if " " in repoName:
-            print(
-                f"\n{RED}[ERROR]{RESET} Repository name cannot contain spaces.")
-            return False
-        if repoDescription is None:
-            repoDescription = yaml.repoDescription() or ""
-        private = yaml.private()
-        autoClone = yaml.autoClone()
-        autoPush = yaml.autoPush()
-        includeContent = yaml.includeContent()
         if repoName is None:
             print(
                 f"\n{RED}[ERROR]{RESET}. The repository name was not specified.")
             return False
+        repoName = sub(REPOSITORY_NAME_PATTERN, "-", repoName)
+        if repoDescription is None:
+            repoDescription = yaml.repoDescription() or ""
+        private = yaml.private()
         if private is None:
             private = True
+        includeContent = yaml.includeContent()
         if includeContent is None:
-            # For retrocompatibility.
-            if autoClone is None and autoPush is None:
-                includeContent = False
-            else:
-                if autoClone:
-                    includeContent = False
-                else:
-                    if autoPush:
-                        includeContent = True
-                    else:
-                        includeContent = False
+            includeContent = False
         # Creating repository.
         try:
             createREADME = not includeContent
@@ -282,14 +270,14 @@ class CLI:
         print(
             f"\n{CYAN}This is the name of the template YAML file (my-template -> my-template.yaml).{RESET}")
         templateNameInput = input("Template name: ")
-        templateName = sub(r'[^A-Za-z0-9_-]', '-', templateNameInput)
+        templateName = sub(TEMPLATE_NAME_PATTERN, '-', templateNameInput)
         if templateNameInput != templateName:
             print(
                 f"\n{YELLOW}[WARN]{RESET} Template name was changed to -> {templateName}")
         if not templateName.endswith(".yaml"):
             templateName += ".yaml"
         repoNameInput = input("\nRepository name: ")
-        repoName = sub(r'[^A-Za-z0-9_.-]', '-', repoNameInput)
+        repoName = sub(REPOSITORY_NAME_PATTERN, '-', repoNameInput)
         if repoNameInput != repoName:
             print(
                 f"\n{YELLOW}[WARN]{RESET} Repository name was changed to -> {repoName}\n")
