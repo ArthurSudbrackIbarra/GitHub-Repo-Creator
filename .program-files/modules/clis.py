@@ -1,4 +1,5 @@
 from os import path
+from re import sub
 from .yaml import YAMLParser, YAMLInterpreter, YAMLWriter
 from .tokens import TokenManager
 from .apis import GitHubAPI
@@ -270,18 +271,18 @@ class CLI:
     def generate(self) -> bool:
         print(
             f"\n{CYAN}This is the name of the template YAML file (my-template -> my-template.yaml).{RESET}")
-        templateName = input("Template name: ")
-        if " " in templateName:
-            templateName = templateName.replace(" ", "-")
+        templateNameInput = input("Template name: ")
+        templateName = sub(r'[^A-Za-z0-9_-]', '-', templateNameInput)
+        if templateNameInput != templateName:
             print(
-                f"\n{YELLOW}[WARN]{RESET} Spaces were replaced by '-' -> {templateName}")
+                f"\n{YELLOW}[WARN]{RESET} Template name was changed to -> {templateName}")
         if not templateName.endswith(".yaml"):
             templateName += ".yaml"
-        repoName = input("\nRepository name: ")
-        if " " in repoName:
-            repoName = repoName.replace(" ", "-")
+        repoNameInput = input("\nRepository name: ")
+        repoName = sub(r'[^A-Za-z0-9_.-]', '-', repoNameInput)
+        if repoNameInput != repoName:
             print(
-                f"\n{YELLOW}[WARN]{RESET} Spaces were replaced by '-' -> {repoName}\n")
+                f"\n{YELLOW}[WARN]{RESET} Repository name was changed to -> {repoName}\n")
         while len(repoName) == 0:
             print("Invalid repository name.")
             repoName = input("Repository name: ")
