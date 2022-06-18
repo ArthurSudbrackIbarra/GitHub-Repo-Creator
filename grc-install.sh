@@ -60,5 +60,6 @@ echo " | | |_ | |  _  /  | |     "
 echo " | |__| | | | \ \  | |____ "
 echo "  \_____| |_|  \_\  \_____|"
 echo
+echo
 
 echo -e "${GREEN}[SUCCESS]${NC} You may close this terminal now for the changes to take effect."

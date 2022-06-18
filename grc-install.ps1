@@ -53,7 +53,7 @@ Write-Host "  / ____| |  __ \   / ____|"
 Write-Host " | |  __  | |__) | | |     "
 Write-Host " | | |_ | |  _  /  | |     "
 Write-Host " | |__| | | | \ \  | |____ "
-Write-Host "  \_____| |_|  \_\  \_____|`n"
+Write-Host "  \_____| |_|  \_\  \_____|`n`n"
 
 Write-Host "[SUCCESS] " -ForegroundColor Green -NoNewline
 Write-Host "You may close this terminal now for the changes to take effect."
