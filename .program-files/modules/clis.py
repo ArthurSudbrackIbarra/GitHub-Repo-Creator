@@ -101,6 +101,10 @@ class CLI:
         yaml = YAMLInterpreter(parser)
         if repoName is None:
             repoName = yaml.repoName()
+        if " " in repoName:
+            print(
+                f"\n{RED}[ERROR]{RESET} Repository name cannot contain spaces.")
+            return False
         if repoDescription is None:
             repoDescription = yaml.repoDescription() or ""
         private = yaml.private()
@@ -267,9 +271,17 @@ class CLI:
         print(
             f"\n{CYAN}This is the name of the template YAML file (my-template -> my-template.yaml).{RESET}")
         templateName = input("Template name: ")
+        if " " in templateName:
+            templateName = templateName.replace(" ", "-")
+            print(
+                f"\n{YELLOW}[WARN]{RESET} Spaces were replaced by '-' -> {templateName}")
         if not templateName.endswith(".yaml"):
             templateName += ".yaml"
         repoName = input("\nRepository name: ")
+        if " " in repoName:
+            repoName = repoName.replace(" ", "-")
+            print(
+                f"\n{YELLOW}[WARN]{RESET} Spaces were replaced by '-' -> {repoName}\n")
         while len(repoName) == 0:
             print("Invalid repository name.")
             repoName = input("Repository name: ")
