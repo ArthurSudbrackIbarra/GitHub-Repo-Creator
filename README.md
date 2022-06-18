@@ -6,32 +6,32 @@ GRC is a tool to automatically create GitHub repositories using YAML templates. 
 
 ## Table of Contents
 
-* [Commands](#cli-commands)
-* [Installation (Windows)](#installation-windows)
-  * [Automatic Installation](#automatic-installation)
-  * [Manual Installation](#manual-installation)
-* [Installation (Linux and MacOS)](#installation-linux-and-macos)
+- [Commands](#cli-commands)
+- [Installation (Windows)](#installation-windows)
+  - [Automatic Installation](#automatic-installation)
+  - [Manual Installation](#manual-installation)
+- [Installation (Linux and MacOS)](#installation-linux-and-macos)
 
 ## CLI Commands
 
 In the next sections, all the possible GRC commands will be listed and explained.
 
-* [help](#help)
-* [version](#version)
-* [update](#update)
-* [authenticate](#authenticate)
-* [create](#create)
-* [save](#save)
-* [list](#list)
-* [get](#get)
-* [choose](#choose)
-* [delete](#delete)
-* [generate](#generate)
-* [merge](#merge)
-* [list-repos](#list-repos)
-* [open-repo](#open-repo)
-* [get-repo](#get-repo)
-* [remove-repo](#remove-repo)
+- [help](#help)
+- [version](#version)
+- [update](#update)
+- [authenticate](#authenticate)
+- [create](#create)
+- [save](#save)
+- [list](#list)
+- [get](#get)
+- [choose](#choose)
+- [delete](#delete)
+- [generate](#generate)
+- [merge](#merge)
+- [list-repos](#list-repos)
+- [open-repo](#open-repo)
+- [get-repo](#get-repo)
+- [remove-repo](#remove-repo)
 
 ## Help
 
@@ -207,7 +207,7 @@ grc generate
 
 ## Merge
 
-The 'merge' command takes *N* template names as a parameter and produces a new template joining the collaborators of all the templates inputed. In case some fields conflict, you will be asked to choose which values you want to keep.
+The 'merge' command takes _N_ template names as a parameter and produces a new template joining the collaborators of all the templates inputed. In case some fields conflict, you will be asked to choose which values you want to keep.
 
 ![Merge](https://user-images.githubusercontent.com/69170322/174129645-48c988b2-ad4e-4a00-8335-c09e6c5abf83.png)
 
@@ -275,9 +275,9 @@ grc remove-repo all # Removes all your repositories.
 
 In order to use GRC, you must have the following tools installed in your machine:
 
-* [Python 3](https://www.python.org/downloads/)
-* [Git](https://git-scm.com/downloads)
-* (Optional, but recommended) [Visual Studio Code](https://code.visualstudio.com)
+- [Python 3](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/downloads)
+- (Optional, but recommended) [Visual Studio Code](https://code.visualstudio.com)
 
 ## Installation (Windows)
 
@@ -296,7 +296,7 @@ In case the automatic installation didn't work for you, it is possible to setup 
 1. Clone this repository:
 
 ```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.1
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.2
 ```
 
 2. Install the necessary dependencies using pip:
