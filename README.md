@@ -159,7 +159,12 @@ The 'choose' command lets you choose a file from your saved templates to create 
 
 ```sh
 # Usage:
-grc choose
+grc choose # Or...
+grc choose <TEMPLATE_NAME>
+
+# Example:
+grc choose # Will show an enumerated list with the possible template options.
+grc choose my-template # Will directly choose the template called "my-template".
 ```
 
 ## Edit
