@@ -39,8 +39,20 @@ def save(absolute_file_path: str) -> None:
 # Choose.
 @click.command(name="choose")
 @click.argument("template_name", required=False)
-def choose(template_name: str = None) -> None:
-    cli.choose(template_name)
+@click.option("-p", "--private")
+@click.option("-i", "--include_content")
+def choose(template_name: str = None, private: str = None, include_content: str = None) -> None:
+    if private is not None:
+        if private == "true":
+            private = True
+        elif private == "false":
+            private = False
+    if include_content is not None:
+        if include_content == "true":
+            include_content = True
+        elif include_content == "false":
+            include_content = False
+    cli.choose(template_name, private, include_content)
     print("")
 
 

@@ -164,7 +164,16 @@ grc choose <TEMPLATE_NAME>
 
 # Example:
 grc choose # Will show an enumerated list with the possible template options.
+
 grc choose my-template # Will directly choose the template called "my-template".
+
+# Options:
+
+# -p, --private (true or false):
+grc choose my-template --private true # Overrides the 'private' field.
+
+# -i, --include_content (true or false):
+grc choose my-template --include_content false # Overrides the 'includeContent' field.
 ```
 
 ## Edit
@@ -301,7 +310,7 @@ In case the automatic installation didn't work for you, it is possible to setup 
 1. Clone this repository:
 
 ```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.2
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.3
 ```
 
 2. Install the necessary dependencies using pip:

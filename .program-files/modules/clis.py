@@ -56,7 +56,7 @@ class CLI:
         return True
 
     # Choose.
-    def choose(self, templateName: str = None) -> bool:
+    def choose(self, templateName: str = None, private: bool = None, includeContent: bool = None) -> bool:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
@@ -92,17 +92,18 @@ class CLI:
             repoName = input("\nRepository name: ")
             repoDescription = input("Repository description: ")
             # Calling the create command with optional arguments.
-            return self.create(filePath, repoName=repoName,
-                               repoDescription=repoDescription)
+            return self.create(filePath, repoName=repoName, repoDescription=repoDescription, private=private, includeContent=includeContent)
         else:
             # Calling the create command.
-            return self.create(filePath)
+            return self.create(filePath, private=private, includeContent=includeContent)
 
     # Create.
     def create(self,
                absoluteFilePath: str,
                repoName: str = None,
-               repoDescription: str = None) -> bool:
+               repoDescription: str = None,
+               private: bool = None,
+               includeContent: bool = None) -> bool:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
@@ -122,10 +123,12 @@ class CLI:
         repoName = sub(REPOSITORY_NAME_PATTERN, "-", repoName)
         if repoDescription is None:
             repoDescription = yaml.repoDescription() or ""
-        private = yaml.private()
+        if private is None:
+            private = yaml.private()
         if private is None:
             private = True
-        includeContent = yaml.includeContent()
+        if includeContent is None:
+            includeContent = yaml.includeContent()
         if includeContent is None:
             includeContent = False
         # Creating repository.
