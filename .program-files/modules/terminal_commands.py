@@ -64,10 +64,13 @@ class CommandRunner:
     @staticmethod
     def updateGRCVersion(repoPath: str, latestTag: str) -> int:
         gitDirFlag = f"--git-dir \"{repoPath}/.git\""
-        exitCode = system(f"git {gitDirFlag} fetch --tags --quiet")
+        exitCode = system(f"git {gitDirFlag} checkout --force main --quiet")
         if exitCode != 0:
             return exitCode
-        return system(f"git {gitDirFlag} checkout -f tags/{latestTag} --quiet")
+        exitCode = system(f"git {gitDirFlag} --force pull --quiet")
+        if exitCode != 0:
+            return exitCode
+        return system(f"git {gitDirFlag} checkout --force tags/{latestTag} --quiet")
 
     @staticmethod
     def getUserCurrentDir() -> str:
