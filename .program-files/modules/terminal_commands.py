@@ -67,7 +67,7 @@ class CommandRunner:
         exitCode = system(f"git {gitDirFlag} checkout --force main --quiet")
         if exitCode != 0:
             return exitCode
-        exitCode = system(f"git {gitDirFlag} --force pull --quiet")
+        exitCode = system(f"git {gitDirFlag} pull --quiet")
         if exitCode != 0:
             return exitCode
         return system(f"git {gitDirFlag} checkout --force tags/{latestTag} --quiet")
