@@ -12,7 +12,7 @@ class GitHubAPI:
             self.github = Github(accessToken, verify=True)
             # Will raise an error if the access token is invalid.
             self.github.get_user().get_repos().totalCount
-        except:
+        except BaseException:
             raise Exception(f"\n{RED}[ERROR]{RESET} Invalid access token.")
 
     def isAuthenticated(self) -> bool:
@@ -20,10 +20,15 @@ class GitHubAPI:
             # Will raise an error if the user is not authenticated.
             self.github.get_user().get_repos().totalCount
             return True
-        except:
+        except BaseException:
             return False
 
-    def createRepo(self, name: str, description: str, private: bool, createREADME: bool = False) -> bool:
+    def createRepo(
+            self,
+            name: str,
+            description: str,
+            private: bool,
+            createREADME: bool = False) -> bool:
         user = self.github.get_user()
         try:
             user.create_repo(
@@ -32,11 +37,15 @@ class GitHubAPI:
                 private=private,
                 auto_init=createREADME,
             )
-        except:
+        except BaseException:
             raise Exception(
                 f"\n{RED}[ERROR]{RESET} Unnable to create repository '{name}'.")
 
-    def addCollaborator(self, repoName: str, collaboratorName: str, permission: str) -> bool:
+    def addCollaborator(
+            self,
+            repoName: str,
+            collaboratorName: str,
+            permission: str) -> bool:
         user = self.github.get_user()
         try:
             repo = user.get_repo(repoName)
@@ -46,7 +55,7 @@ class GitHubAPI:
             )
             print(
                 f"\n{GREEN}[SUCCESS]{RESET} Added collaborator '{collaboratorName}' to repository.")
-        except:
+        except BaseException:
             raise Exception(
                 f"\n{RED}[ERROR]{RESET} Unnable to add collaborator '{collaboratorName}' to repository.")
 
@@ -55,7 +64,7 @@ class GitHubAPI:
         try:
             repo = user.get_repo(repoName)
             return repo.clone_url
-        except:
+        except BaseException:
             raise Exception(
                 f"\n{RED}[ERROR]{RESET} Unnable to get '{repoName}' repository clone URL.")
 
@@ -73,6 +82,6 @@ class GitHubAPI:
                 if len(tagNames) > 0:
                     return tagNames[0]
             return None
-        except:
+        except BaseException:
             raise Exception(
                 f"\n{RED}[ERROR]{RESET} Unnable to get GRC repository latest tag.")

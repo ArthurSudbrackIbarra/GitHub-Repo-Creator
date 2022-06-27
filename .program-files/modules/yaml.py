@@ -105,12 +105,15 @@ class YAMLWriter:
             data[COLLABORATORS] = []
         for collaborator in collaborators:
             data[COLLABORATORS].append(
-                {COLLABORATOR: {COLLABORATOR_NAME: collaborator["name"], COLLABORATOR_PERMISSION: collaborator["permission"]}})
+                {
+                    COLLABORATOR: {
+                        COLLABORATOR_NAME: collaborator["name"],
+                        COLLABORATOR_PERMISSION: collaborator["permission"]}})
         with open(f"{self.absoluteDirPath}/{templateName}", "w+") as yamlFile:
             try:
                 yaml.dump(data, yamlFile)
                 return True
-            except:
+            except BaseException:
                 return False
 
     def writeRepo(self,
@@ -124,5 +127,5 @@ class YAMLWriter:
             try:
                 yaml.dump(data, yamlFile)
                 return True
-            except:
+            except BaseException:
                 return False
