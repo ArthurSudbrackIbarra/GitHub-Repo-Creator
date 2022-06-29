@@ -15,20 +15,6 @@ class GitHubAPI:
         except BaseException:
             raise Exception(f"\n{RED}[ERROR]{RESET} Invalid access token.")
 
-
-
-
-
-
-
-
-
-
-
-
-
-            
-
     def isAuthenticated(self) -> bool:
         try:
             # Will raise an error if the user is not authenticated.
