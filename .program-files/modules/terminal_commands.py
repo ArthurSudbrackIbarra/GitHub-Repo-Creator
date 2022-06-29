@@ -40,7 +40,8 @@ class CommandRunner:
         if absoluteFilePath is None or not exists(absoluteFilePath):
             return 1
         # First tries to open the file with VSCode.
-        # If the user does not have VSCode installed, then uses native text editors.
+        # If the user does not have VSCode installed, then uses native text
+        # editors.
         exitCode = system(f"code \"{absoluteFilePath}\"")
         if exitCode != 0:
             if platform.startswith("win"):
@@ -58,7 +59,7 @@ class CommandRunner:
                 ["git", "--git-dir", f"{repoPath}/.git", "describe", "--tags"], shell=shell)
             output = outputAsBytes.decode()
             return output.strip().split("-")[0]
-        except:
+        except BaseException:
             return None
 
     @staticmethod
@@ -70,7 +71,8 @@ class CommandRunner:
         exitCode = system(f"git {gitDirFlag} pull --quiet")
         if exitCode != 0:
             return exitCode
-        return system(f"git {gitDirFlag} checkout --force tags/{latestTag} --quiet")
+        return system(
+            f"git {gitDirFlag} checkout --force tags/{latestTag} --quiet")
 
     @staticmethod
     def getUserCurrentDir() -> str:
@@ -81,5 +83,5 @@ class CommandRunner:
                 [command], shell=shell)
             output = outputAsBytes.decode()
             return output.strip()
-        except:
+        except BaseException:
             return None

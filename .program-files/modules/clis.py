@@ -56,7 +56,11 @@ class CLI:
         return True
 
     # Choose.
-    def choose(self, templateName: str = None, private: bool = None, includeContent: bool = None) -> bool:
+    def choose(
+            self,
+            templateName: str = None,
+            private: bool = None,
+            includeContent: bool = None) -> bool:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
@@ -68,7 +72,7 @@ class CLI:
             option = -1
             try:
                 option = int(input("\nChoose which file to use: "))
-            except:
+            except BaseException:
                 print(f"\n{RED}[ERROR]{RESET} Option must be a number.")
                 return False
             filePath = chooser.getFilePathByIndex(option)
@@ -92,10 +96,18 @@ class CLI:
             repoName = input("\nRepository name: ")
             repoDescription = input("Repository description: ")
             # Calling the create command with optional arguments.
-            return self.create(filePath, repoName=repoName, repoDescription=repoDescription, private=private, includeContent=includeContent)
+            return self.create(
+                filePath,
+                repoName=repoName,
+                repoDescription=repoDescription,
+                private=private,
+                includeContent=includeContent)
         else:
             # Calling the create command.
-            return self.create(filePath, private=private, includeContent=includeContent)
+            return self.create(
+                filePath,
+                private=private,
+                includeContent=includeContent)
 
     # Create.
     def create(self,
@@ -366,7 +378,8 @@ class CLI:
                 private = True if newPrivate.upper() == "T" else False
             elif private is None:
                 private = yaml.private()
-            if includeContent is not None and yaml.includeContent() != includeContent and not includeContentConflicted:
+            if includeContent is not None and yaml.includeContent(
+            ) != includeContent and not includeContentConflicted:
                 includeContentConflicted = True
                 newIncludeContent = input(
                     f"\nInclude content {YELLOW}conflicted{RESET}, use T/t to include or F/f to not include: ")
@@ -376,7 +389,7 @@ class CLI:
             for i in range(yaml.collaboratorsCount()):
                 collaboratorName = yaml.collaboratorName(i)
                 collaboratorPermission = yaml.collaboratorPermission(i)
-                if not collaboratorName in namesAdded:
+                if collaboratorName not in namesAdded:
                     data = {
                         "name": collaboratorName,
                         "permission": collaboratorPermission

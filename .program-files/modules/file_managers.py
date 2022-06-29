@@ -16,16 +16,29 @@ class FileChooser:
         self.absoluteDirPath = path.abspath(dirPath)
 
     def getFileNames(self, fileExtension: str = ".yaml") -> "list[str]":
-        files = [file for file in listdir(self.absoluteDirPath) if path.isfile(
-            path.join(self.absoluteDirPath, file)) and file.endswith(fileExtension)]
+        files = [
+            file for file in listdir(
+                self.absoluteDirPath) if path.isfile(
+                path.join(
+                    self.absoluteDirPath,
+                    file)) and file.endswith(fileExtension)]
         return files
 
-    def getFilesInfo(self, fileExtension: str = ".yaml") -> "list[DirEntry[str]]":
-        files = [file for file in scandir(self.absoluteDirPath) if path.isfile(
-            path.join(self.absoluteDirPath, file)) and file.name.endswith(fileExtension)]
+    def getFilesInfo(
+            self,
+            fileExtension: str = ".yaml") -> "list[DirEntry[str]]":
+        files = [
+            file for file in scandir(
+                self.absoluteDirPath) if path.isfile(
+                path.join(
+                    self.absoluteDirPath,
+                    file)) and file.name.endswith(fileExtension)]
         return files
 
-    def getFilePathByIndex(self, index: int, fileExtension: str = ".yaml") -> str:
+    def getFilePathByIndex(
+            self,
+            index: int,
+            fileExtension: str = ".yaml") -> str:
         files = self.getFileNames(fileExtension)
         if len(files) >= index + 1:
             return path.join(self.absoluteDirPath, files[index])
@@ -53,7 +66,7 @@ class FileDeleter:
         try:
             remove(absoluteFilePath)
             return True
-        except:
+        except BaseException:
             return False
 
     @staticmethod
@@ -65,5 +78,5 @@ class FileDeleter:
                     unlink(filePath)
                 elif path.isdir(filePath):
                     rmtree(filePath)
-            except:
+            except BaseException:
                 pass
