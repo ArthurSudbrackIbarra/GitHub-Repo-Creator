@@ -310,7 +310,7 @@ In case the automatic installation didn't work for you, it is possible to setup 
 1. Clone this repository:
 
 ```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.3.1
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.4
 ```
 
 2. Install the necessary dependencies using pip:
