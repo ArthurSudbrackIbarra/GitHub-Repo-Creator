@@ -27,20 +27,6 @@ def terminalSupportsColor():
 supportsColor = terminalSupportsColor()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class Colors:
     HEADER = ""
     BLUE = ""

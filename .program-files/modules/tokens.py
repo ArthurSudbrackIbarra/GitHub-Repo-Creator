@@ -14,13 +14,6 @@ class TokenManager:
             tokenBytes = base64.b64decode(base64Bytes)
             return tokenBytes.decode("ascii")
 
-
-
-
-
-
-            
-
     def writeToken(self, accessToken: str) -> None:
         with open(self.tokenPath, 'w') as tokenFile:
             tokenBytes = accessToken.encode("ascii")
