@@ -1,3 +1,3 @@
 .program-files/modules/__pycache__
-GRC-Win-Install/
-GRC/
+.program-files/configurations/token.txt
+.program-files/configurations/version.txt
