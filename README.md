@@ -24,9 +24,9 @@ In the next sections, all the possible GRC commands will be listed and explained
 - [save](#save)
 - [list](#list)
 - [get](#get)
-- [choose](#choose)
+- [choose](#choose) - Very Useful ✅
 - [delete](#delete)
-- [generate](#generate)
+- [generate](#generate) - Very Useful ✅
 - [merge](#merge)
 - [list-repos](#list-repos)
 - [open-repo](#open-repo)

@@ -12,6 +12,7 @@ YELLOW = Colors.YELLOW
 RED = Colors.RED
 CYAN = Colors.CYAN
 BLUE = Colors.BLUE
+HEADER = Colors.HEADER
 RESET = Colors.RESET
 
 TEMPLATES_PATH = path.abspath(
@@ -527,7 +528,7 @@ class CLI:
         print(
             "\nWhat is GRC?\nGRC is a tool to automatically create GitHub repositories using YAML templates.")
         print(
-            f"\n{Colors.HEADER}--{Colors.RESET} General Commands {Colors.HEADER}--{Colors.RESET}")
+            f"\n{HEADER}--{RESET} General Commands {HEADER}--{RESET}")
         print(
             f"\n{BLUE}help{RESET}\nShows this message.")
         print(
@@ -537,32 +538,32 @@ class CLI:
         print(
             f"\n{BLUE}update{RESET}\nAutomatically installs the latest GRC version in case you're still not using it.")
         print(
-            f"\n{Colors.HEADER}--{Colors.RESET} Templates Commands {Colors.HEADER}--{Colors.RESET}")
+            f"\n{HEADER}--{RESET} Templates Commands {HEADER}--{RESET}")
         print(
-            f"\n{BLUE}create{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nCreates a repository for you based on a YAML file that is passed as a parameter.")
+            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.")
         print(
-            f"\n{BLUE}save{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nSaves a YAML file to your templates, so that you can later use it to create another repository with the same configurations.")
+            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}choose{RESET}\nLets you choose a file from your saved templates to create a repository based on it.")
         print(
             f"\n{BLUE}list{RESET}\nLists all the templates that are saved in your machine.")
         print(
             f"\n{BLUE}get{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nShows the content of a template that is saved in your machine.")
         print(
-            f"\n{BLUE}choose{RESET}\nLets you choose a file from your saved templates to create a repository based on it.")
-        print(
             f"\n{BLUE}edit{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nOpens a text editor and lets you edit one of your saved templates.")
         print(
             f"\n{BLUE}delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nDeletes a template from your saved templates.\n(Use 'delete all' to delete all your templates).")
         print(
-            f"\n{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.")
-        print(
             f"\n{BLUE}merge{RESET} {CYAN}<TEMPLATE_NAME_1>{RESET} {CYAN}<TEMPLATE_NAME_2> ...{RESET}\nMerges *N* templates and creates a new template with all the collaborators included.")
         print(
-            f"\n{Colors.HEADER}--{Colors.RESET} Repositories Commands {Colors.HEADER}--{Colors.RESET}")
+            f"\n{BLUE}create{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nCreates a repository for you based on a YAML file that is passed as a parameter.")
+        print(
+            f"\n{BLUE}save{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nSaves a YAML file to your templates, so that you can later use it to create another repository with the same configurations.")
+        print(
+            f"\n{HEADER}--{RESET} Repositories Commands {HEADER}--{RESET}")
         print(
             f"\n{BLUE}list-repos{RESET}\nLists all the repositories that you have created with GRC.")
         print(
-            f"\n{BLUE}open-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nOpens the specified repository in Visual Studio Code.")
-        print(
             f"\n{BLUE}get-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nShows information about a specific repository that was created with GRC.")
+        print(
+            f"\n{BLUE}open-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nOpens the specified repository in Visual Studio Code.")
         print(
             f"\n{BLUE}remove-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nRemoves a repository from your repositories list.\n(Use 'remove-repo all' to remove all your repositories).\n")
