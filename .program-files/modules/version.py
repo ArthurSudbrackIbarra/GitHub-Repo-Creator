@@ -21,7 +21,7 @@ class VersionManager:
 
     def shouldResetCache(self) -> bool:
         if not path.exists(self.versionPath):
-            return False
+            return True
         secsDiff = time() - path.getatime(self.versionPath)
         dayDiff = secsDiff / 86400
         return dayDiff >= self.daysInCache

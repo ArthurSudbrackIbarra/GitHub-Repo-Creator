@@ -24,9 +24,9 @@ In the next sections, all the possible GRC commands will be listed and explained
 - [save](#save)
 - [list](#list)
 - [get](#get)
-- [choose](#choose)
+- [choose](#choose) - Very Useful ✅
 - [delete](#delete)
-- [generate](#generate)
+- [generate](#generate) - Very Useful ✅
 - [merge](#merge)
 - [list-repos](#list-repos)
 - [open-repo](#open-repo)
@@ -310,7 +310,7 @@ In case the automatic installation didn't work for you, it is possible to setup 
 1. Clone this repository:
 
 ```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.4
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.4.1
 ```
 
 2. Install the necessary dependencies using pip:
