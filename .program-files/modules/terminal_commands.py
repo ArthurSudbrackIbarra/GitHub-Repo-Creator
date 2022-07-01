@@ -73,15 +73,3 @@ class CommandRunner:
             return exitCode
         return system(
             f"git {gitDirFlag} checkout --force tags/{latestTag} --quiet")
-
-    @staticmethod
-    def getUserCurrentDir() -> str:
-        shell = True if platform.startswith("win") else False
-        command = "cd" if shell else "pwd"
-        try:
-            outputAsBytes = check_output(
-                [command], shell=shell)
-            output = outputAsBytes.decode()
-            return output.strip()
-        except BaseException:
-            return None

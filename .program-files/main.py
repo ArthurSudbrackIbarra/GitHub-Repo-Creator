@@ -2,7 +2,7 @@ from os import path
 import click
 from modules.tokens import TokenManager
 from modules.version import VersionManager
-from modules.clis import CLI
+from modules.clis import CLI, checkIfLatestVersion
 from modules.terminal_commands import CommandRunner
 from modules.coloring import Colors
 
@@ -30,9 +30,9 @@ def authenticate(access_token: str) -> None:
 
 # Save.
 @click.command(name="save")
-@click.argument("absolute_file_path")
-def save(absolute_file_path: str) -> None:
-    cli.save(absolute_file_path)
+@click.argument("file_path")
+def save(file_path: str) -> None:
+    cli.save(file_path)
     print("")
 
 
@@ -61,9 +61,9 @@ def choose(
 
 # Create.
 @click.command(name="create")
-@click.argument("absolute_file_path")
-def create(absolute_file_path: str) -> None:
-    cli.create(absolute_file_path)
+@click.argument("file_path")
+def create(file_path: str) -> None:
+    cli.create(file_path)
     print("")
 
 
@@ -191,7 +191,7 @@ def versionLog(versionManager: VersionManager) -> None:
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
     currentVersion = CommandRunner.getGRCCurrentVersion(repoPath)
     versionManager.writeVersion(currentVersion)
-    versionInfo = cli.isLatestVersion(currentVersion)
+    versionInfo = checkIfLatestVersion(currentVersion)
     isLatestVersion = versionInfo[0]
     latestVersion = versionInfo[1]
     if not isLatestVersion:

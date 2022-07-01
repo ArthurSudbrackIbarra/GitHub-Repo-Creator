@@ -1,4 +1,4 @@
-from os import path
+from os import path, getcwd
 from re import sub
 from .yaml import YAMLParser, YAMLInterpreter, YAMLWriter
 from .tokens import TokenManager
@@ -24,6 +24,42 @@ TEMPLATE_NAME_PATTERN = r"[^a-zA-Z0-9-_]"
 REPOSITORY_NAME_PATTERN = r"[^a-zA-Z0-9-._]"
 
 
+# Absolute paths are not modified.
+# Relative paths are modified to be absolute paths.
+def handleFilePath(filePath: str) -> str:
+    if path.isabs(filePath):
+        return filePath
+    return path.abspath(path.join(getcwd(), filePath))
+
+
+# Helper function of create command.
+def addRepo(repoName: str, repoPath: str) -> None:
+    repoPath = repoPath.replace("\\", "/")
+    if repoName is None:
+        repoName = repoPath.split("/")[-1]
+    fileName = f"{repoName}.yaml"
+    writer = YAMLWriter(REPOSITORIES_PATH)
+    writer.writeRepo(
+        fileName=fileName,
+        repoName=repoName,
+        repoPath=repoPath
+    )
+
+
+# Helper function, checks if the user is using GRC latest version and returns it.
+def checkIfLatestVersion(version: str) -> "list":
+    try:
+        latestTag = GitHubAPI.getGRCLatestTag()
+        if not version.startswith("v"):
+            version = f"v{version}"
+        if not version.startswith(latestTag):
+            return [False, latestTag]
+        return [True, latestTag]
+    except Exception as error:
+        print(error)
+        return [False, latestTag]
+
+
 class CLI:
     def __init__(self) -> None:
         self.tokenManager = TokenManager()
@@ -46,12 +82,13 @@ class CLI:
             return False
 
     # Save.
-    def save(self, absoluteFilePath: str) -> bool:
-        if not absoluteFilePath.endswith(".yaml"):
+    def save(self, filePath: str) -> bool:
+        if not filePath.endswith(".yaml"):
             print(
                 f"\n{RED}[ERROR]{RESET} Only .yaml files can be saved to your templates.")
             return False
-        copier = FileCopier(absoluteFilePath)
+        filePath = handleFilePath(filePath)
+        copier = FileCopier(filePath)
         copier.copyTo(TEMPLATES_PATH)
         print(f"\n{GREEN}[SUCCESS]{RESET} File saved!")
         return True
@@ -112,7 +149,7 @@ class CLI:
 
     # Create.
     def create(self,
-               absoluteFilePath: str,
+               filePath: str,
                repoName: str = None,
                repoDescription: str = None,
                private: bool = None,
@@ -121,11 +158,12 @@ class CLI:
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
-        if not path.exists(absoluteFilePath):
+        filePath = handleFilePath(filePath)
+        if not path.exists(filePath):
             print(
                 f"\n{RED}[ERROR]{RESET} The path you specified does not exist.")
             return False
-        parser = YAMLParser(absoluteFilePath)
+        parser = YAMLParser(filePath)
         yaml = YAMLInterpreter(parser)
         if repoName is None:
             repoName = yaml.repoName()
@@ -166,9 +204,8 @@ class CLI:
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
-                    currentUserDir = CommandRunner.getUserCurrentDir()
-                    self.addRepo(
-                        repoName=None, repoPath=f"{currentUserDir}/{repoName}")
+                    addRepo(
+                        repoName=None, repoPath=f"{getcwd()}/{repoName}")
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
@@ -182,8 +219,7 @@ class CLI:
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Pushed content to repository with success!")
-                    currentUserDir = CommandRunner.getUserCurrentDir()
-                    self.addRepo(repoName=repoName, repoPath=currentUserDir)
+                    addRepo(repoName=repoName, repoPath=getcwd())
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to push content to repository.")
@@ -207,20 +243,8 @@ class CLI:
                     print(error)
         return True
 
-    # Helper method of create command.
-    def addRepo(self, repoName: str, repoPath: str) -> None:
-        repoPath = repoPath.replace("\\", "/")
-        if repoName is None:
-            repoName = repoPath.split("/")[-1]
-        fileName = f"{repoName}.yaml"
-        writer = YAMLWriter(REPOSITORIES_PATH)
-        writer.writeRepo(
-            fileName=fileName,
-            repoName=repoName,
-            repoPath=repoPath
-        )
-
     # List.
+
     def list(self, enumeration: bool = False) -> None:
         chooser = FileChooser(TEMPLATES_PATH)
         fileNames = chooser.getFileNames()
@@ -424,19 +448,6 @@ class CLI:
         print(f"\nGRC version {version}\n")
         return True
 
-    # Helper method.
-    def isLatestVersion(self, version: str) -> "list":
-        try:
-            latestTag = GitHubAPI.getGRCLatestTag()
-            if not version.startswith("v"):
-                version = f"v{version}"
-            if not version.startswith(latestTag):
-                return [False, latestTag]
-            return [True, latestTag]
-        except Exception as error:
-            print(error)
-            return [False, latestTag]
-
     # Update.
     def update(self, repoPath: str) -> bool:
         currentVersion = CommandRunner.getGRCCurrentVersion(repoPath)
@@ -444,7 +455,7 @@ class CLI:
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to get GRC current version.")
             return False
-        latestVersionInfo = self.isLatestVersion(currentVersion)
+        latestVersionInfo = checkIfLatestVersion(currentVersion)
         isLatestVersion = latestVersionInfo[0]
         latestTag = latestVersionInfo[1]
         if not isLatestVersion:
