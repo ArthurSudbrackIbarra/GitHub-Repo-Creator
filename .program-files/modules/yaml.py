@@ -1,4 +1,3 @@
-from os import path
 from typing import Any
 import yaml
 from yaml.loader import SafeLoader

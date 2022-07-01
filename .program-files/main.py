@@ -1,8 +1,8 @@
 from os import path
 import click
-from modules.tokens import TokenManager
+from modules.token import TokenManager
 from modules.version import VersionManager
-from modules.clis import CLI, checkIfLatestVersion
+from modules.cli import CLI, checkIfLatestVersion
 from modules.terminal_commands import CommandRunner
 from modules.coloring import Colors
 

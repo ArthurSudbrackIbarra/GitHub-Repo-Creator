@@ -1,9 +1,9 @@
 from os import path, getcwd
 from re import sub
 from .yaml import YAMLParser, YAMLInterpreter, YAMLWriter
-from .tokens import TokenManager
-from .apis import GitHubAPI
-from .file_managers import FileCopier, FileChooser, FileDeleter
+from .token import TokenManager
+from .api import GitHubAPI
+from .file_managing import FileCopier, FileChooser, FileDeleter
 from .terminal_commands import CommandRunner
 from .coloring import Colors
 
