@@ -547,7 +547,7 @@ class CLI:
                 collaboratorName=collaboratorName,
                 permission=permission)
             return True
-        except:
+        except BaseException:
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to add collaborator to repository {repoName}.")
             return False
@@ -585,7 +585,7 @@ class CLI:
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
             return False
-        except:
+        except BaseException:
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to clone repository {repoName}.")
             return False
