@@ -159,6 +159,31 @@ def removeRepo(repo_name: str) -> None:
     print("")
 
 
+# Add-Collab.
+@click.command(name="add-collab")
+@click.argument("collaborator_name")
+@click.argument("repo_name")
+@click.argument("permission", default="admin")
+def addCollab(collaborator_name: str, repo_name: str, permission: str) -> None:
+    cli.addCollab(collaborator_name, repo_name, permission)
+    print("")
+
+
+# Remote-Repos.
+@click.command(name="remote-repos")
+def remoteRepos() -> None:
+    cli.remoteRepos()
+    print("")
+
+
+# Clone.
+@click.command(name="clone")
+@click.argument("repo_name")
+def clone(repo_name: str) -> None:
+    cli.clone(repo_name)
+    print("")
+
+
 # Help.
 @click.command(name="help")
 def help() -> None:
@@ -183,6 +208,9 @@ def addCommands() -> None:
     main.add_command(getRepo)
     main.add_command(openRepo)
     main.add_command(removeRepo)
+    main.add_command(addCollab)
+    main.add_command(remoteRepos)
+    main.add_command(clone)
     main.add_command(help)
 
 

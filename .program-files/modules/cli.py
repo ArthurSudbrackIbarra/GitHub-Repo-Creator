@@ -535,6 +535,61 @@ class CLI:
                 f"\n{RED}[ERROR]{RESET} Unnable to remove repository, make sure it exists.")
             return False
 
+    # Add Collab.
+    def addCollab(self, collaboratorName: str, repoName: str, permission: str):
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
+            print(
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+            return False
+        try:
+            self.githubAPI.addCollaborator(
+                repoName=repoName,
+                collaboratorName=collaboratorName,
+                permission=permission)
+            return True
+        except:
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to add collaborator to repository {repoName}.")
+            return False
+
+    # Remote Repos.
+    def remoteRepos(self) -> None:
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
+            print(
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+            return False
+        try:
+            repoList = self.githubAPI.getRepoList()
+            if len(repoList) == 0:
+                print("\nNo repositories to list.")
+                return
+            print("")
+            for repo in repoList:
+                print(repo)
+        except Exception as error:
+            print(error)
+
+    # Clone.
+    def clone(self, repoName: str) -> bool:
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
+            print(
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+            return False
+        try:
+            cloneURL = self.githubAPI.getRepoCloneURL(repoName)
+            exitCode = CommandRunner.gitClone(cloneURL)
+            if exitCode == 0:
+                print(
+                    f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
+                return True
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
+            return False
+        except:
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to clone repository {repoName}.")
+            return False
+
     # Help
     def help(self) -> None:
         print(

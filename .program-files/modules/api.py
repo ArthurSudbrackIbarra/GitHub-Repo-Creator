@@ -23,6 +23,14 @@ class GitHubAPI:
         except BaseException:
             return False
 
+    def getRepoList(self) -> list:
+        user = self.github.get_user()
+        try:
+            return [repo.name for repo in user.get_repos()]
+        except BaseException:
+            raise Exception(
+                f"\n{RED}[ERROR]{RESET} Unable to get list of repositories.")
+
     def createRepo(
             self,
             name: str,
@@ -54,7 +62,7 @@ class GitHubAPI:
                 permission=permission
             )
             print(
-                f"\n{GREEN}[SUCCESS]{RESET} Added collaborator '{collaboratorName}' to repository.")
+                f"\n{GREEN}[SUCCESS]{RESET} Added collaborator '{collaboratorName}' to repository '{repoName}'.")
         except BaseException:
             raise Exception(
                 f"\n{RED}[ERROR]{RESET} Unnable to add collaborator '{collaboratorName}' to repository.")
