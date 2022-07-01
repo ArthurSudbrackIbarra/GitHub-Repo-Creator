@@ -46,7 +46,8 @@ def addRepo(repoName: str, repoPath: str) -> None:
     )
 
 
-# Helper function, checks if the user is using GRC latest version and returns it.
+# Helper function, checks if the user is using GRC latest version and
+# returns it.
 def checkIfLatestVersion(version: str) -> "list":
     try:
         latestTag = GitHubAPI.getGRCLatestTag()
