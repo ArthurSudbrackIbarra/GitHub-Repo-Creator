@@ -1,3 +1,19 @@
+# Pycache.
 .program-files/modules/__pycache__
+
+# Token and version files.
 .program-files/configurations/token.txt
 .program-files/configurations/version.txt
+
+# Do not ignore example templates.
+!templates/main-example.yaml
+!templates/private-no-content.yaml
+!templates/private-with-content.yaml
+!templates/public-no-content.yaml
+!templates/public-with-content.yaml
+
+# Custom user templates.
+templates/*.yaml
+
+# User repositories.
+repositories/*.yaml
