@@ -32,8 +32,8 @@ def handleFilePath(filePath: str) -> str:
     return path.abspath(path.join(getcwd(), filePath))
 
 
-# Helper function of create command.
-def addRepo(repoName: str, repoPath: str) -> None:
+# Helper function to create repository yaml files.
+def createRepoFile(repoPath: str, repoName: str = None) -> None:
     repoPath = repoPath.replace("\\", "/")
     if repoName is None:
         repoName = repoPath.split("/")[-1]
@@ -205,8 +205,7 @@ class CLI:
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
-                    addRepo(
-                        repoName=None, repoPath=f"{getcwd()}/{repoName}")
+                    createRepoFile(repoPath=f"{getcwd()}/{repoName}")
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
@@ -220,7 +219,7 @@ class CLI:
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Pushed content to repository with success!")
-                    addRepo(repoName=repoName, repoPath=getcwd())
+                    createRepoFile(repoPath=getcwd(), repoName=repoName)
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to push content to repository.")
@@ -581,6 +580,7 @@ class CLI:
             if exitCode == 0:
                 print(
                     f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
+                createRepoFile(repoPath=f"{getcwd()}/{repoName}")
                 return True
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
