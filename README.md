@@ -46,7 +46,7 @@ Template commands have the 'temp' prefix. Example: grc **temp** list.
 
 ### Repositories Commands
 
-Repositories commands have the 'repo' prefix. Example: grc **repo** list. These commands apply to the **repositories created with GRC**.
+Repositories commands have the 'repo' prefix. Example: grc **repo** list. These commands apply to the **LOCAL repositories created with GRC**.
 
 - [list](#repo-list)
 - [open](#repo-open)
@@ -55,7 +55,7 @@ Repositories commands have the 'repo' prefix. Example: grc **repo** list. These 
 
 ### Remote Repositories Commands
 
-Remote repositories commands have the 'remote' prefix. Example: grc **remote** list. These commands apply to **your remote repositories on GitHub**.
+Remote repositories commands have the 'remote' prefix. Example: grc **remote** list. These commands apply to **your REMOTE repositories on GitHub**.
 
 - [list](#remote-list)
 - [add-collab](#remote-add-collab)
