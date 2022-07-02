@@ -1,6 +1,5 @@
 from os import path, listdir, scandir, DirEntry, remove, unlink
 from shutil import copy, rmtree
-from typing import AnyStr
 
 
 class FileCopier:

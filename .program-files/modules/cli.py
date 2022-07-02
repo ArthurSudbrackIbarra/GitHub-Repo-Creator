@@ -1,9 +1,9 @@
-from os import path
+from os import path, getcwd
 from re import sub
 from .yaml import YAMLParser, YAMLInterpreter, YAMLWriter
-from .tokens import TokenManager
-from .apis import GitHubAPI
-from .file_managers import FileCopier, FileChooser, FileDeleter
+from .token import TokenManager
+from .api import GitHubAPI
+from .file_managing import FileCopier, FileChooser, FileDeleter
 from .terminal_commands import CommandRunner
 from .coloring import Colors
 
@@ -22,6 +22,43 @@ REPOSITORIES_PATH = path.abspath(
 
 TEMPLATE_NAME_PATTERN = r"[^a-zA-Z0-9-_]"
 REPOSITORY_NAME_PATTERN = r"[^a-zA-Z0-9-._]"
+
+
+# Absolute paths are not modified.
+# Relative paths are modified to be absolute paths.
+def handleFilePath(filePath: str) -> str:
+    if path.isabs(filePath):
+        return filePath
+    return path.abspath(path.join(getcwd(), filePath))
+
+
+# Helper function to create repository yaml files.
+def createRepoFile(repoPath: str, repoName: str = None) -> None:
+    repoPath = repoPath.replace("\\", "/")
+    if repoName is None:
+        repoName = repoPath.split("/")[-1]
+    fileName = f"{repoName}.yaml"
+    writer = YAMLWriter(REPOSITORIES_PATH)
+    writer.writeRepo(
+        fileName=fileName,
+        repoName=repoName,
+        repoPath=repoPath
+    )
+
+
+# Helper function, checks if the user is using GRC latest version and
+# returns it.
+def checkIfLatestVersion(version: str) -> "list":
+    try:
+        latestTag = GitHubAPI.getGRCLatestTag()
+        if not version.startswith("v"):
+            version = f"v{version}"
+        if not version.startswith(latestTag):
+            return [False, latestTag]
+        return [True, latestTag]
+    except Exception as error:
+        print(error)
+        return [False, latestTag]
 
 
 class CLI:
@@ -46,12 +83,13 @@ class CLI:
             return False
 
     # Save.
-    def save(self, absoluteFilePath: str) -> bool:
-        if not absoluteFilePath.endswith(".yaml"):
+    def save(self, filePath: str) -> bool:
+        if not filePath.endswith(".yaml"):
             print(
                 f"\n{RED}[ERROR]{RESET} Only .yaml files can be saved to your templates.")
             return False
-        copier = FileCopier(absoluteFilePath)
+        filePath = handleFilePath(filePath)
+        copier = FileCopier(filePath)
         copier.copyTo(TEMPLATES_PATH)
         print(f"\n{GREEN}[SUCCESS]{RESET} File saved!")
         return True
@@ -97,7 +135,7 @@ class CLI:
             repoName = input("\nRepository name: ")
             repoDescription = input("Repository description: ")
             # Calling the create command with optional arguments.
-            return self.create(
+            return self.apply(
                 filePath,
                 repoName=repoName,
                 repoDescription=repoDescription,
@@ -105,27 +143,28 @@ class CLI:
                 includeContent=includeContent)
         else:
             # Calling the create command.
-            return self.create(
+            return self.apply(
                 filePath,
                 private=private,
                 includeContent=includeContent)
 
-    # Create.
-    def create(self,
-               absoluteFilePath: str,
-               repoName: str = None,
-               repoDescription: str = None,
-               private: bool = None,
-               includeContent: bool = None) -> bool:
+    # Apply.
+    def apply(self,
+              filePath: str,
+              repoName: str = None,
+              repoDescription: str = None,
+              private: bool = None,
+              includeContent: bool = None) -> bool:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
             return False
-        if not path.exists(absoluteFilePath):
+        filePath = handleFilePath(filePath)
+        if not path.exists(filePath):
             print(
                 f"\n{RED}[ERROR]{RESET} The path you specified does not exist.")
             return False
-        parser = YAMLParser(absoluteFilePath)
+        parser = YAMLParser(filePath)
         yaml = YAMLInterpreter(parser)
         if repoName is None:
             repoName = yaml.repoName()
@@ -166,9 +205,7 @@ class CLI:
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
-                    currentUserDir = CommandRunner.getUserCurrentDir()
-                    self.addRepo(
-                        repoName=None, repoPath=f"{currentUserDir}/{repoName}")
+                    createRepoFile(repoPath=f"{getcwd()}/{repoName}")
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
@@ -182,8 +219,7 @@ class CLI:
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Pushed content to repository with success!")
-                    currentUserDir = CommandRunner.getUserCurrentDir()
-                    self.addRepo(repoName=repoName, repoPath=currentUserDir)
+                    createRepoFile(repoPath=getcwd(), repoName=repoName)
                 else:
                     print(
                         f"\n{RED}[ERROR]{RESET} Unnable to push content to repository.")
@@ -207,20 +243,8 @@ class CLI:
                     print(error)
         return True
 
-    # Helper method of create command.
-    def addRepo(self, repoName: str, repoPath: str) -> None:
-        repoPath = repoPath.replace("\\", "/")
-        if repoName is None:
-            repoName = repoPath.split("/")[-1]
-        fileName = f"{repoName}.yaml"
-        writer = YAMLWriter(REPOSITORIES_PATH)
-        writer.writeRepo(
-            fileName=fileName,
-            repoName=repoName,
-            repoPath=repoPath
-        )
-
     # List.
+
     def list(self, enumeration: bool = False) -> None:
         chooser = FileChooser(TEMPLATES_PATH)
         fileNames = chooser.getFileNames()
@@ -424,19 +448,6 @@ class CLI:
         print(f"\nGRC version {version}\n")
         return True
 
-    # Helper method.
-    def isLatestVersion(self, version: str) -> "list":
-        try:
-            latestTag = GitHubAPI.getGRCLatestTag()
-            if not version.startswith("v"):
-                version = f"v{version}"
-            if not version.startswith(latestTag):
-                return [False, latestTag]
-            return [True, latestTag]
-        except Exception as error:
-            print(error)
-            return [False, latestTag]
-
     # Update.
     def update(self, repoPath: str) -> bool:
         currentVersion = CommandRunner.getGRCCurrentVersion(repoPath)
@@ -444,7 +455,7 @@ class CLI:
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to get GRC current version.")
             return False
-        latestVersionInfo = self.isLatestVersion(currentVersion)
+        latestVersionInfo = checkIfLatestVersion(currentVersion)
         isLatestVersion = latestVersionInfo[0]
         latestTag = latestVersionInfo[1]
         if not isLatestVersion:
@@ -523,6 +534,62 @@ class CLI:
                 f"\n{RED}[ERROR]{RESET} Unnable to remove repository, make sure it exists.")
             return False
 
+    # Add Collab.
+    def addCollab(self, collaboratorName: str, repoName: str, permission: str):
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
+            print(
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+            return False
+        try:
+            self.githubAPI.addCollaborator(
+                repoName=repoName,
+                collaboratorName=collaboratorName,
+                permission=permission)
+            return True
+        except BaseException:
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to add collaborator to repository {repoName}.")
+            return False
+
+    # Remote Repos.
+    def remoteRepos(self) -> None:
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
+            print(
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+            return False
+        try:
+            repoList = self.githubAPI.getRepoList()
+            if len(repoList) == 0:
+                print("\nNo repositories to list.")
+                return
+            print("")
+            for repo in repoList:
+                print(repo)
+        except Exception as error:
+            print(error)
+
+    # Clone.
+    def clone(self, repoName: str) -> bool:
+        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
+            print(
+                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+            return False
+        try:
+            cloneURL = self.githubAPI.getRepoCloneURL(repoName)
+            exitCode = CommandRunner.gitClone(cloneURL)
+            if exitCode == 0:
+                print(
+                    f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
+                createRepoFile(repoPath=f"{getcwd()}/{repoName}")
+                return True
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
+            return False
+        except BaseException:
+            print(
+                f"\n{RED}[ERROR]{RESET} Unnable to clone repository {repoName}.")
+            return False
+
     # Help
     def help(self) -> None:
         print(
@@ -540,30 +607,38 @@ class CLI:
         print(
             f"\n{HEADER}--{RESET} Templates Commands {HEADER}--{RESET}")
         print(
-            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.")
+            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}temp generate{RESET}\nGenerates a template for you with the data that you input.")
         print(
-            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}choose{RESET}\nLets you choose a file from your saved templates to create a repository based on it.")
+            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}temp choose{RESET}\nLets you choose a file from your saved templates to create a repository based on it.")
         print(
-            f"\n{BLUE}list{RESET}\nLists all the templates that are saved in your machine.")
+            f"\n{BLUE}temp list{RESET}\nLists all the templates that are saved in your machine.")
         print(
-            f"\n{BLUE}get{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nShows the content of a template that is saved in your machine.")
+            f"\n{BLUE}temp get{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nShows the content of a template that is saved in your machine.")
         print(
-            f"\n{BLUE}edit{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nOpens a text editor and lets you edit one of your saved templates.")
+            f"\n{BLUE}temp edit{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nOpens a text editor and lets you edit one of your saved templates.")
         print(
-            f"\n{BLUE}delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nDeletes a template from your saved templates.\n(Use 'delete all' to delete all your templates).")
+            f"\n{BLUE}temp delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nDeletes a template from your saved templates.\n(Use 'delete all' to delete all your templates).")
         print(
-            f"\n{BLUE}merge{RESET} {CYAN}<TEMPLATE_NAME_1>{RESET} {CYAN}<TEMPLATE_NAME_2> ...{RESET}\nMerges *N* templates and creates a new template with all the collaborators included.")
+            f"\n{BLUE}temp merge{RESET} {CYAN}<TEMPLATE_NAME_1>{RESET} {CYAN}<TEMPLATE_NAME_2> ...{RESET}\nMerges *N* templates and creates a new template with all the collaborators included.")
         print(
-            f"\n{BLUE}create{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nCreates a repository for you based on a YAML file that is passed as a parameter.")
+            f"\n{BLUE}temp apply{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nCreates a repository for you based on a YAML file that is passed as a parameter.")
         print(
-            f"\n{BLUE}save{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nSaves a YAML file to your templates, so that you can later use it to create another repository with the same configurations.")
+            f"\n{BLUE}temp save{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nSaves a YAML file to your templates, so that you can later use it to create another repository with the same configurations.")
         print(
             f"\n{HEADER}--{RESET} Repositories Commands {HEADER}--{RESET}")
         print(
-            f"\n{BLUE}list-repos{RESET}\nLists all the repositories that you have created with GRC.")
+            f"\n{BLUE}repo list{RESET}\nLists all the repositories that you have created with GRC.")
         print(
-            f"\n{BLUE}get-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nShows information about a specific repository that was created with GRC.")
+            f"\n{BLUE}repo get{RESET} {CYAN}<REPO_NAME>{RESET}\nShows information about a specific repository that was created with GRC.")
         print(
-            f"\n{BLUE}open-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nOpens the specified repository in Visual Studio Code.")
+            f"\n{BLUE}repo open{RESET} {CYAN}<REPO_NAME>{RESET}\nOpens the specified repository in Visual Studio Code.")
         print(
-            f"\n{BLUE}remove-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nRemoves a repository from your repositories list.\n(Use 'remove-repo all' to remove all your repositories).\n")
+            f"\n{BLUE}repo remove{RESET} {CYAN}<REPO_NAME>{RESET}\nRemoves a repository from your repositories list.\n(Use 'remove-repo all' to remove all your repositories).")
+        print(
+            f"\n{HEADER}--{RESET} Remote Repositories Commands {HEADER}--{RESET}")
+        print(
+            f"\n{BLUE}remote add-collab{RESET} {CYAN}<REPO_NAME>{RESET} {CYAN}<USER_NAME>{RESET} {CYAN}<PERMISSION?>{RESET}\nAdds a collaborator to a repository.")
+        print(
+            f"\n{BLUE}remote list{RESET}\nLists all the remote repositories that you have in your GitHub account.")
+        print(
+            f"\n{BLUE}remote clone{RESET} {CYAN}<REPO_NAME>{RESET}\nClones a personal repository from your GitHub account.\n")

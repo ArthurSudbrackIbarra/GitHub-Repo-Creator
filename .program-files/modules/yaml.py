@@ -1,4 +1,3 @@
-from os import path
 from typing import Any
 import yaml
 from yaml.loader import SafeLoader
@@ -6,10 +5,10 @@ from yaml.loader import SafeLoader
 
 class YAMLParser:
     def __init__(self, filePath: str) -> None:
-        self.absoluteFilePath = path.abspath(filePath)
+        self.filePath = filePath
 
     def load(self) -> Any:
-        with open(self.absoluteFilePath, 'r') as yamlFile:
+        with open(self.filePath, 'r') as yamlFile:
             data = yaml.load(yamlFile, Loader=SafeLoader)
             return data
 
@@ -87,7 +86,7 @@ class YAMLInterpreter:
 
 class YAMLWriter:
     def __init__(self, dirPath: str) -> None:
-        self.absoluteDirPath = path.abspath(dirPath)
+        self.dirPath = dirPath
 
     def writeTemplate(self,
                       templateName: str,
@@ -109,7 +108,7 @@ class YAMLWriter:
                     COLLABORATOR: {
                         COLLABORATOR_NAME: collaborator["name"],
                         COLLABORATOR_PERMISSION: collaborator["permission"]}})
-        with open(f"{self.absoluteDirPath}/{templateName}", "w+") as yamlFile:
+        with open(f"{self.dirPath}/{templateName}", "w+") as yamlFile:
             try:
                 yaml.dump(data, yamlFile)
                 return True
@@ -123,7 +122,7 @@ class YAMLWriter:
         data = {}
         data[REPO_NAME] = repoName
         data[REPO_PATH] = repoPath
-        with open(f"{self.absoluteDirPath}/{fileName}", "w+") as yamlFile:
+        with open(f"{self.dirPath}/{fileName}", "w+") as yamlFile:
             try:
                 yaml.dump(data, yamlFile)
                 return True

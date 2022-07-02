@@ -1,12 +1,12 @@
 from os import path
 import click
-from modules.tokens import TokenManager
+from modules.token import TokenManager
 from modules.version import VersionManager
-from modules.clis import CLI
+from modules.cli import CLI, checkIfLatestVersion
 from modules.terminal_commands import CommandRunner
 from modules.coloring import Colors
 
-cli = None
+cliInstance = None
 tokenManager = None
 
 YELLOW = Colors.YELLOW
@@ -14,30 +14,61 @@ CYAN = Colors.CYAN
 RESET = Colors.RESET
 
 
-# Main.
+# [Main command group].
+
+
 @click.group()
-def main() -> None:
+def cli() -> None:
     pass
+
+
+# Help.
+@click.command(name="help")
+def help() -> None:
+    cliInstance.help()
 
 
 # Authenticate.
 @click.command(name="authenticate")
 @click.argument("access_token")
 def authenticate(access_token: str) -> None:
-    cli.authenticate(access_token, logs=True)
+    cliInstance.authenticate(access_token, logs=True)
     print("")
 
 
-# Save.
-@click.command(name="save")
-@click.argument("absolute_file_path")
-def save(absolute_file_path: str) -> None:
-    cli.save(absolute_file_path)
+# Version.
+@click.command(name="version")
+def version() -> None:
+    repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
+    cliInstance.version(repoPath)
+
+
+# Update.
+@click.command(name="update")
+def update() -> None:
+    repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
+    cliInstance.update(repoPath)
     print("")
 
 
-# Choose.
-@click.command(name="choose")
+# [Templates command group].
+
+
+@click.group()
+def temp() -> None:
+    pass
+
+
+# Temp Save.
+@temp.command(name="save")
+@click.argument("file_path")
+def save(file_path: str) -> None:
+    cliInstance.save(file_path)
+    print("")
+
+
+# Temp Choose.
+@temp.command(name="choose")
 @click.argument("template_name", required=False)
 @click.option("-p", "--private")
 @click.option("-i", "--include_content")
@@ -55,135 +86,149 @@ def choose(
             include_content = True
         elif include_content == "false":
             include_content = False
-    cli.choose(template_name, private, include_content)
+    cliInstance.choose(template_name, private, include_content)
     print("")
 
 
-# Create.
-@click.command(name="create")
-@click.argument("absolute_file_path")
-def create(absolute_file_path: str) -> None:
-    cli.create(absolute_file_path)
+# Temp Apply.
+@temp.command(name="apply")
+@click.argument("file_path")
+def apply(file_path: str) -> None:
+    cliInstance.apply(file_path)
     print("")
 
 
-# List.
-@click.command(name="list")
+# Temp List.
+@temp.command(name="list")
 def list() -> None:
-    cli.list()
+    cliInstance.list()
     print("")
 
 
-# Get.
-@click.command(name="get")
+# Temp Get.
+@temp.command(name="get")
 @click.argument("template_name")
 def get(template_name: str) -> None:
-    cli.get(template_name)
+    cliInstance.get(template_name)
     print("")
 
 
-# Edit.
-@click.command(name="edit")
+# Temp Edit.
+@temp.command(name="edit")
 @click.argument("template_name")
 def edit(template_name: str) -> None:
-    cli.edit(template_name)
+    cliInstance.edit(template_name)
     print("")
 
 
-# Delete.
-@click.command(name="delete")
+# Temp Delete.
+@temp.command(name="delete")
 @click.argument("template_name")
 def delete(template_name: str) -> None:
-    cli.delete(template_name)
+    cliInstance.delete(template_name)
     print("")
 
 
-# Generate.
-@click.command(name="generate")
+# Temp Generate.
+@temp.command(name="generate")
 def generate() -> None:
-    cli.generate()
+    cliInstance.generate()
     print("")
 
 
-# Merge.
-@click.command(name="merge")
+# Temp Merge.
+@temp.command(name="merge")
 @click.argument("template_names", nargs=-1)
 def merge(template_names: "tuple[str]") -> None:
-    cli.merge(template_names)
+    cliInstance.merge(template_names)
     print("")
 
 
-# Version.
-@click.command(name="version")
-def version() -> None:
-    repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
-    cli.version(repoPath)
+# [GRC Repositories command group].
 
 
-# Update.
-@click.command(name="update")
-def update() -> None:
-    repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
-    cli.update(repoPath)
-    print("")
+@click.group()
+def repo() -> None:
+    pass
 
 
-# List-Repos.
-@click.command(name="list-repos")
+# Repo List.
+@repo.command(name="list")
 def listRepos() -> None:
     print("")
-    cli.listRepos()
+    cliInstance.listRepos()
 
 
-# Get-Repo.
-@click.command(name="get-repo")
+# Repo Get.
+@repo.command(name="get")
 @click.argument("repo_name")
 def getRepo(repo_name: str) -> None:
-    cli.getRepo(repo_name)
+    cliInstance.getRepo(repo_name)
     print("")
 
 
-# Open-Repo.
-@click.command(name="open-repo")
+# Repo Open.
+@repo.command(name="open")
 @click.argument("repo_name")
 def openRepo(repo_name: str) -> None:
-    cli.openRepo(repo_name)
+    cliInstance.openRepo(repo_name)
     print("")
 
 
-# Remove-Repo.
-@click.command(name="remove-repo")
+# Repo Remove.
+@repo.command(name="remove")
 @click.argument("repo_name")
 def removeRepo(repo_name: str) -> None:
-    cli.removeRepo(repo_name)
+    cliInstance.removeRepo(repo_name)
     print("")
 
 
-# Help.
-@click.command(name="help")
-def help() -> None:
-    cli.help()
+# [Remote repositories command group].
+
+
+@click.group()
+def remote() -> None:
+    pass
+
+
+# Remote Add-Collab.
+@remote.command(name="add-collab")
+@click.argument("collaborator_name")
+@click.argument("repo_name")
+@click.argument("permission", default="admin")
+def addCollab(collaborator_name: str, repo_name: str, permission: str) -> None:
+    cliInstance.addCollab(collaborator_name, repo_name, permission)
+    print("")
+
+
+# Remote list.
+@remote.command(name="list")
+def remoteRepos() -> None:
+    cliInstance.remoteRepos()
+    print("")
+
+
+# Remote Clone.
+@remote.command(name="clone")
+@click.argument("repo_name")
+def clone(repo_name: str) -> None:
+    cliInstance.clone(repo_name)
+    print("")
 
 
 # Function to add all the commands.
 def addCommands() -> None:
-    main.add_command(authenticate)
-    main.add_command(save)
-    main.add_command(choose)
-    main.add_command(create)
-    main.add_command(list)
-    main.add_command(get)
-    main.add_command(edit)
-    main.add_command(delete)
-    main.add_command(generate)
-    main.add_command(merge)
-    main.add_command(version)
-    main.add_command(update)
-    main.add_command(listRepos)
-    main.add_command(getRepo)
-    main.add_command(openRepo)
-    main.add_command(removeRepo)
-    main.add_command(help)
+    # General.
+    cli.add_command(help)
+    cli.add_command(authenticate)
+    cli.add_command(version)
+    cli.add_command(update)
+    # Templates.
+    cli.add_command(temp)
+    # GRC Repositories.
+    cli.add_command(repo)
+    # Remote repositories.
+    cli.add_command(remote)
 
 
 # Function that warns the user if they are not using the latest GRC version.
@@ -191,7 +236,7 @@ def versionLog(versionManager: VersionManager) -> None:
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
     currentVersion = CommandRunner.getGRCCurrentVersion(repoPath)
     versionManager.writeVersion(currentVersion)
-    versionInfo = cli.isLatestVersion(currentVersion)
+    versionInfo = checkIfLatestVersion(currentVersion)
     isLatestVersion = versionInfo[0]
     latestVersion = versionInfo[1]
     if not isLatestVersion:
@@ -200,13 +245,12 @@ def versionLog(versionManager: VersionManager) -> None:
 
 
 if __name__ == "__main__":
-    cli = CLI()
+    cliInstance = CLI()
     tokenManager = TokenManager()
     token = tokenManager.readToken()
-    cli.authenticate(token, logs=False)
-    # 0.08 days = 1,92 hours.
+    cliInstance.authenticate(token, logs=False)
     versionManager = VersionManager(daysInCache=0.08)
     if versionManager.shouldResetCache():
         versionLog(versionManager)
     addCommands()
-    main()
+    cli()

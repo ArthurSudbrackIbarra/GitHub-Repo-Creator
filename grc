@@ -11,15 +11,4 @@ if [ -z "$COMMAND" ]; then
     exit 0
 fi
 
-
-if [ $COMMAND = "create" ] || [ $COMMAND = "save" ]; then
-    USER_FILE_PATH=$2
-    if [[ "$USER_FILE_PATH" = /* ]]; then
-        python3 $SCRIPT_DIR/.program-files/main.py $@
-    else
-        ABSOLUTE_FILE_PATH=$PWD/$USER_FILE_PATH
-        python3 $SCRIPT_DIR/.program-files/main.py $COMMAND $ABSOLUTE_FILE_PATH
-    fi     
-else
-    python3 $SCRIPT_DIR/.program-files/main.py $@
-fi
+python3 $SCRIPT_DIR/.program-files/main.py $@
