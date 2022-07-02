@@ -82,7 +82,7 @@ class CLI:
                 print(error)
             return False
 
-    # Save.
+    # (Temp) Save.
     def save(self, filePath: str) -> bool:
         if not filePath.endswith(".yaml"):
             print(
@@ -94,7 +94,7 @@ class CLI:
         print(f"\n{GREEN}[SUCCESS]{RESET} File saved!")
         return True
 
-    # Choose.
+    # (Temp) Choose.
     def choose(
             self,
             templateName: str = None,
@@ -148,7 +148,7 @@ class CLI:
                 private=private,
                 includeContent=includeContent)
 
-    # Apply.
+    # (Temp) Apply.
     def apply(self,
               filePath: str,
               repoName: str = None,
@@ -243,8 +243,7 @@ class CLI:
                     print(error)
         return True
 
-    # List.
-
+    # (Temp) List.
     def list(self, enumeration: bool = False) -> None:
         chooser = FileChooser(TEMPLATES_PATH)
         fileNames = chooser.getFileNames()
@@ -259,7 +258,7 @@ class CLI:
             else:
                 print(fileName)
 
-    # Get.
+    # (Temp) Get.
     def get(self, templateName: str) -> bool:
         chooser = FileChooser(TEMPLATES_PATH)
         if not templateName.endswith(".yaml"):
@@ -272,7 +271,7 @@ class CLI:
         print(f"\n{content}")
         return True
 
-    # Edit.
+    # (Temp) Edit.
     def edit(self, templateName: str) -> bool:
         chooser = FileChooser(TEMPLATES_PATH)
         if not templateName.endswith(".yaml"):
@@ -285,7 +284,7 @@ class CLI:
             f"\n{RED}[ERROR]{RESET} Unnable to edit template, make sure the file exists.")
         return False
 
-    # Delete.
+    # (Temp) Delete.
     def delete(self, templateName: str) -> bool:
         if templateName == "all":
             FileDeleter.deleteAllFromFolder(TEMPLATES_PATH)
@@ -305,7 +304,7 @@ class CLI:
                 f"\n{RED}[ERROR]{RESET} Unnable to delete template, make sure the file exists.")
             return False
 
-    # Generate.
+    # (Temp) Generate.
     def generate(self) -> bool:
         print(
             f"\n{CYAN}This is the name of the template YAML file (my-template -> my-template.yaml).{RESET}")
@@ -368,7 +367,7 @@ class CLI:
             f"\n{RED}[ERROR]{RESET} Unnable to generate template.")
         return False
 
-    # Merge.
+    # (Temp) Merge.
     def merge(self, templateNames: "tuple[str]") -> bool:
         if len(templateNames) < 2:
             print(
@@ -470,7 +469,7 @@ class CLI:
         print("\nAlready using GRC latest version.")
         return False
 
-    # List Repos.
+    # (Repo) List.
     def listRepos(self) -> None:
         chooser = FileChooser(REPOSITORIES_PATH)
         fileNames = chooser.getFileNames()
@@ -494,7 +493,7 @@ class CLI:
         print(f"\n{content}")
         return True
 
-    # Open Repo.
+    # (Repo) Open.
     def openRepo(self, repoName: str) -> bool:
         chooser = FileChooser(REPOSITORIES_PATH)
         if not repoName.endswith(".yaml"):
@@ -514,7 +513,7 @@ class CLI:
             return False
         return True
 
-    # Remove Repo.
+    # (Repo) Remove.
     def removeRepo(self, fileName: str) -> bool:
         if fileName == "all":
             FileDeleter.deleteAllFromFolder(REPOSITORIES_PATH)
@@ -534,7 +533,7 @@ class CLI:
                 f"\n{RED}[ERROR]{RESET} Unnable to remove repository, make sure it exists.")
             return False
 
-    # Add Collab.
+    # (Remote) Add Collab.
     def addCollab(self, collaboratorName: str, repoName: str, permission: str):
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
@@ -551,7 +550,7 @@ class CLI:
                 f"\n{RED}[ERROR]{RESET} Unnable to add collaborator to repository {repoName}.")
             return False
 
-    # Remote Repos.
+    # (Remote) List Remote Repos.
     def remoteRepos(self) -> None:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
@@ -568,7 +567,7 @@ class CLI:
         except Exception as error:
             print(error)
 
-    # Clone.
+    # (Remote) Clone.
     def clone(self, repoName: str) -> bool:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
