@@ -4,6 +4,13 @@
 GRC is a tool to automatically create and manage GitHub repositories using YAML templates. It comes with a CLI (Command Line Interface) that you can use to execute commands.
 <br/>
 
+<br/>
+<span align="center">
+  <img src="https://lh4.googleusercontent.com/afwpHcwbtK4nsBacWX-3DppK2s7y700e8MMactqkLvkXGwDIiz_9RsdJBob3akxYC8hxvDr2zF5peAi-Krqh=w1920-h969-rw">
+</span>
+<br/>
+<br/>
+
 ## Table of Contents
 
 - [CLI Commands](#cli-commands)
