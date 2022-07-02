@@ -5,9 +5,9 @@ GRC is a tool to automatically create and manage GitHub repositories using YAML 
 <br/>
 
 <br/>
-<span align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1w4yBbD-qTSwA087hkEIMkChanBZhQPLD">
-</span>
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1HDdlI3ZIlyckLf42FzfDPIFK-5oQFh3F">
+</p>
 <br/>
 <br/>
 
