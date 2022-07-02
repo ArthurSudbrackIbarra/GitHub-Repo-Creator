@@ -135,7 +135,7 @@ class CLI:
             repoName = input("\nRepository name: ")
             repoDescription = input("Repository description: ")
             # Calling the create command with optional arguments.
-            return self.create(
+            return self.apply(
                 filePath,
                 repoName=repoName,
                 repoDescription=repoDescription,
@@ -143,18 +143,18 @@ class CLI:
                 includeContent=includeContent)
         else:
             # Calling the create command.
-            return self.create(
+            return self.apply(
                 filePath,
                 private=private,
                 includeContent=includeContent)
 
-    # Create.
-    def create(self,
-               filePath: str,
-               repoName: str = None,
-               repoDescription: str = None,
-               private: bool = None,
-               includeContent: bool = None) -> bool:
+    # Apply.
+    def apply(self,
+              filePath: str,
+              repoName: str = None,
+              repoDescription: str = None,
+              private: bool = None,
+              includeContent: bool = None) -> bool:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
             print(
                 f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
@@ -607,30 +607,38 @@ class CLI:
         print(
             f"\n{HEADER}--{RESET} Templates Commands {HEADER}--{RESET}")
         print(
-            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}generate{RESET}\nGenerates a template for you with the data that you input.")
+            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}temp generate{RESET}\nGenerates a template for you with the data that you input.")
         print(
-            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}choose{RESET}\nLets you choose a file from your saved templates to create a repository based on it.")
+            f"\n{HEADER}[VERY USEFUL] {RESET}{BLUE}temp choose{RESET}\nLets you choose a file from your saved templates to create a repository based on it.")
         print(
-            f"\n{BLUE}list{RESET}\nLists all the templates that are saved in your machine.")
+            f"\n{BLUE}temp list{RESET}\nLists all the templates that are saved in your machine.")
         print(
-            f"\n{BLUE}get{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nShows the content of a template that is saved in your machine.")
+            f"\n{BLUE}temp get{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nShows the content of a template that is saved in your machine.")
         print(
-            f"\n{BLUE}edit{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nOpens a text editor and lets you edit one of your saved templates.")
+            f"\n{BLUE}temp edit{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nOpens a text editor and lets you edit one of your saved templates.")
         print(
-            f"\n{BLUE}delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nDeletes a template from your saved templates.\n(Use 'delete all' to delete all your templates).")
+            f"\n{BLUE}temp delete{RESET} {CYAN}<TEMPLATE_NAME>{RESET}\nDeletes a template from your saved templates.\n(Use 'delete all' to delete all your templates).")
         print(
-            f"\n{BLUE}merge{RESET} {CYAN}<TEMPLATE_NAME_1>{RESET} {CYAN}<TEMPLATE_NAME_2> ...{RESET}\nMerges *N* templates and creates a new template with all the collaborators included.")
+            f"\n{BLUE}temp merge{RESET} {CYAN}<TEMPLATE_NAME_1>{RESET} {CYAN}<TEMPLATE_NAME_2> ...{RESET}\nMerges *N* templates and creates a new template with all the collaborators included.")
         print(
-            f"\n{BLUE}create{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nCreates a repository for you based on a YAML file that is passed as a parameter.")
+            f"\n{BLUE}temp apply{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nCreates a repository for you based on a YAML file that is passed as a parameter.")
         print(
-            f"\n{BLUE}save{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nSaves a YAML file to your templates, so that you can later use it to create another repository with the same configurations.")
+            f"\n{BLUE}temp save{RESET} {CYAN}<PATH_TO_YOUR_YAML_FILE>{RESET}\nSaves a YAML file to your templates, so that you can later use it to create another repository with the same configurations.")
         print(
             f"\n{HEADER}--{RESET} Repositories Commands {HEADER}--{RESET}")
         print(
-            f"\n{BLUE}list-repos{RESET}\nLists all the repositories that you have created with GRC.")
+            f"\n{BLUE}repo list{RESET}\nLists all the repositories that you have created with GRC.")
         print(
-            f"\n{BLUE}get-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nShows information about a specific repository that was created with GRC.")
+            f"\n{BLUE}repo get{RESET} {CYAN}<REPO_NAME>{RESET}\nShows information about a specific repository that was created with GRC.")
         print(
-            f"\n{BLUE}open-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nOpens the specified repository in Visual Studio Code.")
+            f"\n{BLUE}repo open{RESET} {CYAN}<REPO_NAME>{RESET}\nOpens the specified repository in Visual Studio Code.")
         print(
-            f"\n{BLUE}remove-repo{RESET} {CYAN}<REPO_NAME>{RESET}\nRemoves a repository from your repositories list.\n(Use 'remove-repo all' to remove all your repositories).\n")
+            f"\n{BLUE}repo remove{RESET} {CYAN}<REPO_NAME>{RESET}\nRemoves a repository from your repositories list.\n(Use 'remove-repo all' to remove all your repositories).")
+        print(
+            f"\n{HEADER}--{RESET} Remote Repositories Commands {HEADER}--{RESET}")
+        print(
+            f"\n{BLUE}remote add-collab{RESET} {CYAN}<REPO_NAME>{RESET} {CYAN}<USER_NAME>{RESET} {CYAN}<PERMISSION?>{RESET}\nAdds a collaborator to a repository.")
+        print(
+            f"\n{BLUE}remote list{RESET}\nLists all the remote repositories that you have in your GitHub account.")
+        print(
+            f"\n{BLUE}remote clone{RESET} {CYAN}<REPO_NAME>{RESET}\nClones a personal repository from your GitHub account.\n")

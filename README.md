@@ -1,12 +1,12 @@
 <h1 align="center">GitHub Repository Creator (GRC)</h1>
 
 <br/>
-GRC is a tool to automatically create GitHub repositories using YAML templates. It comes with a CLI (Command Line Interface) that you can use to execute commands.
+GRC is a tool to automatically create and manage GitHub repositories using YAML templates. It comes with a CLI (Command Line Interface) that you can use to execute commands.
 <br/>
 
 ## Table of Contents
 
-- [Commands](#cli-commands)
+- [CLI Commands](#cli-commands)
 - [Installation (Windows)](#installation-windows)
   - [Automatic Installation](#automatic-installation)
   - [Manual Installation](#manual-installation)
@@ -16,22 +16,44 @@ GRC is a tool to automatically create GitHub repositories using YAML templates. 
 
 In the next sections, all the possible GRC commands will be listed and explained.
 
+### General Commands
+
+General commands have no prefix, they are used directly after 'grc'. Example: grc version.
+
 - [help](#help)
 - [version](#version)
 - [update](#update)
 - [authenticate](#authenticate)
-- [create](#create)
-- [save](#save)
-- [list](#list)
-- [get](#get)
-- [choose](#choose) - Very Useful ✅
-- [delete](#delete)
-- [generate](#generate) - Very Useful ✅
-- [merge](#merge)
-- [list-repos](#list-repos)
-- [open-repo](#open-repo)
-- [get-repo](#get-repo)
-- [remove-repo](#remove-repo)
+
+### Template Commands
+
+Template commands have the 'temp' prefix. Example: grc **temp** list.
+
+- [apply](#temp-apply)
+- [save](#temp-save)
+- [list](#temp-list)
+- [get](#temp-get)
+- [choose](#temp-choose)
+- [delete](#temp-delete)
+- [generate](#temp-generate)
+- [merge](#temp-merge)
+
+### Repositories Commands
+
+Repositories commands have the 'repo' prefix. Example: grc **repo** list. These commands apply to the **repositories created with GRC**.
+
+- [list](#repo-list)
+- [open](#repo-open)
+- [get](#repo-get)
+- [remove](#repo-remove)
+
+### Remote Repositories Commands
+
+Remote repositories commands have the 'remote' prefix. Example: grc **remote** list. These commands apply to **your remote repositories on GitHub**.
+
+- [list](#remote-list)
+- [add-collab](#remote-add-collab)
+- [clone](#remote-clone)
 
 ## Help
 
@@ -46,8 +68,6 @@ grc help
 
 The 'version' command shows you the GRC version that you are currently using.
 
-![Version](https://user-images.githubusercontent.com/69170322/172204486-f139282f-6f32-4c3e-bf3d-c9188cf95691.png)
-
 ```sh
 # Usage:
 grc version
@@ -57,8 +77,6 @@ grc version
 
 The 'update' command automatically installs the latest GRC version in case you're still not using it.
 
-![Update](https://user-images.githubusercontent.com/69170322/172204826-73d4fa06-cd18-465e-b1f1-548246c1039c.png)
-
 ```sh
 # Usage:
 grc update
@@ -67,8 +85,6 @@ grc update
 ## Authenticate
 
 The 'authenticate' command is used so you can authenticate to GitHub and create repositories in your account. This is the **first command** you need to execute in order to start using GRC.
-
-![Authenticate](https://user-images.githubusercontent.com/69170322/172030151-00f09557-7129-4fc6-ab73-7b29078e8147.png)
 
 ```sh
 # Usage:
@@ -80,11 +96,9 @@ grc authenticate ghp_3dh39j39874hs3d8PSBSHksbsbtx
 
 Before running the command, you will need to generate a personal access token in GitHub if you don't have one yet. More on how to do that [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token), make sure to check the 'repo' permission box when creating your token.
 
-## Create
+## (Temp) Apply
 
-The 'create' command creates a repository for you based on a YAML file that is passed as a parameter. The YAML file contains information about the repository you want to create and must follow the patterns defined in the [templates](https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/tree/main/templates).
-
-![Create](https://user-images.githubusercontent.com/69170322/172030355-cf5c3e39-4753-4936-9f26-5c8b8a0799db.png)
+The 'apply' command creates a repository for you based on a YAML file that is passed as a parameter. The YAML file contains information about the repository you want to create and must follow the patterns defined in the [templates](https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/tree/main/templates).
 
 **File:** my-template.yaml
 
@@ -105,184 +119,200 @@ collaborators:
 
 ```sh
 # Usage:
-grc create <PATH_TO_YOUR_YAML_FILE>
+grc temp apply <PATH_TO_YOUR_YAML_FILE>
 
 # Example:
-grc create ./my-template.yaml
+grc temp apply ./my-template.yaml
 ```
 
-## Save
+## (Temp) Save
 
 The 'save' command is used to save a YAML file to your templates, so that you can later use it to create another repository with the same configurations but with a different repository name/description without having to specify the file path again.
 
-![Save](https://user-images.githubusercontent.com/69170322/172030218-a11db610-6de7-40b2-93e3-0466d31677b6.png)
-
 ```sh
 # Usage:
-grc save <PATH_TO_YOUR_YAML_FILE>
+grc temp save <PATH_TO_YOUR_YAML_FILE>
 
 # Example:
-grc save ./my-template.yaml
+grc temp save ./my-template.yaml
 ```
 
-## List
+## (Temp) List
 
 The 'list' command lists all the templates that are saved in your machine.
 
-![List](https://user-images.githubusercontent.com/69170322/172093152-a5f96ee0-4803-4b4f-9cb7-029338799e58.png)
-
 ```sh
 # Usage:
-grc list
+grc temp list
 ```
 
-## Get
+## (Temp) Get
 
 The 'get' command shows the content of a template that is saved in your machine.
 
-![Get](https://user-images.githubusercontent.com/69170322/172093282-b282c9c8-7ac0-4d00-a758-139880716cd1.png)
-
 ```sh
 # Usage:
-grc get <TEMPLATE_NAME>
+grc temp get <TEMPLATE_NAME>
 
 # Example:
-grc get my-template # Or...
-grc get my-template.yaml
+grc temp get my-template # Or...
+grc temp get my-template.yaml
 ```
 
-## Choose
+## (Temp) Choose
 
 The 'choose' command lets you choose a file from your saved templates to create a repository based on it. When selecting a template, you have the option to use a different repository name/description than the one specified in the template file.
 
-![Choose](https://user-images.githubusercontent.com/69170322/172030272-9f62a9a9-a30e-48bc-8356-ec83b4743737.png)
-
 ```sh
 # Usage:
-grc choose # Or...
-grc choose <TEMPLATE_NAME>
+grc temp choose # Or...
+grc temp choose <TEMPLATE_NAME>
 
 # Example:
-grc choose # Will show an enumerated list with the possible template options.
+grc temp choose # Will show an enumerated list with the possible template options.
 
-grc choose my-template # Will directly choose the template called "my-template".
+grc temp choose my-template # Will directly choose the template called "my-template".
 
 # Options:
 
 # -p, --private (true or false):
-grc choose my-template --private true # Overrides the 'private' field.
+grc temp choose my-template --private true # Overrides the 'private' field.
 
 # -i, --include_content (true or false):
-grc choose my-template --include_content false # Overrides the 'includeContent' field.
+grc temp choose my-template --include_content false # Overrides the 'includeContent' field.
 ```
 
-## Edit
+## (Temp) Edit
 
 The 'edit' command opens a text editor and lets you edit one of your saved templates. If you have [VSCode](https://code.visualstudio.com) installed in your computer, then it is used. If you don't, then a native text editor is used.
 
-![Edit](https://user-images.githubusercontent.com/69170322/172093332-c08f74ba-5a3a-49f9-8811-eaeb01b3a2b9.png)
-
 ```sh
 # Usage:
-grc edit <TEMPLATE_NAME>
+grc temp edit <TEMPLATE_NAME>
 
 # Example:
-grc edit my-template # Or...
-grc edit my-template.yaml
+grc temp edit my-template # Or...
+grc temp edit my-template.yaml
 ```
 
-## Delete
+## (Temp) Delete
 
 The 'delete' command is used to delete a template from your saved templates.
 
-![Delete](https://user-images.githubusercontent.com/69170322/172030289-60f9be26-2575-4e13-a674-ba1519709beb.png)
-
 ```sh
 # Usage:
-grc delete <TEMPLATE_NAME>
+grc temp delete <TEMPLATE_NAME>
 
 # Examples:
-grc delete my-template # Or...
-grc delete my-template.yaml
+grc temp delete my-template # Or...
+grc temp delete my-template.yaml
 
-grc delete all # Will delete all your templates.
+grc temp delete all # Will delete all your templates.
 ```
 
-## Generate
+## (Temp) Generate
 
 The 'generate' command will ask you to input information, such as the repository name and collaborators, and then will generate and save an YAML template for you.
 
-![Generate](https://user-images.githubusercontent.com/69170322/173131022-e1e9f209-6812-4f12-995d-13ced317b496.png)
-
 ```sh
 # Usage:
-grc generate
+grc temp generate
 ```
 
-## Merge
+## (Temp) Merge
 
 The 'merge' command takes _N_ template names as a parameter and produces a new template joining the collaborators of all the templates inputed. In case some fields conflict, you will be asked to choose which values you want to keep.
 
-![Merge](https://user-images.githubusercontent.com/69170322/174129645-48c988b2-ad4e-4a00-8335-c09e6c5abf83.png)
-
 ```sh
 # Usage:
-grc merge <TEMPLATE_NAME> <TEMPLATE_NAME> ...
-grc merge a b c d e f g ... # N number of templates.
+grc temp merge <TEMPLATE_NAME> <TEMPLATE_NAME> ...
+grc temp merge a b c d e f g ... # N number of templates.
 
 # Example:
-grc merge my-template-1 my-template-2
+grc temp merge my-template-1 my-template-2
 ```
 
-## List-Repos
+## (Repo) List
 
-The 'list-repos' command will list the name of all the repositories that you have created with GRC.
-
-![List-Repos](https://user-images.githubusercontent.com/69170322/173981692-5dd3c541-052f-4f11-af21-00b2fa6026dc.png)
+The 'list' command will list the name of all the repositories that you have created with GRC.
 
 ```sh
 # Usage:
-grc list-repos
+grc repo list
 ```
 
-## Open-Repo
+## (Repo) Open
 
-The 'open-repo' takes the name of a repository that you have created with GRC and opens the repository folder in Visual Studio Code.
+The 'open' command takes the name of a repository that you have created with GRC and opens the repository folder in Visual Studio Code.
 
 ```sh
 # Usage:
-grc open-repo <REPOSITORY_NAME>
+grc repo open <REPOSITORY_NAME>
 
 # Example:
-grc open-repo my-repository
+grc repo open my-repository
 ```
 
-## Get-Repo
+## (Repo) Get
 
-The 'get-repo' command shows you some information about a repository that was created with GRC.
-
-![Get-Repo](https://user-images.githubusercontent.com/69170322/173985059-0b12b4c9-804b-4983-a713-c82a2c69083c.png)
+The 'get' command shows you some information about a repository that was created with GRC.
 
 ```sh
 # Usage:
-grc get-repo <REPOSITORY_NAME>
+grc repo get <REPOSITORY_NAME>
 
 # Example:
-grc get-repo my-repository
+grc repo get my-repository
 ```
 
-## Remove-Repo
+## (Repo) Remove
 
-The 'remove-repo' commands removes a repository from your repositories list.
+The 'remove' commands removes a repository from your repositories list.
 
 ```sh
 # Usage:
-grc remove-repo <REPOSITORY_NAME>
+grc repo remove <REPOSITORY_NAME>
 
 # Example:
-grc remove-repo my-repository
+grc repo remove my-repository
 
-grc remove-repo all # Removes all your repositories.
+grc repo remove all # Removes all your repositories.
+```
+
+## (Remote) List
+
+The 'list' command lists all the repositories in your GitHub account.
+
+```sh
+# Usage:
+grc remote list
+```
+
+## (Remote) add-collab
+
+The 'add-collab' command adds a collaborator to one of your remote repositories.
+
+```sh
+# Usage:
+grc remote add-collab <REPO_NAME> <COLLABORATOR_NAME> <PERMISSION?>
+
+# Examples:
+grc remote add-collab My-Repository Arthur admin # Or...
+grc remote add-collab My-Repository Arthur # Default permission is 'admin'.
+
+# Permissions = [admin, pull, push].
+```
+
+## (Remote) Clone
+
+The 'clone' command clones one of your remote repositories on GitHub to your machine.
+
+```sh
+# Usage:
+grc remote clone <REPO_NAME>
+
+# Example:
+grc remote clone My-Repository
 ```
 
 ## Requirements

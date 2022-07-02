@@ -7,4 +7,4 @@ if %ERRORLEVEL% neq 0 (
     exit /b %ERRORLEVEL%
 ) 
 
-python3 %~dp0.program-files\main.py %*s
+python3 %~dp0.program-files\main.py %*
