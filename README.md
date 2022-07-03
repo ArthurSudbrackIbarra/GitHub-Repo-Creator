@@ -60,6 +60,7 @@ Remote repositories commands have the 'remote' prefix. Example: grc **remote** l
 - [list](#remote-list)
 - [add-collab](#remote-add-collab)
 - [clone](#remote-clone)
+- [url](#remote-url)
 
 ## Help
 
@@ -321,6 +322,18 @@ grc remote clone <REPO_NAME>
 grc remote clone My-Repository
 ```
 
+## (Remote) URL
+
+The 'url' command shows you the web URL of a personal repository on GitHub.
+
+```sh
+# Usage:
+grc remote url <REPO_NAME>
+
+# Example:
+grc remote url My-Repository
+```
+
 ## Requirements
 
 In order to use GRC, you must have the following tools installed in your machine:
@@ -346,7 +359,7 @@ In case the automatic installation didn't work for you, it is possible to setup 
 1. Clone this repository:
 
 ```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v2.0.5
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v3.0.1
 ```
 
 2. Install the necessary dependencies using pip:

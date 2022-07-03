@@ -24,6 +24,15 @@ TEMPLATE_NAME_PATTERN = r"[^a-zA-Z0-9-_]"
 REPOSITORY_NAME_PATTERN = r"[^a-zA-Z0-9-._]"
 
 
+# Authentication helper function.
+def authMiddleware(githubAPI: GitHubAPI) -> bool:
+    if githubAPI is None or not githubAPI.isAuthenticated():
+        print(
+            f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+        return False
+    return True
+
+
 # Absolute paths are not modified.
 # Relative paths are modified to be absolute paths.
 def handleFilePath(filePath: str) -> str:
@@ -91,7 +100,7 @@ class CLI:
         filePath = handleFilePath(filePath)
         copier = FileCopier(filePath)
         copier.copyTo(TEMPLATES_PATH)
-        print(f"\n{GREEN}[SUCCESS]{RESET} File saved!")
+        print(f"\n{GREEN}[SUCCESS]{RESET} Template saved!")
         return True
 
     # (Temp) Choose.
@@ -102,9 +111,7 @@ class CLI:
             repoDescription: str = None,
             private: bool = None,
             includeContent: bool = None) -> bool:
-        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
-            print(
-                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+        if not authMiddleware(self.githubAPI):
             return False
         chooser = FileChooser(TEMPLATES_PATH)
         filePath = ""
@@ -154,9 +161,7 @@ class CLI:
               repoDescription: str = None,
               private: bool = None,
               includeContent: bool = None) -> bool:
-        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
-            print(
-                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+        if not authMiddleware(self.githubAPI):
             return False
         filePath = handleFilePath(filePath)
         if not path.exists(filePath):
@@ -248,7 +253,7 @@ class CLI:
         fileNames = chooser.getFileNames()
         if len(fileNames) <= 0:
             print(
-                f"No files to list, create templates by running '{CYAN}grc{RESET} save <PATH_TO_YOUR_YAML>'.")
+                f"No templates to list, create templates by running '{CYAN}grc{RESET} generate'.")
             return
         print("")
         for index, fileName in enumerate(fileNames):
@@ -534,9 +539,7 @@ class CLI:
 
     # (Remote) Add Collab.
     def addCollab(self, collaboratorName: str, repoName: str, permission: str):
-        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
-            print(
-                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+        if not authMiddleware(self.githubAPI):
             return False
         try:
             self.githubAPI.addCollaborator(
@@ -551,9 +554,7 @@ class CLI:
 
     # (Remote) List Remote Repos.
     def remoteRepos(self) -> None:
-        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
-            print(
-                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+        if not authMiddleware(self.githubAPI):
             return False
         try:
             repoList = self.githubAPI.getRepoList()
@@ -568,9 +569,7 @@ class CLI:
 
     # (Remote) Clone.
     def clone(self, repoName: str) -> bool:
-        if self.githubAPI is None or not self.githubAPI.isAuthenticated():
-            print(
-                f"\nUser not authenticated to GitHub, run '{CYAN}grc{RESET} authenticate <YOUR_ACCESS_TOKEN>' to authenticate.")
+        if not authMiddleware(self.githubAPI):
             return False
         try:
             cloneURL = self.githubAPI.getRepoCloneURL(repoName)
@@ -586,6 +585,18 @@ class CLI:
         except BaseException:
             print(
                 f"\n{RED}[ERROR]{RESET} Unnable to clone repository {repoName}.")
+            return False
+
+    # (Remote) URL.
+    def url(self, repoName: str) -> bool:
+        if not authMiddleware(self.githubAPI):
+            return False
+        try:
+            htmlUrl = self.githubAPI.getRepoHTMLURL(repoName)
+            print(f"\n{htmlUrl}")
+            return True
+        except Exception as error:
+            print(error)
             return False
 
     # Help
@@ -639,4 +650,6 @@ class CLI:
         print(
             f"\n{BLUE}remote list{RESET}\nLists all the remote repositories that you have in your GitHub account.")
         print(
-            f"\n{BLUE}remote clone{RESET} {CYAN}<REPO_NAME>{RESET}\nClones a personal repository from your GitHub account.\n")
+            f"\n{BLUE}remote clone{RESET} {CYAN}<REPO_NAME>{RESET}\nClones a personal repository from your GitHub account.")
+        print(
+            f"\n{BLUE}remote url{RESET} {CYAN}<REPO_NAME>{RESET}\nShows the web url of a personal repository.\n")

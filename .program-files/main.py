@@ -206,7 +206,7 @@ def addCollab(collaborator_name: str, repo_name: str, permission: str) -> None:
     print("")
 
 
-# Remote list.
+# Remote List.
 @remote.command(name="list")
 def remoteRepos() -> None:
     cliInstance.remoteRepos()
@@ -218,6 +218,14 @@ def remoteRepos() -> None:
 @click.argument("repo_name")
 def clone(repo_name: str) -> None:
     cliInstance.clone(repo_name)
+    print("")
+
+
+# Remote URL.
+@remote.command(name="url")
+@click.argument("repo_name")
+def url(repo_name: str) -> None:
+    cliInstance.url(repo_name)
     print("")
 
 

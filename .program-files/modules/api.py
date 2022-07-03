@@ -76,6 +76,15 @@ class GitHubAPI:
             raise Exception(
                 f"\n{RED}[ERROR]{RESET} Unnable to get '{repoName}' repository clone URL.")
 
+    def getRepoHTMLURL(self, repoName: str) -> str:
+        user = self.github.get_user()
+        try:
+            repo = user.get_repo(repoName)
+            return repo.html_url
+        except BaseException:
+            raise Exception(
+                f"\n{RED}[ERROR]{RESET} Unnable to get '{repoName}' repository HTML URL.")
+
     @staticmethod
     def getGRCLatestTag() -> str:
         try:
