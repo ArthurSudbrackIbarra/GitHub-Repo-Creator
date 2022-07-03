@@ -70,23 +70,28 @@ def save(file_path: str) -> None:
 # Temp Choose.
 @temp.command(name="choose")
 @click.argument("template_name", required=False)
+@click.option("-n", "--name")
+@click.option("-d", "--description")
 @click.option("-p", "--private")
 @click.option("-i", "--include_content")
 def choose(
         template_name: str = None,
+        name: str = None,
+        description: str = None,
         private: str = None,
         include_content: str = None) -> None:
     if private is not None:
         if private == "true":
             private = True
-        elif private == "false":
+        else:
             private = False
     if include_content is not None:
         if include_content == "true":
             include_content = True
-        elif include_content == "false":
+        else:
             include_content = False
-    cliInstance.choose(template_name, private, include_content)
+    cliInstance.choose(template_name, name, description,
+                       private, include_content)
     print("")
 
 
@@ -201,7 +206,7 @@ def addCollab(collaborator_name: str, repo_name: str, permission: str) -> None:
     print("")
 
 
-# Remote list.
+# Remote List.
 @remote.command(name="list")
 def remoteRepos() -> None:
     cliInstance.remoteRepos()
@@ -213,6 +218,14 @@ def remoteRepos() -> None:
 @click.argument("repo_name")
 def clone(repo_name: str) -> None:
     cliInstance.clone(repo_name)
+    print("")
+
+
+# Remote URL.
+@remote.command(name="url")
+@click.argument("repo_name")
+def url(repo_name: str) -> None:
+    cliInstance.url(repo_name)
     print("")
 
 
