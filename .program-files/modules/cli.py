@@ -98,6 +98,8 @@ class CLI:
     def choose(
             self,
             templateName: str = None,
+            repoName: str = None,
+            repoDescription: str = None,
             private: bool = None,
             includeContent: bool = None) -> bool:
         if self.githubAPI is None or not self.githubAPI.isAuthenticated():
@@ -126,27 +128,24 @@ class CLI:
                 print(
                     f"\n{RED}[ERROR]{RESET} Template '{templateName}' not found.")
                 return False
-        print("\nWould you like to change the repository name and/or description?")
-        print(f"\n{GREEN}[Y/y]{RESET} - Yes, I want to change.")
-        print(
-            f"{RED}[Other]{RESET} - No, keep the name/description from the template file.\n")
-        change = input()
-        if change == "Y" or change == "y":
-            repoName = input("\nRepository name: ")
-            repoDescription = input("Repository description: ")
-            # Calling the create command with optional arguments.
-            return self.apply(
-                filePath,
-                repoName=repoName,
-                repoDescription=repoDescription,
-                private=private,
-                includeContent=includeContent)
-        else:
-            # Calling the create command.
-            return self.apply(
-                filePath,
-                private=private,
-                includeContent=includeContent)
+        if repoName is None or repoDescription is None:
+            print("\nWould you like to change the repository name and/or description?")
+            print(f"\n{GREEN}[Y/y]{RESET} - Yes, I want to change.")
+            print(
+                f"{RED}[Other]{RESET} - No, keep the name/description from the template file.\n")
+            change = input()
+            if change == "Y" or change == "y":
+                print("")
+                if repoName is None:
+                    repoName = input("Repository name: ")
+                if repoDescription is None:
+                    repoDescription = input("Repository description: ")
+        return self.apply(
+            filePath,
+            repoName=repoName,
+            repoDescription=repoDescription,
+            private=private,
+            includeContent=includeContent)
 
     # (Temp) Apply.
     def apply(self,
