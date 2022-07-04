@@ -36,6 +36,13 @@ def authenticate(access_token: str) -> None:
     print("")
 
 
+# User.
+@click.command(name="user")
+def user() -> None:
+    cliInstance.user()
+    print("")
+
+
 # Version.
 @click.command(name="version")
 def version() -> None:
@@ -234,6 +241,7 @@ def addCommands() -> None:
     # General.
     cli.add_command(help)
     cli.add_command(authenticate)
+    cli.add_command(user)
     cli.add_command(version)
     cli.add_command(update)
     # Templates.

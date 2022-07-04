@@ -23,6 +23,31 @@ class GitHubAPI:
         except BaseException:
             return False
 
+    def getUserInfo(self) -> "dict[str, ]":
+        user = self.github.get_user()
+        try:
+            return {
+                "name": user.name,
+                "email": user.email,
+                "avatar_url": user.avatar_url,
+                "html_url": user.html_url,
+                "login": user.login,
+                "type": user.type,
+                "company": user.company,
+                "blog": user.blog,
+                "location": user.location,
+                "bio": user.bio,
+                "public_repos": user.public_repos,
+                "public_gists": user.public_gists,
+                "followers": user.followers,
+                "following": user.following,
+                "created_at": user.created_at,
+                "updated_at": user.updated_at,
+            }
+        except BaseException:
+            raise Exception(
+                f"\n{RED}[ERROR]{RESET} Unable to get user information.")
+
     def getRepoList(self) -> list:
         user = self.github.get_user()
         try:

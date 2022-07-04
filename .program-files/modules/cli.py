@@ -91,6 +91,30 @@ class CLI:
                 print(error)
             return False
 
+    # User.
+    def user(self) -> bool:
+        if not authMiddleware(self.githubAPI):
+            return False
+        try:
+            userInfo = self.githubAPI.getUserInfo()
+            print(f"\nUsername: {userInfo['login']}")
+            print(f"E-mail: {userInfo['email']}")
+            print(f"Name: {userInfo['name']}")
+            print(f"Company: {userInfo['company']}")
+            print(f"Location: {userInfo['location']}")
+            print(f"Bio: {userInfo['bio']}")
+            print(f"Website: {userInfo['blog']}")
+            print(f"Avatar URL: {userInfo['avatar_url']}")
+            print(f"Public Repositories: {userInfo['public_repos']}")
+            print(f"Followers: {userInfo['followers']}")
+            print(f"Following: {userInfo['following']}")
+            print(f"Created At: {userInfo['created_at']}")
+            print(f"Updated At: {userInfo['updated_at']}")
+            return True
+        except Exception as error:
+            print(error)
+            return False
+
     # (Temp) Save.
     def save(self, filePath: str) -> bool:
         if not filePath.endswith(".yaml"):
