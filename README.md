@@ -40,6 +40,7 @@ General commands have no prefix, they are used directly after 'grc'. Example: gr
 - [version](#version)
 - [update](#update)
 - [authenticate](#authenticate)
+- [user](#user)
 
 ### Template Commands
 
@@ -109,6 +110,15 @@ grc authenticate <ACCESS_TOKEN>
 
 # Example:
 grc authenticate ghp_3dh39j39874hs3d8PSBSHksbsbtx
+```
+
+## User
+
+The 'user' command shows information about the current authenticated user.
+
+```sh
+# Usage:
+grc user
 ```
 
 Before running the command, you will need to generate a personal access token in GitHub if you don't have one yet. More on how to do that [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token), make sure to check the 'repo' permission box when creating your token.

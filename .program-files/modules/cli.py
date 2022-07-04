@@ -634,6 +634,8 @@ class CLI:
         print(
             f"\n{BLUE}authenticate{RESET} {CYAN}<ACCESS_TOKEN>{RESET}\nAuthenticates to GitHub in order to create repositories in your account.")
         print(
+            f"\n{BLUE}user{RESET}\nShows information about the current authenticated user.")
+        print(
             f"\n{BLUE}version{RESET}\nShows you the GRC version that you are currently using.")
         print(
             f"\n{BLUE}update{RESET}\nAutomatically installs the latest GRC version in case you're still not using it.")
