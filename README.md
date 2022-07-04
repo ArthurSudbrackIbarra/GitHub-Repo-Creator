@@ -24,8 +24,8 @@ If you don't like using the command line, GRC also has a [Visual Studio Code ext
 
 | GRC Version | Compatible GRC Extension Version |
 | :---------: | :------------------------------: |
-|   v3.0.1    |              0.0.1               |
-|   v3.0.2    |              0.0.2               |
+|   v3.0.1    |              v0.0.1              |
+|   v3.0.2    |              v0.0.2              |
 
 <br/>
 <p align="center">
