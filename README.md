@@ -22,6 +22,11 @@ GRC is a tool to automatically create and manage GitHub repositories using YAML 
 
 If you don't like using the command line, GRC also has a [Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=ArthurSudbrackIbarra.grc&ssr=false#user-content-requirements), which creates an abstraction on top of the GRC commands for you. Although more limited, it is a great option for people who don't want to memorize all the CLI commands.
 
+| GRC Version | Compatible GRC Extension Version |
+| :---------: | :------------------------------: |
+|   v3.0.1    |              0.0.1               |
+|   v3.0.2    |              0.0.2               |
+
 <br/>
 <p align="center">
   <img src="https://user-images.githubusercontent.com/69170322/177070202-29ee23fc-f66b-4798-b8ee-51cb859ce631.png">
@@ -40,6 +45,7 @@ General commands have no prefix, they are used directly after 'grc'. Example: gr
 - [version](#version)
 - [update](#update)
 - [authenticate](#authenticate)
+- [user](#user)
 
 ### Template Commands
 
@@ -109,6 +115,15 @@ grc authenticate <ACCESS_TOKEN>
 
 # Example:
 grc authenticate ghp_3dh39j39874hs3d8PSBSHksbsbtx
+```
+
+## User
+
+The 'user' command shows information about the current authenticated user.
+
+```sh
+# Usage:
+grc user
 ```
 
 Before running the command, you will need to generate a personal access token in GitHub if you don't have one yet. More on how to do that [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token), make sure to check the 'repo' permission box when creating your token.
@@ -369,7 +384,7 @@ In case the automatic installation didn't work for you, it is possible to setup 
 1. Clone this repository:
 
 ```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v3.0.1
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v3.0.2
 ```
 
 2. Install the necessary dependencies using pip:
