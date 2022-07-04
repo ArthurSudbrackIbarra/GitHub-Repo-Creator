@@ -18,6 +18,16 @@ GRC is a tool to automatically create and manage GitHub repositories using YAML 
   - [Manual Installation](#manual-installation)
 - [Installation (Linux and MacOS)](#installation-linux-and-macos)
 
+## Visual Studio Code Extension
+
+If you don't like using the command line, GRC also has a [Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=ArthurSudbrackIbarra.grc&ssr=false#user-content-requirements), which creates an abstraction on top of the GRC commands for you. Although more limited, it is a great option for people who don't want to memorize all the CLI commands.
+
+<br/>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/69170322/177070202-29ee23fc-f66b-4798-b8ee-51cb859ce631.png">
+</p>
+<br/>
+
 ## CLI Commands
 
 In the next sections, all the possible GRC commands will be listed and explained.
