@@ -43,10 +43,12 @@ git checkout improve-unix-installation-process --quiet > /dev/null
 echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 
 # Giving all users the permission to execute grc script.
-chmod +x "$PWD/grc"
+chmod +x grc
+# Giving the Python scripts the permission to access program files.
+chmod -R +x .program-files/*.py
 
-# Copying grc executable to /usr/bin.
-cp "$PWD/grc" /usr/bin
+# Moving grc executable to /usr/bin.
+mv grc /usr/bin
 echo -e "${PURPLE}[INFO]${NC} Moved grc executable to /usr/bin."
 
 # Installing python dependencies.
@@ -63,4 +65,4 @@ echo "  \_____| |_|  \_\  \_____|"
 echo
 echo
 
-echo -e "${GREEN}[SUCCESS]${NC} You may close this terminal now for the changes to take effect."
+echo -e "${GREEN}[SUCCESS]${NC} GRC was successfully installed!"
