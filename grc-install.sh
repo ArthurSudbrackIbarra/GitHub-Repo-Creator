@@ -37,9 +37,9 @@ echo -e "${PURPLE}[INFO]${NC} Created directory 'GRC-Install' in /usr/local."
 # Clones GRC repository.
 rm -rf GitHub-Repo-Creator
 git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git --quiet > /dev/null
+cd GitHub-Repo-Creator
 # git checkout v3.0.3 --quiet > /dev/null
 git checkout improve-unix-installation-process --quiet > /dev/null
-cd GitHub-Repo-Creator
 echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 
 # Giving all users the permission to execute grc script.
