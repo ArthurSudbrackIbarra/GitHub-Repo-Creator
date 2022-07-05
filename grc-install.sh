@@ -29,10 +29,10 @@ if [[ -f /etc/os-release ]]; then
   fi
 fi
 
-# Creates GRC directory in /usr/local.
-mkdir -p /usr/local/GRC-Install
-cd /usr/local/GRC-Install
-echo -e "${PURPLE}[INFO]${NC} Created directory 'GRC-Install' in /usr/local."
+# Creates GRC directory in /opt.
+mkdir -p /opt/grc
+cd /opt/grc
+echo -e "${PURPLE}[INFO]${NC} Created directory grc in /opt."
 
 # Clones GRC repository.
 rm -rf GitHub-Repo-Creator
@@ -44,16 +44,13 @@ echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 
 # Giving all users the permission to execute grc script.
 chmod +x grc
-# Giving the Python scripts the permission to access program files.
-chmod +x .program-files/main.py
-chmod +x .program-files/modules/*.py
 
 # Moving grc executable to /usr/bin.
 mv grc /usr/bin
 echo -e "${PURPLE}[INFO]${NC} Moved grc executable to /usr/bin."
 
 # Installing python dependencies.
-pip3 install -r ./.program-files/requirements.txt > dev/null
+pip3 install -r ./.program-files/requirements.txt > /dev/null
 echo -e "${PURPLE}[INFO]${NC} Installed Python dependencies."
 
 echo
