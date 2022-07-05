@@ -9,4 +9,4 @@ if [ -z "$COMMAND" ]; then
     exit 0
 fi
 
-python3 /usr/local/GRC-Install/.program-files/main.py $@
+python3 /usr/local/GRC-Install/GitHub-Repo-Creator/.program-files/main.py $@

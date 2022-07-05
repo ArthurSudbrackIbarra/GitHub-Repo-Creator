@@ -45,7 +45,8 @@ echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 # Giving all users the permission to execute grc script.
 chmod +x grc
 # Giving the Python scripts the permission to access program files.
-chmod -R +x .program-files/*.py
+chmod +x .program-files/main.py
+chmod +x .program-files/modules/*.py
 
 # Moving grc executable to /usr/bin.
 mv grc /usr/bin
