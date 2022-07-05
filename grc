@@ -2,8 +2,6 @@
 
 COMMAND=$1
 
-SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
-
 if [ -z "$COMMAND" ]; then
     echo
     echo "GRC: No command passed."
@@ -11,4 +9,4 @@ if [ -z "$COMMAND" ]; then
     exit 0
 fi
 
-python3 $SCRIPT_DIR/.program-files/main.py $@
+python3 /usr/local/GRC-Install/.program-files/main.py $@

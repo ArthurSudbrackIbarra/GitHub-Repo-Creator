@@ -17,7 +17,7 @@ if ! pip3 --version >/dev/null 2>/dev/null; then
   exit 1
 fi
 
-# If Debian, do checks.
+# If OS is Debian, do some checks.
 if [[ -f /etc/os-release ]]; then
   if awk -F= '/^NAME/{print $2}' /etc/os-release | grep Debian >/dev/null 2>/dev/null; then
     # Checking libffi-dev.
@@ -29,24 +29,25 @@ if [[ -f /etc/os-release ]]; then
   fi
 fi
 
-# Creates GRC directory.
-mkdir -p GRC
-cd GRC
-echo -e "${PURPLE}[INFO]${NC} Created folder 'GRC', please do not move this folder to another path."
+# Creates GRC directory in /usr/local.
+mkdir -p /usr/local/GRC-Install
+cd /usr/local/GRC-Install
+echo -e "${PURPLE}[INFO]${NC} Created directory 'GRC-Install' in /usr/local."
 
 # Clones GRC repository.
 rm -rf GitHub-Repo-Creator
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v3.0.2
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git --quiet > /dev/null
+# git checkout v3.0.3 --quiet > /dev/null
+git checkout improve-unix-installation-process --quiet > /dev/null
 cd GitHub-Repo-Creator
 echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 
 # Giving all users the permission to execute grc script.
 chmod +x "$PWD/grc"
 
-# Adding the project directory to $PATH.
-sed -i "/GRC/d" ~/.bashrc
-echo "export PATH=\"\$PATH:$PWD\" # GRC" >> ~/.bashrc
-echo -e "${PURPLE}[INFO]${NC} Added repository directory to your PATH."
+# Copying grc executable to /usr/bin.
+cp "$PWD/grc" /usr/bin
+echo -e "${PURPLE}[INFO]${NC} Moved grc executable to /usr/bin."
 
 # Installing python dependencies.
 pip3 install -r ./.program-files/requirements.txt

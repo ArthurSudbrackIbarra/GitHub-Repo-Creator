@@ -384,7 +384,7 @@ In case the automatic installation didn't work for you, it is possible to setup 
 1. Clone this repository:
 
 ```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v3.0.2
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v3.0.3
 ```
 
 2. Install the necessary dependencies using pip:
@@ -402,8 +402,8 @@ Copy the project directory path, as shown in the image above, and follow [this q
 
 ## Installation (Linux and MacOS)
 
-1. Open a terminal and run this commmand:
+1. Open a terminal and run the command above, you will be asked to enter your sudo password:
 
 ```sh
-bash <(curl -s https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install.sh)
+sudo bash <(curl -s https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install.sh)
 ```
