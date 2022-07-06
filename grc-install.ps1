@@ -41,12 +41,22 @@ if ($OldPath.Contains($ToAdd)) {
   Write-Host "Added repository directory to your PATH."
 }
 
-# Installing python dependencies.
+# Creating virtual environment.
+python -m venv venv
+Set-ExecutionPolicy Unrestricted -Scope Process
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
-Write-Host "Installing Python dependencies."
+Write-Host "Created virtual environment."
+
+# Activating virtual environment.
+Invoke-Expression "$PSScriptRoot\venv\Scripts\activate"
+
+# Installing dependencies.
 pip3 install -r ./.program-files/requirements.txt
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Installed Python dependencies."
+
+# Deactivating virtual environment.
+deactivate
 
 Write-Host "`n   _____   _____     _____ "
 Write-Host "  / ____| |  __ \   / ____|"

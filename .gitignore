@@ -1,3 +1,6 @@
+# Virtual Environment.
+venv
+
 # Pycache.
 .program-files/modules/__pycache__
 
