@@ -15,8 +15,9 @@ cd /opt/grc/GitHub-Repo-Creator
 
 source venv/bin/activate
 python ./.program-files/main.py $@
+EXIT_CODE=$?
 deactivate
 
 cd $OLD_USER_DIR
 
-exit $?
+exit $EXIT_CODE
