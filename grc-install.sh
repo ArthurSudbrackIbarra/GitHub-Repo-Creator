@@ -71,9 +71,6 @@ deactivate
 mv -f grc /usr/bin
 echo -e "${PURPLE}[INFO]${NC} Moved grc executable to /usr/bin."
 
-# Deleting the installation script.
-rm -- "$0"
-
 echo
 echo "   _____   _____     _____ "
 echo "  / ____| |  __ \   / ____|"
@@ -87,3 +84,7 @@ echo
 echo
 echo -e "${GREEN}[SUCCESS]${NC} GRC was successfully installed!"
 echo
+
+# Deleting the installation script.
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+rm $SCRIPT_DIR/grc-install.sh 2> /dev/null
