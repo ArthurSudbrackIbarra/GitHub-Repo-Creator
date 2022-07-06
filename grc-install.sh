@@ -71,6 +71,9 @@ deactivate
 mv -f grc /usr/bin
 echo -e "${PURPLE}[INFO]${NC} Moved grc executable to /usr/bin."
 
+# Deleting the installation script.
+rm -- "$0"
+
 echo
 echo "   _____   _____     _____ "
 echo "  / ____| |  __ \   / ____|"

@@ -4,7 +4,7 @@ set COMMAND=%1
 
 if "%COMMAND%" == "" (
     echo.
-    echo GRC: No command passed
+    echo GRC: No command specified.
     echo.
     exit /b 1
 )
