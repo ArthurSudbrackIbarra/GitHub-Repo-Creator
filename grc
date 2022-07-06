@@ -11,7 +11,7 @@ fi
 
 OLD_USER_DIR=$(pwd)
 
-cd opt/grc/GitHub-Repo-Creator
+cd /opt/grc/GitHub-Repo-Creator
 
 source venv/bin/activate
 python ./.program-files/main.py $@
