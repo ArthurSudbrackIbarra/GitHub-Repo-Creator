@@ -51,6 +51,7 @@ chmod ugo+rw templates
 chmod ugo+rw repositories
 
 # Creating virtual environment.
+dpkg -s python3.10-venv > /dev/null 2> /dev/null || apt install -y python3.10-venv > /dev/null 2> /dev/null
 python3 -m venv venv
 echo -e "${PURPLE}[INFO]${NC} Created virtual environment."
 
