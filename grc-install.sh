@@ -84,7 +84,3 @@ echo
 echo
 echo -e "${GREEN}[SUCCESS]${NC} GRC was successfully installed!"
 echo
-
-# Deleting the installation script.
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-rm $SCRIPT_DIR/grc-install.sh 2> /dev/null
