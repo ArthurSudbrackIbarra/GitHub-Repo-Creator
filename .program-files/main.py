@@ -7,7 +7,6 @@ from modules.terminal_commands import CommandRunner
 from modules.coloring import Colors
 
 cliInstance = None
-tokenManager = None
 
 YELLOW = Colors.YELLOW
 CYAN = Colors.CYAN
@@ -288,6 +287,7 @@ def versionLog(versionManager: VersionManager) -> None:
 
 
 if __name__ == "__main__":
+    # Initializing the global CLI instance.
     cliInstance = CLI()
     tokenManager = TokenManager()
     accessToken = tokenManager.readToken()
@@ -296,4 +296,5 @@ if __name__ == "__main__":
     if versionManager.shouldResetCache():
         versionLog(versionManager)
     setupCommands()
+    # Running the CLI.
     cli()
