@@ -18,3 +18,5 @@ python ./.program-files/main.py $@
 deactivate
 
 cd $OLD_USER_DIR
+
+exit $?

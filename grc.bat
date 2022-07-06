@@ -10,3 +10,5 @@ if "%COMMAND%" == "" (
 )
 
 powershell -ep Bypass %~dp0grc-helper.ps1 %*
+
+exit /b %ERRORLEVEL%
