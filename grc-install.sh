@@ -12,14 +12,14 @@ NC='\033[0m'
 # Checking dependencies.
 
 # Checking pip3.
-if ! pip3 --version >/dev/null 2>/dev/null; then
+if ! pip3 --version > /dev/null 2> /dev/null; then
   echo -e "${RED}[ERROR]${NC} You don't have pip3 installed!"
   exit 1
 fi
 
 # If OS is Debian, do some checks.
 if [[ -f /etc/os-release ]]; then
-  if awk -F= '/^NAME/{print $2}' /etc/os-release | grep Debian >/dev/null 2>/dev/null; then
+  if awk -F= '/^NAME/{print $2}' /etc/os-release | grep Debian > /dev/null 2> /dev/null; then
     # Checking libffi-dev.
     APT_LIBFFI_DEV_RES=$(apt-cache search --names-only '^libffi-dev$')
     if [[ $APT_LIBFFI_DEV_RES == "" ]]; then

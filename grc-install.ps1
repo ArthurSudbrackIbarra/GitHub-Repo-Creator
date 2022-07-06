@@ -9,16 +9,17 @@ try {
   Exit 1
 }
 
-# Creating install folder (Windows does not allow "GRC" dir creation because shell script "grc" already exists on this dir).
-New-Item GRC-Win-Install -type directory -Force > $null
+# Creating install folder (Windows does not allow "grc" dir creation because shell script "grc" already exists on this dir).
+New-Item GRC-Win-Install -type directory -Force 2> $null
 cd GRC-Win-Install
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
-Write-Host "Created folder 'GRC-Win-Install', please do not move this folder to another path."
+Write-Host "Created folder GRC-Win-Install, please do not move this folder to another path."
 
 # Cloning repository.
 Remove-Item GitHub-Repo-Creator -Force -Recurse 2> $null
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v3.0.3 2> $null
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git --quiet > $null
 cd GitHub-Repo-Creator
+git checkout improve-unix-installation-process --quiet > $null
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Cloned GRC GitHub repository."
 
