@@ -9,4 +9,12 @@ if [ -z "$COMMAND" ]; then
     exit 1
 fi
 
-python3 /opt/grc/GitHub-Repo-Creator/.program-files/main.py $@
+OLD_USER_DIR=$(pwd)
+
+cd opt/grc/GitHub-Repo-Creator
+
+source venv/bin/activate
+python3 ./.program-files/main.py $@
+deactivate
+
+cd $OLD_USER_DIR
