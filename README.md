@@ -405,5 +405,5 @@ Copy the project directory path, as shown in the image above, and follow [this q
 1. Open a terminal and run the command below, you will be asked to enter your sudo password:
 
 ```sh
-sudo -- sh -c 'wget https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/improve-unix-installation-process/grc-install.sh && bash ./grc-install.sh && rm ./grc-install.sh'
+sudo -- sh -c 'wget https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/improve-unix-installation-process/grc-install.sh && bash ./grc-install.sh && rm -f grc-install.sh'
 ```
