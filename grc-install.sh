@@ -44,15 +44,18 @@ echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 
 # Giving all users the permission to execute grc script.
 chmod +x grc
-# Giving the Python scripts the permission to access program files.
-chmod -R +x .program-files/*.py
+
+# Giving permissions to read and write to folders.
+chmod ugo+rw .program-files/configurations
+chmod ugo+rw templates
+chmod ugo+rw repositories
 
 # Moving grc executable to /usr/bin.
 mv grc /usr/bin
 echo -e "${PURPLE}[INFO]${NC} Moved grc executable to /usr/bin."
 
 # Installing python dependencies.
-pip3 install -r ./.program-files/requirements.txt > dev/null
+pip3 install -r ./.program-files/requirements.txt --root-user-action=ignore > dev/null
 echo -e "${PURPLE}[INFO]${NC} Installed Python dependencies."
 
 echo
