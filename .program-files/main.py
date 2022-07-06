@@ -1,5 +1,5 @@
-from os import path
 import click
+from os import path
 from modules.token import TokenManager
 from modules.version import VersionManager
 from modules.cli import CLI, checkIfLatestVersion
@@ -25,37 +25,42 @@ def cli() -> None:
 # Help.
 @click.command(name="help")
 def help() -> None:
-    cliInstance.help()
+    success = cliInstance.help()
+    exit(0 if success else 1)
 
 
 # Authenticate.
 @click.command(name="authenticate")
 @click.argument("access_token")
 def authenticate(access_token: str) -> None:
-    cliInstance.authenticate(access_token, logs=True)
+    success = cliInstance.authenticate(access_token, logs=True)
     print("")
+    exit(0 if success else 1)
 
 
 # User.
 @click.command(name="user")
 def user() -> None:
-    cliInstance.user()
+    success = cliInstance.user()
     print("")
+    exit(0 if success else 1)
 
 
 # Version.
 @click.command(name="version")
 def version() -> None:
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
-    cliInstance.version(repoPath)
+    success = cliInstance.version(repoPath)
+    exit(0 if success else 1)
 
 
 # Update.
 @click.command(name="update")
 def update() -> None:
     repoPath = path.abspath(path.join(path.dirname(__file__), "../"))
-    cliInstance.update(repoPath)
+    success = cliInstance.update(repoPath)
     print("")
+    exit(0 if success else 1)
 
 
 # [Templates command group].
@@ -70,8 +75,9 @@ def temp() -> None:
 @temp.command(name="save")
 @click.argument("file_path")
 def save(file_path: str) -> None:
-    cliInstance.save(file_path)
+    success = cliInstance.save(file_path)
     print("")
+    exit(0 if success else 1)
 
 
 # Temp Choose.
@@ -97,63 +103,71 @@ def choose(
             include_content = True
         else:
             include_content = False
-    cliInstance.choose(template_name, name, description,
-                       private, include_content)
+    success = cliInstance.choose(
+        template_name, name, description, private, include_content)
     print("")
+    exit(0 if success else 1)
 
 
 # Temp Apply.
 @temp.command(name="apply")
 @click.argument("file_path")
 def apply(file_path: str) -> None:
-    cliInstance.apply(file_path)
+    success = cliInstance.apply(file_path)
     print("")
+    exit(0 if success else 1)
 
 
 # Temp List.
 @temp.command(name="list")
 def list() -> None:
-    cliInstance.list()
+    success = cliInstance.list()
     print("")
+    exit(0 if success else 1)
 
 
 # Temp Get.
 @temp.command(name="get")
 @click.argument("template_name")
 def get(template_name: str) -> None:
-    cliInstance.get(template_name)
+    success = cliInstance.get(template_name)
     print("")
+    exit(0 if success else 1)
 
 
 # Temp Edit.
 @temp.command(name="edit")
 @click.argument("template_name")
 def edit(template_name: str) -> None:
-    cliInstance.edit(template_name)
+    success = cliInstance.edit(template_name)
     print("")
+    exit(0 if success else 1)
 
 
 # Temp Delete.
 @temp.command(name="delete")
 @click.argument("template_name")
 def delete(template_name: str) -> None:
-    cliInstance.delete(template_name)
+    success = cliInstance.delete(template_name)
     print("")
+    exit(0 if success else 1)
 
 
 # Temp Generate.
 @temp.command(name="generate")
 def generate() -> None:
-    cliInstance.generate()
+    success = cliInstance.generate()
     print("")
+    exit(0 if success else 1)
 
 
 # Temp Merge.
 @temp.command(name="merge")
 @click.argument("template_names", nargs=-1)
 def merge(template_names: "tuple[str]") -> None:
-    cliInstance.merge(template_names)
+    success = cliInstance.merge(template_names)
     print("")
+    exit(0 if success else 1)
 
 
 # [GRC Repositories command group].
@@ -168,31 +182,35 @@ def repo() -> None:
 @repo.command(name="list")
 def listRepos() -> None:
     print("")
-    cliInstance.listRepos()
+    success = cliInstance.listRepos()
+    exit(0 if success else 1)
 
 
 # Repo Get.
 @repo.command(name="get")
 @click.argument("repo_name")
 def getRepo(repo_name: str) -> None:
-    cliInstance.getRepo(repo_name)
+    success = cliInstance.getRepo(repo_name)
     print("")
+    exit(0 if success else 1)
 
 
 # Repo Open.
 @repo.command(name="open")
 @click.argument("repo_name")
 def openRepo(repo_name: str) -> None:
-    cliInstance.openRepo(repo_name)
+    success = cliInstance.openRepo(repo_name)
     print("")
+    exit(0 if success else 1)
 
 
 # Repo Remove.
 @repo.command(name="remove")
 @click.argument("repo_name")
 def removeRepo(repo_name: str) -> None:
-    cliInstance.removeRepo(repo_name)
+    success = cliInstance.removeRepo(repo_name)
     print("")
+    exit(0 if success else 1)
 
 
 # [Remote repositories command group].
@@ -209,35 +227,39 @@ def remote() -> None:
 @click.argument("repo_name")
 @click.argument("permission", default="admin")
 def addCollab(collaborator_name: str, repo_name: str, permission: str) -> None:
-    cliInstance.addCollab(collaborator_name, repo_name, permission)
+    success = cliInstance.addCollab(collaborator_name, repo_name, permission)
     print("")
+    exit(0 if success else 1)
 
 
 # Remote List.
 @remote.command(name="list")
 def remoteRepos() -> None:
-    cliInstance.remoteRepos()
+    success = cliInstance.remoteRepos()
     print("")
+    exit(0 if success else 1)
 
 
 # Remote Clone.
 @remote.command(name="clone")
 @click.argument("repo_name")
 def clone(repo_name: str) -> None:
-    cliInstance.clone(repo_name)
+    success = cliInstance.clone(repo_name)
     print("")
+    exit(0 if success else 1)
 
 
 # Remote URL.
 @remote.command(name="url")
 @click.argument("repo_name")
 def url(repo_name: str) -> None:
-    cliInstance.url(repo_name)
+    success = cliInstance.url(repo_name)
     print("")
+    exit(0 if success else 1)
 
 
-# Function to add all the commands.
-def addCommands() -> None:
+# Function to setup all the commands.
+def setupCommands() -> None:
     # General.
     cli.add_command(help)
     cli.add_command(authenticate)
@@ -268,10 +290,10 @@ def versionLog(versionManager: VersionManager) -> None:
 if __name__ == "__main__":
     cliInstance = CLI()
     tokenManager = TokenManager()
-    token = tokenManager.readToken()
-    cliInstance.authenticate(token, logs=False)
-    versionManager = VersionManager(daysInCache=0.08)
+    accessToken = tokenManager.readToken()
+    cliInstance.authenticate(accessToken, logs=False)
+    versionManager = VersionManager(daysInCache=0.1)
     if versionManager.shouldResetCache():
         versionLog(versionManager)
-    addCommands()
+    setupCommands()
     cli()

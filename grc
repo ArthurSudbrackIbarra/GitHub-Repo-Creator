@@ -6,7 +6,7 @@ if [ -z "$COMMAND" ]; then
     echo
     echo "GRC: No command passed."
     echo
-    exit 0
+    exit 1
 fi
 
 python3 /opt/grc/GitHub-Repo-Creator/.program-files/main.py $@
