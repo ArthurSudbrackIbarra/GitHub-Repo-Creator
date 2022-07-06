@@ -282,7 +282,7 @@ class CLI:
         if len(fileNames) <= 0:
             print(
                 f"No templates to list, create templates by running '{CYAN}grc{RESET} generate'.")
-            return
+            return True
         print("")
         for index, fileName in enumerate(fileNames):
             if enumeration:
@@ -506,9 +506,9 @@ class CLI:
     def listRepos(self) -> bool:
         chooser = FileChooser(REPOSITORIES_PATH)
         fileNames = chooser.getFileNames()
-        if len(fileNames) <= 0:
+        if len(fileNames) == 0:
             print("No repositories to list.\n")
-            return
+            return True
         for fileName in fileNames:
             print(fileName.replace(".yaml", ""))
         print("")
@@ -590,7 +590,7 @@ class CLI:
             repoList = self.githubAPI.getRepoList()
             if len(repoList) == 0:
                 print("\nNo repositories to list.")
-                return
+                return True
             print("")
             for repo in repoList:
                 print(repo)
