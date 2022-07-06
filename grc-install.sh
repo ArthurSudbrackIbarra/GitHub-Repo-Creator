@@ -51,7 +51,7 @@ chmod ugo+rw templates
 chmod ugo+rw repositories
 
 # Moving grc executable to /usr/bin.
-mv grc /usr/bin
+mv -f grc /usr/bin
 echo -e "${PURPLE}[INFO]${NC} Moved grc executable to /usr/bin."
 
 # Installing python dependencies.
