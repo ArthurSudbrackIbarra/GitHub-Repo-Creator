@@ -55,7 +55,7 @@ mv grc /usr/bin
 echo -e "${PURPLE}[INFO]${NC} Moved grc executable to /usr/bin."
 
 # Installing python dependencies.
-pip3 install -r ./.program-files/requirements.txt --root-user-action=ignore > /dev/null
+pip3 install -r ./.program-files/requirements.txt > /dev/null
 echo -e "${PURPLE}[INFO]${NC} Installed Python dependencies."
 
 echo
@@ -68,4 +68,6 @@ echo "  \_____| |_|  \_\  \_____|"
 echo
 echo
 
+echo
 echo -e "${GREEN}[SUCCESS]${NC} GRC was successfully installed!"
+echo
