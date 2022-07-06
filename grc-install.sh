@@ -51,7 +51,7 @@ chmod ugo+rw templates
 chmod ugo+rw repositories
 
 # Creating virtual environment.
-apt-get update --quiet > /dev/null
+apt-get update > /dev/null
 apt-get install python3.10-venv > /dev/null
 echo -e "${PURPLE}[INFO]${NC} Installed python3.10-venv."
 python3 -m venv venv > /dev/null 2> /dev/null
