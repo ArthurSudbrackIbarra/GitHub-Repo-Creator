@@ -10,7 +10,7 @@ try {
 }
 
 # Creating install folder (Windows does not allow "grc" dir creation because shell script "grc" already exists on this dir).
-New-Item GRC-Win-Install -type directory -Force 2> $null
+New-Item GRC-Win-Install -type directory -Force > $null 2> $null
 cd GRC-Win-Install
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Created folder GRC-Win-Install, please do not move this folder to another path."
@@ -49,10 +49,10 @@ Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Created virtual environment."
 
 # Activating virtual environment.
-.\venv\Scripts\activate.ps1
+Invoke-Expression $PSScriptRoot\venv\Scripts\activate.ps1
 
 # Installing dependencies.
-pip3 install -r ./.program-files/requirements.txt
+pip3 install -r ./.program-files/requirements.txt --disable-pip-version-check > $null
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Installed Python dependencies."
 
