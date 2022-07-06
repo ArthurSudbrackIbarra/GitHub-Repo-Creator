@@ -228,8 +228,10 @@ class CLI:
         # Cloning repository.
         if not includeContent:
             try:
-                cloneURL = self.githubAPI.getRepoCloneURL(repoName)
-                exitCode = CommandRunner.gitClone(cloneURL)
+                accessToken = self.tokenManager.readToken()
+                username = self.githubAPI.getUserInfo()['login']
+                exitCode = CommandRunner.gitClone(
+                    repoName, accessToken, username)
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
@@ -242,8 +244,10 @@ class CLI:
         # Pushing content.
         else:
             try:
-                cloneURL = self.githubAPI.getRepoCloneURL(repoName)
-                exitCode = CommandRunner.gitLocalToRemote(cloneURL)
+                accessToken = self.tokenManager.readToken()
+                username = self.githubAPI.getUserInfo()['login']
+                exitCode = CommandRunner.gitLocalToRemote(
+                    repoName, accessToken, username)
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Pushed content to repository with success!")
@@ -596,8 +600,9 @@ class CLI:
         if not authMiddleware(self.githubAPI):
             return False
         try:
-            cloneURL = self.githubAPI.getRepoCloneURL(repoName)
-            exitCode = CommandRunner.gitClone(cloneURL)
+            accessToken = self.tokenManager.readToken()
+            username = self.githubAPI.getUserInfo()["login"]
+            exitCode = CommandRunner.gitClone(repoName, accessToken, username)
             if exitCode == 0:
                 print(
                     f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")

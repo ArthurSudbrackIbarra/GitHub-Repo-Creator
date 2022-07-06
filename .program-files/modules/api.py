@@ -92,15 +92,6 @@ class GitHubAPI:
             raise Exception(
                 f"\n{RED}[ERROR]{RESET} Unnable to add collaborator '{collaboratorName}' to repository.")
 
-    def getRepoCloneURL(self, repoName: str) -> str:
-        user = self.github.get_user()
-        try:
-            repo = user.get_repo(repoName)
-            return repo.clone_url
-        except BaseException:
-            raise Exception(
-                f"\n{RED}[ERROR]{RESET} Unnable to get '{repoName}' repository clone URL.")
-
     def getRepoHTMLURL(self, repoName: str) -> str:
         user = self.github.get_user()
         try:
