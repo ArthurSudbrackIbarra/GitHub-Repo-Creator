@@ -48,7 +48,7 @@ Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Created virtual environment."
 
 # Activating virtual environment.
-Invoke-Expression "$PSScriptRoot\venv\Scripts\activate"
+.\venv\Scripts\activate.ps1
 
 # Installing dependencies.
 pip3 install -r ./.program-files/requirements.txt
