@@ -44,12 +44,12 @@ if ($OldPath.Contains($ToAdd)) {
 
 # Creating virtual environment.
 python -m venv venv
-Set-ExecutionPolicy Unrestricted -Scope Process
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Created virtual environment."
 
 # Activating virtual environment.
-Invoke-Expression .\venv\Scripts\Activate.ps1
+Set-ExecutionPolicy Unrestricted -Scope Process
+Invoke-Expression venv\Scripts\Activate.ps1
 
 # Installing dependencies.
 pip3 install -r ./.program-files/requirements.txt --disable-pip-version-check > $null
