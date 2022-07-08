@@ -46,6 +46,7 @@ echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 chmod +x grc
 
 # Giving permissions to read and write to folders.
+chmod ugo+rw .git
 chmod ugo+rw .program-files/configurations
 chmod ugo+rw templates
 chmod ugo+rw repositories
