@@ -26,6 +26,7 @@ If you don't like using the command line, GRC also has a [Visual Studio Code ext
 | :---------: | :------------------------------: |
 |   v3.0.1    |              v0.0.1              |
 |   v3.0.2    |              v0.0.2              |
+|   v3.0.3    |              v0.0.3              |
 
 <br/>
 <p align="center">
@@ -380,7 +381,7 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercon
 Open a terminal and run the command below, you will be asked to enter your sudo password:
 
 ```sh
-sudo -- sh -c 'wget https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/improve-unix-installation-process/grc-install-linux.sh && bash grc-install-linux.sh && rm -f grc-install-linux.sh'
+sudo -- sh -c 'wget https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/main/grc-install-linux.sh && bash grc-install-linux.sh && rm -f grc-install-linux.sh'
 ```
 
 ## Installation (MacOS)
@@ -388,5 +389,5 @@ sudo -- sh -c 'wget https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/
 Open a terminal and run the command below, you will be asked to enter your sudo password:
 
 ```sh
-sudo -- sh -c 'curl https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/improve-unix-installation-process/grc-install-macos.sh -o grc-installer.sh && bash grc-installer.sh && rm -f grc-installer.sh'
+sudo -- sh -c 'curl https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/main/grc-install-macos.sh -o grc-installer.sh && bash grc-installer.sh && rm -f grc-installer.sh'
 ```

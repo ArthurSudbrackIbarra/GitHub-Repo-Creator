@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo
+
 # If any error occurs, exits the script.
 set -e
 

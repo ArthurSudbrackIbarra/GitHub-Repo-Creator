@@ -1,3 +1,5 @@
+Write-Host ""
+
 # Checking dependencies.
 
 # Checking pip3 dependency.
@@ -67,6 +69,6 @@ Write-Host " | |__| | | | \ \  | |____ "
 Write-Host "  \_____| |_|  \_\  \_____|`n"
 
 Write-Host "`n[SUCCESS] " -ForegroundColor Green -NoNewline
-Write-Host "You may close this terminal now for the changes to take effect."
+Write-Host "You may close this terminal now for the changes to take effect.`n"
 
 cd ../..
