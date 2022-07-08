@@ -372,7 +372,7 @@ In order to use GRC, you must have the following tools installed in your machine
 Open a **Powershell** terminal and run this command:
 
 ```ps1
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install.ps1'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install-windows.ps1'))
 ```
 
 ## Installation (Linux)
