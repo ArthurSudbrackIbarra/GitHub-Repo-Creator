@@ -12,11 +12,11 @@ GRC is a tool to automatically create and manage GitHub repositories using YAML 
 
 ## Table of Contents
 
+- [Visual Studio Code Extension](#visual-studio-code-extension)
 - [CLI Commands](#cli-commands)
 - [Installation (Windows)](#installation-windows)
-  - [Automatic Installation](#automatic-installation)
-  - [Manual Installation](#manual-installation)
-- [Installation (Linux and MacOS)](#installation-linux-and-macos)
+- [Installation (Linux)](#installation-linux)
+- [Installation (MacOS)](#installation-macos)
 
 ## Visual Studio Code Extension
 
@@ -369,41 +369,24 @@ In order to use GRC, you must have the following tools installed in your machine
 
 ## Installation (Windows)
 
-### Automatic installation
-
-1. Open a **Powershell** terminal and run this command:
+Open a **Powershell** terminal and run this command:
 
 ```ps1
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install.ps1'))
 ```
 
-### Manual Installation
+## Installation (Linux)
 
-In case the automatic installation didn't work for you, it is possible to setup GRC manually:
-
-1. Clone this repository:
+Open a terminal and run the command below, you will be asked to enter your sudo password:
 
 ```sh
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v3.0.3
+sudo -- sh -c 'wget https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/improve-unix-installation-process/grc-install-linux.sh && bash grc-install-linux.sh && rm -f grc-install-linux.sh'
 ```
 
-2. Install the necessary dependencies using pip:
+## Installation (MacOS)
+
+Open a terminal and run the command below, you will be asked to enter your sudo password:
 
 ```sh
-# In the root of the project:
-pip install -r .\.program-files\requirements.txt
-```
-
-3. Add the project directory to your path:
-
-![Path](https://user-images.githubusercontent.com/69170322/172077383-d22a075f-0cba-4886-88a1-63f326f136ce.png)
-
-Copy the project directory path, as shown in the image above, and follow [this quick tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
-
-## Installation (Linux and MacOS)
-
-1. Open a terminal and run the command below, you will be asked to enter your sudo password:
-
-```sh
-sudo -- sh -c 'wget https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/improve-unix-installation-process/grc-install.sh && bash ./grc-install.sh && rm -f grc-install.sh'
+sudo -- sh -c 'curl https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/improve-unix-installation-process/grc-install-macos.sh -o grc-installer.sh && bash grc-installer.sh && rm -f grc-installer.sh'
 ```

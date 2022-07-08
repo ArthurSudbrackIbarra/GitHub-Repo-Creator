@@ -4,7 +4,7 @@ COMMAND=$1
 
 if [ -z "$COMMAND" ]; then
     echo
-    echo "GRC: No command specified."
+    echo "GRC is installed, use 'grc help' to see the list of commands."
     echo
     exit 1
 fi

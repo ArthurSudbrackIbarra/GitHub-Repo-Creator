@@ -4,7 +4,7 @@ set COMMAND=%1
 
 if "%COMMAND%" == "" (
     echo.
-    echo GRC: No command specified.
+    echo GRC is installed, use 'grc help' to see the list of commands.
     echo.
     exit /b 1
 )
