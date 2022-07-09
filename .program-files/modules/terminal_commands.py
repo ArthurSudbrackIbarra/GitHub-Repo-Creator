@@ -16,7 +16,10 @@ class CommandRunner:
         return system(f"code \"{repoPath}\"")
 
     @staticmethod
-    def gitLocalToRemote(repoName: str, accessToken: str, username: str) -> int:
+    def gitLocalToRemote(
+            repoName: str,
+            accessToken: str,
+            username: str) -> int:
         print("")
         exitCode = system("git init")
         if exitCode != 0:
