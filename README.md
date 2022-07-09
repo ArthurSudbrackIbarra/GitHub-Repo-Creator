@@ -381,7 +381,7 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercon
 Open a terminal and run the command below, you will be asked to enter your sudo password:
 
 ```sh
-sudo -- sh -c 'wget https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/main/grc-install-linux.sh && bash grc-install-linux.sh && rm -f grc-install-linux.sh'
+sudo -- sh -c 'wget https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install-linux.sh && bash grc-install-linux.sh && rm -f grc-install-linux.sh'
 ```
 
 ## Installation (MacOS)
@@ -389,5 +389,5 @@ sudo -- sh -c 'wget https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/
 Open a terminal and run the command below, you will be asked to enter your sudo password:
 
 ```sh
-sudo -- sh -c 'curl https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/raw/main/grc-install-macos.sh -o grc-installer.sh && bash grc-installer.sh && rm -f grc-installer.sh'
+sudo -- sh -c 'curl https://raw.githubusercontent.com/ArthurSudbrackIbarra/GitHub-Repo-Creator/main/grc-install-macos.sh -O && bash grc-install-macos.sh && rm -f grc-install-macos.sh'
 ```
