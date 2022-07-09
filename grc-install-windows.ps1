@@ -1,3 +1,5 @@
+Write-Host ""
+
 # Checking dependencies.
 
 # Checking pip3 dependency.
@@ -9,16 +11,17 @@ try {
   Exit 1
 }
 
-# Creating install folder (Windows does not allow "GRC" dir creation because shell script "grc" already exists on this dir).
-New-Item GRC-Win-Install -type directory -Force > $null
+# Creating install folder (Windows does not allow "grc" dir creation because shell script "grc" already exists on this dir).
+New-Item GRC-Win-Install -type directory -Force > $null 2> $null
 cd GRC-Win-Install
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
-Write-Host "Created folder 'GRC-Win-Install', please do not move this folder to another path."
+Write-Host "Created folder GRC-Win-Install, please do not move this folder to another path."
 
 # Cloning repository.
 Remove-Item GitHub-Repo-Creator -Force -Recurse 2> $null
-git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git -b v3.0.2 2> $null
+git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git --quiet > $null
 cd GitHub-Repo-Creator
+git checkout v3.0.3 --quiet > $null
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Cloned GRC GitHub repository."
 
@@ -41,12 +44,22 @@ if ($OldPath.Contains($ToAdd)) {
   Write-Host "Added repository directory to your PATH."
 }
 
-# Installing python dependencies.
+# Creating virtual environment.
+python -m venv venv
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
-Write-Host "Installing Python dependencies."
-pip3 install -r ./.program-files/requirements.txt
+Write-Host "Created virtual environment."
+
+# Activating virtual environment.
+Set-ExecutionPolicy Unrestricted -Scope Process
+Invoke-Expression venv\Scripts\Activate.ps1
+
+# Installing dependencies.
+pip3 install -r ./.program-files/requirements.txt --disable-pip-version-check > $null
 Write-Host "[INFO] " -ForegroundColor Magenta -NoNewline
 Write-Host "Installed Python dependencies."
+
+# Deactivating virtual environment.
+deactivate
 
 Write-Host "`n   _____   _____     _____ "
 Write-Host "  / ____| |  __ \   / ____|"
@@ -56,6 +69,6 @@ Write-Host " | |__| | | | \ \  | |____ "
 Write-Host "  \_____| |_|  \_\  \_____|`n"
 
 Write-Host "`n[SUCCESS] " -ForegroundColor Green -NoNewline
-Write-Host "You may close this terminal now for the changes to take effect."
+Write-Host "You may close this terminal now for the changes to take effect.`n"
 
 cd ../..

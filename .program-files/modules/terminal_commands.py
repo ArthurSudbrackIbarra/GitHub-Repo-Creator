@@ -6,8 +6,9 @@ from subprocess import check_output
 
 class CommandRunner:
     @staticmethod
-    def gitClone(cloneURL: str) -> int:
+    def gitClone(repoName: str, accessToken: str, username: str) -> int:
         print("")
+        cloneURL = f"https://{accessToken}@github.com/{username}/{repoName}.git"
         return system(f"git clone {cloneURL}")
 
     @staticmethod
@@ -15,7 +16,10 @@ class CommandRunner:
         return system(f"code \"{repoPath}\"")
 
     @staticmethod
-    def gitLocalToRemote(repoURL: str) -> int:
+    def gitLocalToRemote(
+            repoName: str,
+            accessToken: str,
+            username: str) -> int:
         print("")
         exitCode = system("git init")
         if exitCode != 0:
@@ -23,14 +27,16 @@ class CommandRunner:
         exitCode = system("git branch -M main")
         if exitCode != 0:
             return exitCode
-        exitCode = system(f"git remote add origin {repoURL}")
+        originURL = f"https://{username}:{accessToken}@github.com/{username}/{repoName}.git"
+        exitCode = system(
+            f"git remote add origin {originURL}")
         if exitCode != 0:
             return exitCode
         exitCode = system("git add .")
         if exitCode != 0:
             return exitCode
         exitCode = system(
-            "git commit -m \"Automatic Commit using GRC (https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator).\"")
+            "git commit -m \"Automatic Commit using GRC.\"")
         if exitCode != 0:
             return exitCode
         return system("git push -u origin main")

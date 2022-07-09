@@ -1,10 +1,14 @@
 @echo off
 
-:: Checking if python or python3.
-python3 --version >nul 2>&1
-if %ERRORLEVEL% neq 0 (
-    python %~dp0.program-files\main.py %*
-    exit /b %ERRORLEVEL%
-) 
+set COMMAND=%1
 
-python3 %~dp0.program-files\main.py %*
+if "%COMMAND%" == "" (
+    echo.
+    echo GRC is installed, use 'grc help' to see the list of commands.
+    echo.
+    exit /b 1
+)
+
+powershell -ep Bypass %~dp0grc-helper.ps1 %*
+
+exit /b %ERRORLEVEL%

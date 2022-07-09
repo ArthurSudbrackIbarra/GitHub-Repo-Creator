@@ -228,8 +228,10 @@ class CLI:
         # Cloning repository.
         if not includeContent:
             try:
-                cloneURL = self.githubAPI.getRepoCloneURL(repoName)
-                exitCode = CommandRunner.gitClone(cloneURL)
+                accessToken = self.tokenManager.readToken()
+                username = self.githubAPI.getUserInfo()['login']
+                exitCode = CommandRunner.gitClone(
+                    repoName, accessToken, username)
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
@@ -242,8 +244,10 @@ class CLI:
         # Pushing content.
         else:
             try:
-                cloneURL = self.githubAPI.getRepoCloneURL(repoName)
-                exitCode = CommandRunner.gitLocalToRemote(cloneURL)
+                accessToken = self.tokenManager.readToken()
+                username = self.githubAPI.getUserInfo()['login']
+                exitCode = CommandRunner.gitLocalToRemote(
+                    repoName, accessToken, username)
                 if exitCode == 0:
                     print(
                         f"\n{GREEN}[SUCCESS]{RESET} Pushed content to repository with success!")
@@ -272,19 +276,20 @@ class CLI:
         return True
 
     # (Temp) List.
-    def list(self, enumeration: bool = False) -> None:
+    def list(self, enumeration: bool = False) -> bool:
         chooser = FileChooser(TEMPLATES_PATH)
         fileNames = chooser.getFileNames()
         if len(fileNames) <= 0:
             print(
                 f"No templates to list, create templates by running '{CYAN}grc{RESET} generate'.")
-            return
+            return True
         print("")
         for index, fileName in enumerate(fileNames):
             if enumeration:
                 print(f"{CYAN}[{index}]{RESET} - {fileName}")
             else:
                 print(fileName)
+        return True
 
     # (Temp) Get.
     def get(self, templateName: str) -> bool:
@@ -498,15 +503,16 @@ class CLI:
         return False
 
     # (Repo) List.
-    def listRepos(self) -> None:
+    def listRepos(self) -> bool:
         chooser = FileChooser(REPOSITORIES_PATH)
         fileNames = chooser.getFileNames()
-        if len(fileNames) <= 0:
+        if len(fileNames) == 0:
             print("No repositories to list.\n")
-            return
+            return True
         for fileName in fileNames:
             print(fileName.replace(".yaml", ""))
         print("")
+        return True
 
     # Get Repo.
     def getRepo(self, repoName: str) -> bool:
@@ -577,34 +583,37 @@ class CLI:
             return False
 
     # (Remote) List Remote Repos.
-    def remoteRepos(self) -> None:
+    def remoteRepos(self) -> bool:
         if not authMiddleware(self.githubAPI):
             return False
         try:
             repoList = self.githubAPI.getRepoList()
             if len(repoList) == 0:
                 print("\nNo repositories to list.")
-                return
+                return True
             print("")
             for repo in repoList:
                 print(repo)
+            return True
         except Exception as error:
             print(error)
+            return False
 
     # (Remote) Clone.
     def clone(self, repoName: str) -> bool:
         if not authMiddleware(self.githubAPI):
             return False
         try:
-            cloneURL = self.githubAPI.getRepoCloneURL(repoName)
-            exitCode = CommandRunner.gitClone(cloneURL)
+            accessToken = self.tokenManager.readToken()
+            username = self.githubAPI.getUserInfo()["login"]
+            exitCode = CommandRunner.gitClone(repoName, accessToken, username)
             if exitCode == 0:
                 print(
                     f"\n{GREEN}[SUCCESS]{RESET} Repository cloned with success!")
                 createRepoFile(repoPath=f"{getcwd()}/{repoName}")
                 return True
             print(
-                f"\n{RED}[ERROR]{RESET} Unnable to clone repository.")
+                f"\n{RED}[ERROR]{RESET} Unnable to clone repository {repoName}.")
             return False
         except BaseException:
             print(
@@ -624,7 +633,7 @@ class CLI:
             return False
 
     # Help
-    def help(self) -> None:
+    def help(self) -> bool:
         print(
             "\nWhat is GRC?\nGRC is a tool to automatically create GitHub repositories using YAML templates.")
         print(
@@ -679,3 +688,4 @@ class CLI:
             f"\n{BLUE}remote clone{RESET} {CYAN}<REPO_NAME>{RESET}\nClones a personal repository from your GitHub account.")
         print(
             f"\n{BLUE}remote url{RESET} {CYAN}<REPO_NAME>{RESET}\nShows the web url of a personal repository.\n")
+        return True
