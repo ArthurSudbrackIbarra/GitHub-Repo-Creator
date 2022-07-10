@@ -401,7 +401,11 @@ class CLI:
         return False
 
     # (Temp) Merge.
-    def merge(self, templateNames: "tuple[str]", outputFileName: str = None, ignoreConflicts: bool = False) -> bool:
+    def merge(
+            self,
+            templateNames: "tuple[str]",
+            outputFileName: str = None,
+            ignoreConflicts: bool = False) -> bool:
         if len(templateNames) < 2:
             print(
                 f"\n{RED}[ERROR]{RESET} At least 2 template names must be specified.")

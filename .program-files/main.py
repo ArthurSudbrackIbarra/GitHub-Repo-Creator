@@ -165,7 +165,10 @@ def generate() -> None:
 @click.argument("template_names", nargs=-1)
 @click.option("-o", "--output_file_name")
 @click.option("-i", "--ignore_conflicts", is_flag=True)
-def merge(template_names: "tuple[str]", output_file_name: str, ignore_conflicts: bool) -> None:
+def merge(
+        template_names: "tuple[str]",
+        output_file_name: str,
+        ignore_conflicts: bool) -> None:
     success = cliInstance.merge(
         template_names, output_file_name, ignore_conflicts)
     print("")
