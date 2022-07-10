@@ -163,8 +163,11 @@ def generate() -> None:
 # Temp Merge.
 @temp.command(name="merge")
 @click.argument("template_names", nargs=-1)
-def merge(template_names: "tuple[str]") -> None:
-    success = cliInstance.merge(template_names)
+@click.option("-o", "--output_file_name")
+@click.option("-i", "--ignore_conflicts", is_flag=True)
+def merge(template_names: "tuple[str]", output_file_name: str, ignore_conflicts: bool) -> None:
+    success = cliInstance.merge(
+        template_names, output_file_name, ignore_conflicts)
     print("")
     exit(0 if success else 1)
 
