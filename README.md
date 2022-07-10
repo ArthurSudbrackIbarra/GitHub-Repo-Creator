@@ -118,6 +118,8 @@ grc authenticate <ACCESS_TOKEN>
 grc authenticate ghp_3dh39j39874hs3d8PSBSHksbsbtx
 ```
 
+Before running the command, you will need to generate a personal access token in GitHub if you don't have one yet. More on how to do that [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token), make sure to check the 'repo' permission box when creating your token.
+
 ## User
 
 The 'user' command shows information about the current authenticated user.
@@ -126,8 +128,6 @@ The 'user' command shows information about the current authenticated user.
 # Usage:
 grc user
 ```
-
-Before running the command, you will need to generate a personal access token in GitHub if you don't have one yet. More on how to do that [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token), make sure to check the 'repo' permission box when creating your token.
 
 ## (Temp) Apply
 
