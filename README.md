@@ -27,6 +27,7 @@ If you don't like using the command line, GRC also has a [Visual Studio Code ext
 |   v3.0.1    |              v0.0.1              |
 |   v3.0.2    |              v0.0.2              |
 |   v3.0.3    |              v0.0.3              |
+|   v3.0.4    |              v0.0.4              |
 
 <br/>
 <p align="center">
@@ -263,6 +264,12 @@ grc temp merge a b c d e f g ... # N number of templates.
 
 # Example:
 grc temp merge my-template-1 my-template-2
+
+# Options:
+
+# -o, --output_file_name (the name of the generated template).
+# -i, --ignore_conflicts (will use the values of the first template).
+grc temp merge temp-1 temp-2 -o merged-temp --ignore_conflicts
 ```
 
 ## (Repo) List

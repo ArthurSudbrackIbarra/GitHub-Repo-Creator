@@ -28,7 +28,7 @@ echo -e "${PURPLE}[INFO]${NC} Created directory grc in /opt."
 rm -rf GitHub-Repo-Creator
 git clone https://github.com/ArthurSudbrackIbarra/GitHub-Repo-Creator.git --quiet > /dev/null
 cd GitHub-Repo-Creator
-git checkout v3.0.3 --quiet > /dev/null
+git checkout v3.0.4 --quiet > /dev/null
 echo -e "${PURPLE}[INFO]${NC} Cloned GRC GitHub repository."
 
 # Giving all users the permission to execute grc script.
